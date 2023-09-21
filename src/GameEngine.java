@@ -13,6 +13,10 @@ public class GameEngine {
     private Map map;
     private Inventory inventory;
 
+//    xPosition and yPosition can be changed when implementing the proper map and movement.
+    private int xPosition;
+    private int yPosition;
+
     /**
      * Private constructor to initialize the GameEngine instance.
      * It creates a new map, inventory, and scanner for user input.
@@ -65,9 +69,18 @@ public class GameEngine {
                     System.out.println("Attack");
                 }
                 case "move" -> {
+                    System.out.println("Which direction do you want to move? : ");
+                    String nextLine = scanner.nextLine();
+                    nextLine = nextLine.toLowerCase();
+                    switch (nextLine) {
+                        case "forward" -> {move(Direction.Forward);}
+                        case "backward" -> {move(Direction.Backward);}
+                        case "left" -> {move(Direction.Left);}
+                        case "right" -> {move(Direction.Right);}
+                    }
                     // More logic for keyword followed after move, i.e., "move forward" will move forward,
                     // but if the player is at the edge of our map, then return invalid'
-                    System.out.println("Move");
+                    System.out.println("Move " + nextLine);
                 }
                 case "talk" -> {
                     // Similar logic with attack, but instead with talking to NPCs
@@ -91,8 +104,48 @@ public class GameEngine {
         // Add more commands as needed.
     }
 
-    public void move(Direction direction) {
+    /**
+     * moves the user in the input direction
+     *
+     * @returns True if the movement was successful, false if the movement was unsuccessful.
+     * @author Sam Powell
+     */
+    public boolean move(Direction direction) {
+        if (direction == Direction.Left) {
+            if (isValidPosition(xPosition -1,yPosition)) {xPosition -=1; return true;}
+            else {return false;}
+        }
+        if (direction == Direction.Right) {
+            if (isValidPosition(xPosition+1,yPosition)) {xPosition +=1; return true;}
+            else {return false;}
+        }
+        if (direction == Direction.Forward) {
+            if (isValidPosition(xPosition,yPosition+1)) {yPosition +=1; return true;}
+            else {return false;}
+        }
+        if (direction == Direction.Backward) {
+            if (isValidPosition(xPosition,yPosition-1)) {yPosition -=1; return true;}
+            else {return false;}
+        }
+        return false;
+    }
 
+    /**
+     * asserts whether the coordinates given are a valid position of the game map,
+     * including the position of NPCs and enemies.
+     *
+     * @returns True if the given coordinates are a valid position for the player to move to, false otherwise.
+     * @author Sam Powell
+     */
+    public boolean isValidPosition(int x, int y) {
+//        Position in bounds of map
+//        Can change variables to official map bounds later.
+        int mapLeftEdge = 0;
+        int mapRightEdge = 1;
+        int mapTopEdge = 1;
+        int mapBottomEdge = 0;
+        if (x < mapLeftEdge || y < mapBottomEdge || x > mapRightEdge || y > mapTopEdge) {return false;}
+        return true;
     }
 
     public void fightEnemy(Enemy enemy) {

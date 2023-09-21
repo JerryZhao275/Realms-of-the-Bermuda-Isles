@@ -1,3 +1,4 @@
+import java.util.List;
 import java.util.Scanner;
 
 /**
@@ -38,6 +39,11 @@ public class GameEngine {
         }
         return instance;
     }
+//Temporary main class for testing, can be removed.
+    public static void main(String[] args) {
+        GameEngine gameEngine = getInstance();
+        gameEngine.startGame();
+    }
 
     /**
      * startGame() starts the user's playthrough of the game.
@@ -70,22 +76,56 @@ public class GameEngine {
                 }
                 case "move" -> {
                     System.out.println("Which direction do you want to move? : ");
+                    System.out.print("> ");
                     String nextLine = scanner.nextLine();
                     nextLine = nextLine.toLowerCase();
+                    boolean flag = false;
                     switch (nextLine) {
-                        case "forward" -> {move(Direction.Forward);}
-                        case "backward" -> {move(Direction.Backward);}
-                        case "left" -> {move(Direction.Left);}
-                        case "right" -> {move(Direction.Right);}
+                        case "forward" -> {flag = move(Direction.Forward);}
+                        case "backward" -> {flag = move(Direction.Backward);}
+                        case "left" -> {flag = move(Direction.Left);}
+                        case "right" -> {flag = move(Direction.Right);}
                     }
                     // More logic for keyword followed after move, i.e., "move forward" will move forward,
                     // but if the player is at the edge of our map, then return invalid'
-                    System.out.println("Move " + nextLine);
+                    if (flag) {System.out.println("Move " + nextLine);}
+                    else {System.out.println("Move command is invalid");}
                 }
                 case "talk" -> {
                     // Similar logic with attack, but instead with talking to NPCs
                     System.out.println("talk");
                 }
+                case "take" -> {
+                    Item item = getItemAtPosition(xPosition,yPosition);
+                    if (item != null) {
+                        interactWithItem(item);
+                        System.out.println("Took a " + item.getName());
+                    }
+                    else {System.out.println("Cannot take item here");}
+
+                }
+                case "use" -> {
+                    System.out.println("Which item do you want to use: ");
+                    List<Item> items = inventory.getItems();
+                    for (Item item : items) {
+                        System.out.println(item.getName());
+                    }
+                    System.out.print("> ");
+                    String itemName = scanner.nextLine();
+                    Item selectedItem = inventory.getItem(itemName);
+                    if (selectedItem != null) {
+                        switch (selectedItem.getName()) {
+                            case "potion" -> {
+                                System.out.println("You used a potion");
+                                inventory.removeItem(selectedItem);
+                            }
+                            case "gold" -> System.out.println("You look at the gold in your inventory " +
+                                    "and wonder what purpose it might have.");
+                            }
+                        }
+                    else {System.out.println("Invalid item name");}
+                    }
+
                 // Add more commands such as save and load later
                 default -> System.out.println("Please enter a valid command or type help to see the commands.");
             }
@@ -101,6 +141,9 @@ public class GameEngine {
         System.out.println("Available commands:");
         System.out.println("help - Display this help message");
         System.out.println("quit - Quit the game");
+        System.out.println("move - Move your character to a new position");
+        if (inventory.getItems().size() > 0) {System.out.println("use - Use an item in your inventory");}
+        if (getItemAtPosition(xPosition,yPosition) != null) {System.out.println("take - take item at current position");}
         // Add more commands as needed.
     }
 
@@ -155,4 +198,30 @@ public class GameEngine {
     public void talkToNPC(NPC npc) {
         npc.talk();
     }
+
+    /**
+     *
+     * @param item
+     * Adds item to players inventory
+     * @author Sam Powell
+     */
+    public void interactWithItem(Item item) {
+        inventory.addItem(item);
+    }
+
+    /**
+     * @param x
+     * @param y
+     *
+     * @returns The item at the players current position, or null if there is no item at the players position
+     */
+    public Item getItemAtPosition(int x, int y) {
+//        placeholder until map intergration
+        return new Item("potion",-1,-1);
+    }
+
+
+
+
 }
+

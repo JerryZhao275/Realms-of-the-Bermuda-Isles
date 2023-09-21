@@ -66,9 +66,9 @@ public class GameEngine {
                     isGameOver = true;
                     System.out.println("Thanks for playing!");
                 }
-                case "inventory" -> {
-                    System.out.println("Show inventory");
-                }
+                case "inventory" -> displayInventory();
+                case "take" -> takeItem();
+                case "use" -> useItem();
                 case "attack" -> {
                     // More logic for keyword followed after attack, i.e., "attack goblin" will attack goblin,
                     // but if no goblin exists then return 'That is not a valid action!'
@@ -93,38 +93,46 @@ public class GameEngine {
                 }
                 case "talk" -> {
                     // Similar logic with attack, but instead with talking to NPCs
-                    System.out.println("talk");
-                }
-                case "take" -> {
-                    Item item = getItemAtPosition(xPosition,yPosition);
-                    if (item != null) {
-                        interactWithItem(item);
-                        System.out.println("Took a " + item.getName());
-                    }
-                    else {System.out.println("Cannot take item here");}
+                        System.out.print("Who do you want to talk to? ");
+                        String npcName = scanner.nextLine().toLowerCase(); //
+                        NPC npc = getNPCAtPosition(xPosition, yPosition, npcName);
+                        if (npc != null) {
+                            talkToNPC(npc);
+                        } else {
+                            System.out.println("There is no " + npcName + " here to talk to.");
+                        }
 
                 }
-                case "use" -> {
-                    System.out.println("Which item do you want to use: ");
-                    List<Item> items = inventory.getItems();
-                    for (Item item : items) {
-                        System.out.println(item.getName());
-                    }
-                    System.out.print("> ");
-                    String itemName = scanner.nextLine();
-                    Item selectedItem = inventory.getItem(itemName);
-                    if (selectedItem != null) {
-                        switch (selectedItem.getName()) {
-                            case "potion" -> {
-                                System.out.println("You used a potion");
-                                inventory.removeItem(selectedItem);
-                            }
-                            case "gold" -> System.out.println("You look at the gold in your inventory " +
-                                    "and wonder what purpose it might have.");
-                            }
-                        }
-                    else {System.out.println("Invalid item name");}
-                    }
+//                case "take" -> {
+//                    Item item = getItemAtPosition(xPosition,yPosition);
+//                    if (item != null) {
+//                        interactWithItem(item);
+//                        System.out.println("Took a " + item.getName());
+//                    }
+//                    else {System.out.println("Cannot take item here");}
+//
+//                }
+//                case "use" -> {
+//                    System.out.println("Which item do you want to use: ");
+//                    List<Item> items = inventory.getItems();
+//                    for (Item item : items) {
+//                        System.out.println(item.getName());
+//                    }
+//                    System.out.print("> ");
+//                    String itemName = scanner.nextLine();
+//                    Item selectedItem = inventory.getItem(itemName);
+//                    if (selectedItem != null) {
+//                        switch (selectedItem.getName()) {
+//                            case "potion" -> {
+//                                System.out.println("You used a potion");
+//                                inventory.removeItem(selectedItem);
+//                            }
+//                            case "gold" -> System.out.println("You look at the gold in your inventory " +
+//                                    "and wonder what purpose it might have.");
+//                            }
+//                        }
+//                    else {System.out.println("Invalid item name");}
+//                    }
 
                 // Add more commands such as save and load later
                 default -> System.out.println("Please enter a valid command or type help to see the commands.");
@@ -218,6 +226,73 @@ public class GameEngine {
     public Item getItemAtPosition(int x, int y) {
 //        placeholder until map intergration
         return new Item("potion",-1,-1);
+    }
+
+
+    private void displayInventory() {
+        List<Item> items = inventory.getItems();
+        if (items.isEmpty()) {
+            System.out.println("Your inventory is empty.");
+            return;
+        }
+
+        System.out.println("Your inventory contains:");
+        for (Item item : items) {
+            System.out.println("- " + item.getName());
+        }
+    }
+
+    private void takeItem() {
+        Item item = getItemAtPosition(xPosition, yPosition);
+        if (item != null) {
+            inventory.addItem(item);
+            System.out.println("You have taken the " + item.getName() + ".");
+        } else {
+            System.out.println("There's no item to take here.");
+        }
+    }
+
+    private void useItem() {
+        System.out.println("Which item do you want to use?");
+        List<Item> items = inventory.getItems();
+        for (Item item : items) {
+            System.out.println("- " + item.getName());
+        }
+        System.out.print("> ");
+        String itemName = scanner.nextLine();
+        Item selectedItem = inventory.getItem(itemName);
+
+        if (selectedItem != null) {
+            // Logic for using the item
+            switch (selectedItem.getName()) {
+                case "potion":
+                    System.out.println("You used a potion.");
+                    inventory.removeItem(selectedItem);
+                    break;
+                // More logic for other items can be added
+                default:
+                    System.out.println("You looked at the " + selectedItem.getName() + " in your inventory.");
+            }
+        } else {
+            System.out.println("You don't have an item named " + itemName + ".");
+        }
+    }
+
+
+    /**
+     * Get an NPC instance at the specified position.
+     *
+     * @param x       The x-coordinate of the NPC.
+     * @param y       The y-coordinate of the NPC.
+     * @param npcName The name of the NPC to look for.
+     * @return If a matching NPC is found, return the corresponding NPC instance; otherwise, return null.
+     */
+    public NPC getNPCAtPosition(int x, int y, String npcName) {
+        if (npcName.equals("blacksmith") && x == 1 && y == 1) {
+            return new NPC("Blacksmith", x, y);
+        }
+
+        return null;
     }
 
 

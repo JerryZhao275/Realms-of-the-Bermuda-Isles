@@ -19,6 +19,12 @@ public class Map {
         Entity npc = new NPC("NPC", -1, -1);
         Entity item = new Item("Item", -1, -1);
 
+        NPC blacksmith = new NPC("Blacksmith", -1, -1);
+        NPC thief = new NPC("Thief", -1, -1);
+        NPC dwarf = new NPC("Dwarf", -1, -1);
+
+
+
         placeEntity(item,0,1);
         placeEntity(npc,1,0);
         placeEntity(enemy,1,1);
@@ -28,6 +34,7 @@ public class Map {
      * Set the entity's position and add it to the grid.
      */
     private void placeEntity(Entity entity, int row, int col) {
+
         entity.move(row, col);
         grid[row][col] = entity;
     }
@@ -90,6 +97,19 @@ public class Map {
         }
     }
 
+    public String interactWithNPC(String npcName, Player player) {
+        for (Entity[] row : grid) {
+            for (Entity entity : row) {
+                if (entity instanceof NPC && entity.getName().equals(npcName)) {
+                    return ((NPC) entity).interact(player);
+                }
+            }
+        }
+        return "No such NPC found!";
+    }
+
+
+
     public static void main(String[] args) {
         Map gameMap = new Map();
 
@@ -109,6 +129,9 @@ public class Map {
         col = 1;
         String entityType3 = gameMap.getEntityTypeAt(row, col);
         System.out.println("Entity at grid[" + row + "][" + col + "]: " + entityType3);
+
+
+
     }
 }
 

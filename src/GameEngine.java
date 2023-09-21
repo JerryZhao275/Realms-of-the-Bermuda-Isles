@@ -69,9 +69,18 @@ public class GameEngine {
                     System.out.println("Attack");
                 }
                 case "move" -> {
+                    System.out.println("Which direction do you want to move? : ");
+                    String nextLine = scanner.nextLine();
+                    nextLine = nextLine.toLowerCase();
+                    switch (nextLine) {
+                        case "forward" -> {move(Direction.Forward);}
+                        case "backward" -> {move(Direction.Backward);}
+                        case "left" -> {move(Direction.Left);}
+                        case "right" -> {move(Direction.Right);}
+                    }
                     // More logic for keyword followed after move, i.e., "move forward" will move forward,
                     // but if the player is at the edge of our map, then return invalid'
-                    System.out.println("Move");
+                    System.out.println("Move " + nextLine);
                 }
                 case "talk" -> {
                     // Similar logic with attack, but instead with talking to NPCs

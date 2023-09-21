@@ -42,7 +42,6 @@ public class GameEngine {
      */
     public void startGame() {
         System.out.println("Type 'help' for a list of commands.");
-        System.out.println("Type 'play' to dive into the game!");
         System.out.println("Some plotline and story for our game");
 
         boolean isGameOver = false;

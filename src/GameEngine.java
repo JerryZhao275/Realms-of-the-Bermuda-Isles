@@ -55,7 +55,22 @@ public class GameEngine {
         System.out.println("Some plotline and story for our game");
 
         boolean isGameOver = false;
+        int prevXPosition = xPosition; // Store the previous positions
+        int prevYPosition = yPosition;
+
         while (!isGameOver) {
+            // Check if the player's position has changed and print new dialogue when entering a new area
+            if (xPosition != prevXPosition || yPosition != prevYPosition) {
+                switch (map.getEntityTypeAt(xPosition, yPosition)) {
+                    case "Enemy" -> System.out.println("Insert dialogue where the player sees an enemy");
+                    case "NPC" -> System.out.println("Insert dialogue where the player sees an NPC");
+                    case "Item" -> System.out.println("Insert dialogue where the player sees an item");
+                    default -> System.out.println("Insert dialogue where the player is standing in an open plain field");
+                }
+                prevXPosition = xPosition;
+                prevYPosition = yPosition;
+            }
+
             System.out.print("> ");
             String input = scanner.nextLine();
             input = input.toLowerCase(); // Convert input to lowercase for case-insensitivity.

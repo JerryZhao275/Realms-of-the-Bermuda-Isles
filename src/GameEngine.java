@@ -14,7 +14,7 @@ public class GameEngine {
     private Map map;
     private Inventory inventory;
 
-//    xPosition and yPosition can be changed when implementing the proper map and movement.
+    //    xPosition and yPosition can be changed when implementing the proper map and movement.
     private int xPosition;
     private int yPosition;
 
@@ -39,7 +39,7 @@ public class GameEngine {
         }
         return instance;
     }
-//Temporary main class for testing, can be removed.
+    //Temporary main class for testing, can be removed.
     public static void main(String[] args) {
         GameEngine gameEngine = getInstance();
         gameEngine.startGame();
@@ -81,9 +81,7 @@ public class GameEngine {
                     isGameOver = true;
                     System.out.println("Thanks for playing!");
                 }
-                case "inventory" -> {
-                    System.out.println("Show inventory");
-                }
+                case "inventory" -> displayInventory();
                 case "attack" -> {
                     // More logic for keyword followed after attack, i.e., "attack goblin" will attack goblin,
                     // but if no goblin exists then return 'That is not a valid action!'
@@ -107,9 +105,22 @@ public class GameEngine {
                     else {System.out.println("Move command is invalid");}
                 }
                 case "talk" -> {
-                    // Similar logic with attack, but instead with talking to NPCs
-                    System.out.println("talk");
+                    System.out.print("Who do you want to talk to? ");
+                    String npcName = scanner.nextLine().toLowerCase();
+                    System.out.println("Trying to talk to: " + npcName);
+                    System.out.println("At position: x=" + xPosition + ", y=" + yPosition);
+
+                    Entity entity = map.getEntityAt(xPosition, yPosition);
+                    if (entity instanceof NPC && entity.getName().equalsIgnoreCase(npcName)) {
+                        NPC npc = (NPC) entity;
+                        String message = npc.talk(this.inventory);  // Assuming GameEngine has a field called 'inventory'
+                        System.out.println(message);
+                    } else {
+                        System.out.println("There is no " + npcName + " here to talk to.");
+                    }
                 }
+
+
                 case "take" -> {
                     Item item = getItemAtPosition(xPosition,yPosition);
                     if (item != null) {
@@ -210,9 +221,9 @@ public class GameEngine {
         enemy.talk();
     }
 
-    public void talkToNPC(NPC npc) {
-        npc.talk();
-    }
+//    public void talkToNPC(NPC npc) {
+//        npc.talk();
+//    }
 
     /**
      *
@@ -234,6 +245,41 @@ public class GameEngine {
 //        placeholder until map intergration
         return new Item("potion",-1,-1);
     }
+
+
+    private void displayInventory() {
+        List<Item> items = inventory.getItems();
+        if (items.isEmpty()) {
+            System.out.println("Your inventory is empty.");
+            return;
+        }
+
+        System.out.println("Your inventory contains:");
+        for (Item item : items) {
+            System.out.println("- " + item.getName());
+        }
+    }
+
+    /**
+     * Get an NPC instance at the specified position.
+     *
+     * @param x       The x-coordinate of the NPC.
+     * @param y       The y-coordinate of the NPC.
+     * @param npcName The name of the NPC to look for.
+     * @return If a matching NPC is found, return the corresponding NPC instance; otherwise, return null.
+     */
+    public NPC getNPCAtPosition(int x, int y, String npcName) {
+        Entity entity = map.getEntityAt(x, y);
+        System.out.println("Entity at position: " + entity);
+        if (entity instanceof NPC && entity.getName().equalsIgnoreCase(npcName)) {
+            System.out.println("Found matching NPC: " + entity.getName());
+            return (NPC) entity;
+        }
+        return null;
+    }
+
+
+
 
 
 

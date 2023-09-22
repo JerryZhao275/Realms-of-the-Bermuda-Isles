@@ -10,35 +10,47 @@ import java.util.ArrayList;
  */
 
 public abstract class NPC extends Entity {
+
     /**
      * Public constructor to initialize the NPC instance.
      * It creates a new name, x-axis coordinate, and y-axis coordinate for the NPC.
+     * @param name Name of the NPC.
+     * @param x X-axis coordinate.
+     * @param y Y-axis coordinate.
      */
-
-
-
     public NPC(String name, int x, int y) {
         super(name, x, y);
     }
 
+    /**
+     * Abstract method to facilitate conversation with the NPC and potentially modify the player's inventory.
+     * Each NPC subclass will have its own implementation.
+     *
+     * @param inventory Player's inventory.
+     * @return Message to the player after interaction.
+     */
     public abstract String talk(Inventory inventory);
 
-//    public abstract String interact(Player player);
-
+    /**
+     * A Blacksmith NPC that offers a sword to the player.
+     */
     public static class Blacksmith extends NPC {
         public Blacksmith(String name, int x, int y) {
             super(name, x, y);
         }
 
+        @Override
         public String talk(Inventory inventory) {
             System.out.println("Ah, a wanderer! You could use a sword to protect these treacherous lands");
             Item sword = new Item("Sword", -1, -1);
             inventory.addItem(sword);
             return "Use it wisely. The Bermuda Isles are no place for the unprepared";
         }
-
     }
 
+    /**
+     * A Thief NPC that warns the player and potentially steals from them.
+     */
     public static class Thief extends NPC {
         public Thief(String name, int x, int y) {
             super(name, x, y);
@@ -54,9 +66,11 @@ public abstract class NPC extends Entity {
             }
             return "Thanks for the loot! Better luck next time!";
         }
-
     }
 
+    /**
+     * A Dwarf NPC that offers a sack of gold to the player.
+     */
     public static class Dwarf extends NPC {
         public Dwarf(String name, int x, int y) {
             super(name, x, y);
@@ -70,6 +84,5 @@ public abstract class NPC extends Entity {
             inventory.addItem(gold);
             return "Gold might not have much value here, but it's a start. Seek the exit, and may fortune favor you";
         }
-
     }
 }

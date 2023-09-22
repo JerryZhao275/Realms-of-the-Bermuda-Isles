@@ -92,17 +92,20 @@ public class GameEngine {
                     else {System.out.println("Move command is invalid");}
                 }
                 case "talk" -> {
-                    // Similar logic with attack, but instead with talking to NPCs
-                        System.out.print("Who do you want to talk to? ");
-                        String npcName = scanner.nextLine().toLowerCase(); //
-                        NPC npc = getNPCAtPosition(xPosition, yPosition, npcName);
-                        if (npc != null) {
-                            talkToNPC(npc);
-                        } else {
-                            System.out.println("There is no " + npcName + " here to talk to.");
-                        }
+                    System.out.print("Who do you want to talk to? ");
+                    String npcName = scanner.nextLine().toLowerCase();
+                    System.out.println("Trying to talk to: " + npcName);
+                    System.out.println("At position: x=" + xPosition + ", y=" + yPosition);
 
+                    Entity entity = map.getEntityAt(xPosition, yPosition);
+                    if (entity instanceof NPC && entity.getName().equalsIgnoreCase(npcName)) {
+                        NPC npc = (NPC) entity;
+                        talkToNPC(npc);
+                    } else {
+                        System.out.println("There is no " + npcName + " here to talk to.");
+                    }
                 }
+
 //                case "take" -> {
 //                    Item item = getItemAtPosition(xPosition,yPosition);
 //                    if (item != null) {
@@ -288,12 +291,17 @@ public class GameEngine {
      * @return If a matching NPC is found, return the corresponding NPC instance; otherwise, return null.
      */
     public NPC getNPCAtPosition(int x, int y, String npcName) {
-        if (npcName.equals("blacksmith") && x == 1 && y == 1) {
-            return new NPC("Blacksmith", x, y);
+        Entity entity = map.getEntityAt(x, y);
+        System.out.println("Entity at position: " + entity);
+        if (entity instanceof NPC && entity.getName().equalsIgnoreCase(npcName)) {
+            System.out.println("Found matching NPC: " + entity.getName());
+            return (NPC) entity;
         }
-
         return null;
     }
+
+
+
 
 
 

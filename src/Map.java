@@ -99,16 +99,6 @@ public class Map {
         }
     }
 
-    public String interactWithNPC(String npcName, Player player) {
-        for (Entity[] row : grid) {
-            for (Entity entity : row) {
-                if (entity instanceof NPC && entity.getName().equals(npcName)) {
-                    return ((NPC) entity).interact(player);
-                }
-            }
-        }
-        return "No such NPC found!";
-    }
 
     public Entity getEntityAt(int row, int col) {
         if (isValidPosition(row, col)) {

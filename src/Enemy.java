@@ -13,9 +13,15 @@ public class Enemy extends Entity{
     /**
      * Initiates a battle with the player.
      */
-    public void fight() {
-        System.out.println("Prepare for battle! " + getName() + " is attacking!");
+    public void fight(GameEngine gameEngine) {
+        if (gameEngine.playerHasWeapon()) {
+            System.out.println("With your weapon, you slay the " + getName() + "!");
+        } else {
+            System.out.println(getName() + " overpowers you! Game Over!");
+            System.exit(0); // Ends the game
+        }
     }
+
 
     /**
      * Handles interaction and dialogue with the player.

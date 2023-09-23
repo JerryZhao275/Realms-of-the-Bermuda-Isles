@@ -27,9 +27,9 @@ public class Map {
         Entity dwarf = new NPC.Dwarf("dwarf", -1, -1);
 
 
-        placeEntity(blacksmith,1,0);
+        placeEntity(blacksmith,1,1);
         placeEntity(potion,0,1);
-        placeEntity(goblin,1,1);
+        placeEntity(goblin,1,0);
     }
 
     /**

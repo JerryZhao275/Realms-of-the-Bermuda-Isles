@@ -14,6 +14,9 @@ public class GameEngine {
     private Map map;
     private Inventory inventory;
 
+    private boolean playerHasWeapon = false;  // At the class level, after other fields
+
+
     //    xPosition and yPosition can be changed when implementing the proper map and movement.
     private int xPosition;
     private int yPosition;
@@ -85,8 +88,15 @@ public class GameEngine {
                 case "attack" -> {
                     // More logic for keyword followed after attack, i.e., "attack goblin" will attack goblin,
                     // but if no goblin exists then return 'That is not a valid action!'
-                    System.out.println("Attack");
+                    Entity entity = map.getEntityAt(xPosition, yPosition);
+                    if (entity instanceof Enemy) {
+                        Enemy enemy = (Enemy) entity;
+                        enemy.fight(this);  // 'this' refers to the current GameEngine instance
+                    } else {
+                        System.out.println("There's no enemy here to fight!");
+                    }
                 }
+
                 case "move" -> {
                     System.out.println("Which direction do you want to move? : ");
                     System.out.print("> ");
@@ -277,6 +287,19 @@ public class GameEngine {
         }
         return null;
     }
+
+    public boolean playerHasWeapon() {
+        return playerHasWeapon;
+    }
+
+    public void equipPlayerWeapon() {
+        this.playerHasWeapon = true;
+    }
+
+    public void playerLoseWeapon() {
+        this.playerHasWeapon = false;
+    }
+
 
 
 

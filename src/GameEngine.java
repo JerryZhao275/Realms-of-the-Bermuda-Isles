@@ -87,8 +87,14 @@ public class GameEngine {
                 }
                 case "inventory" -> displayInventory();
                 case "attack" -> {
-                    // More logic for keyword followed after attack, i.e., "attack goblin" will attack goblin,
-                    // but if no goblin exists then return 'That is not a valid action!'
+                    Entity entity = map.getEntityAt(xPosition, yPosition);
+                    if (entity instanceof Enemy) {
+                        System.out.println("Please specify an enemy you would like to fight, i.e. 'fight ogre'.");
+                    } else {
+                        System.out.println("There's no enemy here to fight!");
+                    }
+                }
+                case "attack goblin", "attack ogre", "attack spider" -> {
                     Entity entity = map.getEntityAt(xPosition, yPosition);
                     if (entity instanceof Enemy enemy) {
                         enemy.fight(this, map, xPosition, yPosition, inventory);  // 'this' refers to the current GameEngine instance

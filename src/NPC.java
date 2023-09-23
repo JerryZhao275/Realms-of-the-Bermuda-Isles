@@ -29,7 +29,7 @@ public abstract class NPC extends Entity {
      * @param inventory Player's inventory.
      * @return Message to the player after interaction.
      */
-    public abstract String talk(Inventory inventory);
+    public abstract String talk(Map map, int row, int column, Inventory inventory);
 
     /**
      * A Blacksmith NPC that offers a sword to the player.
@@ -40,11 +40,13 @@ public abstract class NPC extends Entity {
         }
 
         @Override
-        public String talk(Inventory inventory) {
+        public String talk(Map map, int row, int column, Inventory inventory) {
             System.out.println("Ah, a wanderer! You could use a sword to protect these treacherous lands");
-            Item sword = new Item("Sword", -1, -1);
+            Item sword = new Item("sword", -1, -1);
             inventory.addItem(sword);
-            return "Use it wisely. The Bermuda Isles are no place for the unprepared";
+            map.removeEntity(row,column);
+            System.out.println("Use it wisely. The Bermuda Isles are no place for the unprepared");
+            return "# The blacksmith left you a sharp sword. A 'Sword' has been added to your inventory.";
         }
     }
 
@@ -57,14 +59,16 @@ public abstract class NPC extends Entity {
         }
 
         @Override
-        public String talk(Inventory inventory) {
+        public String talk(Map map, int row, int column, Inventory inventory) {
             System.out.println("Psst, newcomer, watch your pockets!");
             for (Item item : new ArrayList<>(inventory.getItems())) {
                 if (!item.getName().equalsIgnoreCase("sword")) {
                     inventory.removeItem(item);
                 }
             }
-            return "Thanks for the loot! Better luck next time!";
+            map.removeEntity(row,column);
+            System.out.println("Thanks for the loot! Better luck next time!");
+            return "# The thief took your (item being stolen) and escaped.";
         }
     }
 
@@ -77,7 +81,7 @@ public abstract class NPC extends Entity {
         }
 
         @Override
-        public String talk(Inventory inventory) {
+        public String talk(Map map, int row, int column, Inventory inventory) {
             System.out.println("Greetings, traveller. I've been on this island for a time unknown. " +
                     "Take this sack of Gold; it may aid you on your journey.");
             Item gold = new Item("Sack of Gold", -1, -1);

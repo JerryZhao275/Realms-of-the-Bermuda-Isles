@@ -13,11 +13,15 @@ public class Enemy extends Entity{
     /**
      * Initiates a battle with the player.
      */
-    public void fight(GameEngine gameEngine) {
+    public void fight(GameEngine gameEngine, Map map, int row, int column, Inventory inventory) {
         if (gameEngine.playerHasWeapon()) {
-            System.out.println("With your weapon, you slay the " + getName() + "!");
+            map.removeEntity(row,column);
+            System.out.println("# You have slayed the " + getName() + "!");
+            inventory.addItem(new Item("gold",-1,-1));
+            System.out.println("# You obtained a piece of 'gold' from " + getName());
         } else {
-            System.out.println(getName() + " overpowers you! Game Over!");
+            System.out.println("# " + getName() + " overpowers you!");
+            System.out.println("## Game Over ##");
             System.exit(0); // Ends the game
         }
     }

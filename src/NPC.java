@@ -86,7 +86,9 @@ public abstract class NPC extends Entity {
                     "Take this sack of Gold; it may aid you on your journey.");
             Item gold = new Item("Sack of Gold", -1, -1);
             inventory.addItem(gold);
-            return "Gold might not have much value here, but it's a start. Seek the exit, and may fortune favor you";
+            map.removeEntity(row,column);
+            System.out.println("Gold might not have much value here, but it's a start. Seek the exit, and may fortune favor you");
+            return "# The Dwarf left you a piece of gold. A piece of 'gold' has been added to your inventory.";
         }
     }
 }

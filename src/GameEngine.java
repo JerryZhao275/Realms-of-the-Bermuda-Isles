@@ -14,7 +14,7 @@ public class GameEngine {
     private Map map;
     private Inventory inventory;
 
-    private boolean playerHasWeapon = false;  // At the class level, after other fields
+    private boolean playerHasWeapon = false;  // At the class level, after other fields (testing boolean)
 
 
     //    xPosition and yPosition can be changed when implementing the proper map and movement.
@@ -28,6 +28,7 @@ public class GameEngine {
     private GameEngine() {
         map = new Map();
         inventory = new Inventory();
+        inventory.addItem(new Item("bow",-1,-1)); // Initial weapon
         this.scanner = new Scanner(System.in);
     }
 
@@ -89,9 +90,8 @@ public class GameEngine {
                     // More logic for keyword followed after attack, i.e., "attack goblin" will attack goblin,
                     // but if no goblin exists then return 'That is not a valid action!'
                     Entity entity = map.getEntityAt(xPosition, yPosition);
-                    if (entity instanceof Enemy) {
-                        Enemy enemy = (Enemy) entity;
-                        enemy.fight(this);  // 'this' refers to the current GameEngine instance
+                    if (entity instanceof Enemy enemy) {
+                        enemy.fight(this, map, xPosition, yPosition, inventory);  // 'this' refers to the current GameEngine instance
                     } else {
                         System.out.println("There's no enemy here to fight!");
                     }
@@ -114,6 +114,7 @@ public class GameEngine {
                     if (flag) {System.out.println("Move " + nextLine);}
                     else {System.out.println("Move command is invalid");}
                 }
+
                 case "talk" -> {
                     System.out.print("Who do you want to talk to? ");
                     String npcName = scanner.nextLine().toLowerCase();
@@ -123,7 +124,7 @@ public class GameEngine {
                     Entity entity = map.getEntityAt(xPosition, yPosition);
                     if (entity instanceof NPC && entity.getName().equalsIgnoreCase(npcName)) {
                         NPC npc = (NPC) entity;
-                        String message = npc.talk(this.inventory);  // Assuming GameEngine has a field called 'inventory'
+                        String message = npc.talk(this.map,xPosition,yPosition,this.inventory);  // Assuming GameEngine has a field called 'inventory'
                         System.out.println(message);
                     } else {
                         System.out.println("There is no " + npcName + " here to talk to.");
@@ -132,12 +133,13 @@ public class GameEngine {
 
 
                 case "take" -> {
-                    Item item = getItemAtPosition(xPosition,yPosition);
-                    if (item != null) {
-                        interactWithItem(item);
-                        System.out.println("Took a " + item.getName());
+                    Entity entity = map.getEntityAt(xPosition, yPosition);
+                    if (entity instanceof Item item) {
+                        inventory.addItem(item);
+                        map.removeEntity(xPosition,yPosition);
+                        System.out.println("# You took a " + entity.getName());
                     }
-                    else {System.out.println("Cannot take item here");}
+                    else {System.out.println("There is no item here");}
 
                 }
                 case "use" -> {
@@ -288,9 +290,22 @@ public class GameEngine {
         return null;
     }
 
+    /**
+     * Check if the player has weapon or not.
+     *
+     * @return does the player has a weapon.
+     * @author Kwong Yu Zhou
+     * @author Thomas Green
+     */
     public boolean playerHasWeapon() {
-        return playerHasWeapon;
+        for (Item item : inventory.getItems()) {
+            switch (item.getName()) {
+                case "sword", "bow" -> {return true;}
+            }
+        }
+        return playerHasWeapon; // Return false if no weapon was found in the loop
     }
+
 
     public void equipPlayerWeapon() {
         this.playerHasWeapon = true;

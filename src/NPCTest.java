@@ -1,6 +1,11 @@
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * This is a JUnit test class responsible for covering all tests for the NPC class.
+ *
+ * @author Jerry Zhao
+ */
 public class NPCTest {
 
     private Inventory inventory;
@@ -21,6 +26,7 @@ public class NPCTest {
         thief.talk(inventory);
         assertEquals(1, inventory.getItems().size(), "Inventory should be empty after the thief's visit");
     }
+
     @Test
     void testThiefTalkSingle() {
         inventory = new Inventory();

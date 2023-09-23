@@ -34,7 +34,7 @@ public class Map {
     /**
      * Set the entity's position and add it to the grid.
      */
-    private void placeEntity(Entity entity, int row, int col) {
+    public void placeEntity(Entity entity, int row, int col) {
         entity.move(row, col);
         grid[row][col] = entity;
         System.out.println("Placed " + entity.getName() + " at [" + row + "][" + col + "]");
@@ -55,7 +55,7 @@ public class Map {
      *
      * @return the position is valid on the grid
      */
-    private boolean isValidPosition(int row, int col) {
+    public boolean isValidPosition(int row, int col) {
         return row >= 0 && row < grid.length && col >= 0 && col < grid.length;
     }
 

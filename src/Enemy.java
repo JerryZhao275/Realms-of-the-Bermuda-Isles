@@ -17,8 +17,6 @@ public class Enemy extends Entity{
         if (gameEngine.playerHasWeapon()) {
             map.removeEntity(row,column);
             System.out.println("# You have slayed the " + getName() + "!");
-            inventory.addItem(new Item("gold",-1,-1));
-            System.out.println("# You obtained a piece of 'gold' from " + getName());
         } else {
             System.out.println("# " + getName() + " overpowers you!");
             System.out.println("## Game Over ##");

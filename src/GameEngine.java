@@ -1,4 +1,5 @@
 import java.util.List;
+import java.util.Random;
 import java.util.Scanner;
 
 /**
@@ -149,7 +150,8 @@ public class GameEngine {
                 case "attack goblin", "attack ogre", "attack spider" -> {
                     Entity entity = map.getEntityAt(xPosition, yPosition);
                     if (entity instanceof Enemy enemy) {
-                        enemy.fight(this, map, xPosition, yPosition, inventory);  // 'this' refers to the current GameEngine instance
+                        enemy.fight(this, map, xPosition, yPosition, inventory);// 'this' refers to the current GameEngine instance
+                        if (map.getEntityAt(xPosition, yPosition) == null){openChest(inventory);}
                     } else {
                         System.out.println("There's no enemy here to fight!");
                     }
@@ -349,6 +351,37 @@ public class GameEngine {
     }
 
 
+    public void openChest(Inventory inventory) {
+        Random random = new Random();
+        Item sword = new Item("sword", -1, -1);
+        Item potion = new Item("potion", -1, -1);
+        Item bow = new Item("bow", -1, -1);
+        Item armor = new Item("armor", -1, -1);
+        Item[] possibleItems = {sword, bow, potion, armor};
+        int count_gold = 0;
+
+        // Randomly select a weapon (sword or bow) or a supplement (armor or potion)
+        Item chosenItem = possibleItems[random.nextInt(4)];
+        inventory.addItem(chosenItem);
+
+        // Generate a random number of golds between 0 and 2
+        int numberOfGolds = random.nextInt(3);
+
+        for (int i = 0; i < numberOfGolds; i++) {
+            inventory.addItem(new Item("gold", -1, -1));
+            count_gold++;
+        }
+        if (count_gold == 0){
+            System.out.println("# You have opened a chest. You've got a " + chosenItem.getName()
+                + ".");
+        } else if (count_gold == 1) {
+            System.out.println("# You have opened a chest. You've got a " + chosenItem.getName()
+                    + " and a piece of gold.");
+        } else{
+            System.out.println("# You have opened a chest. You've got a " + chosenItem.getName()
+                    + " and " + count_gold + " pieces of gold.");
+        }
+    }
 
 
 

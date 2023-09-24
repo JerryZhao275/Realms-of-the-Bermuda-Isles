@@ -367,7 +367,12 @@ public class GameEngine {
                 System.exit(0);
             }
         }
+    }
 
+    /**
+     * Open a chest and add the items to the inventory
+     * @author Kwong Yu Zhou
+     */
     public void openChest(Inventory inventory) {
         Random random = new Random();
         Item sword = new Item("sword", -1, -1);

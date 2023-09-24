@@ -55,9 +55,20 @@ public class GameEngine {
      * @author Jerry Zhao
      */
     public void startGame() {
-        System.out.println("Type 'help' for a list of commands.");
-        System.out.println("Some plotline and story for our game");
 
+        System.out.println("In the enigmatic expanse of the Bermuda Triangle, an area where time and space mysteriously intertwine, lies a realm unknown to most.\n" +
+                "After surviving a plane crash, our protagonist awakens on a desolate beach.\n" +
+                "Alongside their footprints are ancient and faded symbols, hinting at the land's age-old secrets.\n" +
+                "This place, known as the heart of the Bermuda Triangle, is the Bermuda Isles.\n" +
+                "Its inhabitants, mostly sailors and aviators who vanished over the years, have formed a unique community in this lost world.\n" +
+                "Some have become artisans, some merchants, and other predators.\n" +
+                "To find a way back to reality, the protagonist must explore every nook and cranny of the isles, decipher its enigmas, confront mysterious and perilous creatures,\n" +
+                "and search for a door leading back to the known world…\n");
+        System.out.println("You stand on the desolate beach, with dense forests to the west and south.\n" +
+                "Currently, you have only two paths to choose from: one leading north and one leading east.");
+
+
+        System.out.println("Type 'help' for a list of commands.");
         boolean isGameOver = false;
         int prevXPosition = xPosition; // Store the previous positions
         int prevYPosition = yPosition;
@@ -65,11 +76,54 @@ public class GameEngine {
         while (!isGameOver) {
             // Check if the player's position has changed and print new dialogue when entering a new area
             if (xPosition != prevXPosition || yPosition != prevYPosition) {
+
+                if (xPosition == 0 && yPosition == 0) {
+                    System.out.println("You stand on the desolate beach, with dense forests to the west and south.\n" +
+                            "Currently, you have only two paths to choose from: one leading north and one leading east.");
+                }
+                else if (xPosition == 0 && yPosition == 1) {
+                    System.out.println("After moving, you enter the depths of the forest.\n" +
+                            "The trees are tall, and sunlight filters through the leaves onto you.\n" +
+                            "You hear the sounds of wildlife, and it seems full of life here.");
+                    System.out.println("The dense forest stretches ahead, offering a direction for further exploration to the east.\n" +
+                            "On the south is the initial beach, but it's just beginning to get interesting here.");
+                }
+                else if (xPosition == 1 && yPosition == 0) {
+                    System.out.println("You arrive in an open area.\n" +
+                            "There are no trees here, only lush grasslands.\n" +
+                            "In the distance, there's a mountain range that looks like an intriguing adventure.");
+                    System.out.println("The open grasslands extend to the north, where more unknowns seem to await you.\n" +
+                            "You can also move east to the beach and organize the current exploration process.");
+                }
+                else if (xPosition == 1 && yPosition == 1) {
+                    System.out.println("You've reached the top right corner of the map. This is an open highland.\n" +
+                            "From here, you can overlook the entire Bermuda Isles and see the distant coastline.");
+                    System.out.println("Standing on the highland, you feel like you're at the peak of the Bermuda Isles, but there's still much to explore.\n" +
+                            "You can choose to move west or south to continue your journey.");
+                }
+                // More explanation similar to this for the player to have an idea of where they are
+
                 switch (map.getEntityTypeAt(xPosition, yPosition)) {
-                    case "Enemy" -> System.out.println("Insert dialogue where the player sees an enemy");
-                    case "NPC" -> System.out.println("Insert dialogue where the player sees an NPC");
-                    case "Item" -> System.out.println("Insert dialogue where the player sees an item");
-                    default -> System.out.println("Insert dialogue where the player is standing in an open plain field");
+                    case "Enemy" -> {
+                        Enemy enemy = (Enemy) map.getEntityAt(xPosition, yPosition);
+                        enemy.talk();
+                    }
+                    case "NPC" -> {
+                        NPC npc = (NPC) map.getEntityAt(xPosition, yPosition);
+                        String npcDialogue = npc.talk(map,xPosition,yPosition,inventory);
+                        System.out.println(npcDialogue);
+                    }
+                    case "Item" -> {
+                        System.out.println("Amidst the overgrown flora of the Bermuda Isles, a glint catches your eye.\n" +
+                                "Hidden beneath the fallen leaves, you find an artifact, ancient and ornate, perhaps a relic from one of the lost sailors or aviators.\n" +
+                                "Its design is unfamiliar, but it radiates an aura of significance, maybe even power.\n" +
+                                "Do you dare to pick it up? The land's mysteries beckon... But so do its dangers. Choose wisely.");
+                    }
+                    default -> {
+                        System.out.println("You stand amidst an expansive open plain, surrounded by endless stretches of tall, waving grass.\n" +
+                                "The sky above is a pristine shade of blue, punctuated by languid clouds drifting lazily.\n" +
+                                "In this moment of solitude, you're enveloped by the sounds of nature, and you can't shake the feeling that the plain holds secrets yet to be discovered.");
+                    }
                 }
                 prevXPosition = xPosition;
                 prevYPosition = yPosition;
@@ -111,8 +165,8 @@ public class GameEngine {
                     }
                     // More logic for keyword followed after move, i.e., "move forward" will move forward,
                     // but if the player is at the edge of our map, then return invalid'
-                    if (flag) {System.out.println("Move " + nextLine);}
-                    else {System.out.println("Move command is invalid");}
+                    if (flag) {System.out.println("[" + "Move " + nextLine + "]");}
+                    else {System.out.println("[" + "Move command is invalid" + "]");}
                 }
 
                 case "talk" -> {

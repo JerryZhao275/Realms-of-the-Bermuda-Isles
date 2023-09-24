@@ -124,6 +124,7 @@ public class GameEngine {
                                 "The sky above is a pristine shade of blue, punctuated by languid clouds drifting lazily.\n" +
                                 "In this moment of solitude, you're enveloped by the sounds of nature, and you can't shake the feeling that the plain holds secrets yet to be discovered.");
                     }
+
                 }
                 prevXPosition = xPosition;
                 prevYPosition = yPosition;
@@ -141,8 +142,14 @@ public class GameEngine {
                 }
                 case "inventory" -> displayInventory();
                 case "attack" -> {
-                    // More logic for keyword followed after attack, i.e., "attack goblin" will attack goblin,
-                    // but if no goblin exists then return 'That is not a valid action!'
+                    Entity entity = map.getEntityAt(xPosition, yPosition);
+                    if (entity instanceof Enemy) {
+                        System.out.println("Please specify an enemy you would like to fight, i.e. 'fight ogre'.");
+                    } else {
+                        System.out.println("There's no enemy here to fight!");
+                    }
+                }
+                case "attack goblin", "attack ogre", "attack spider" -> {
                     Entity entity = map.getEntityAt(xPosition, yPosition);
                     if (entity instanceof Enemy enemy) {
                         enemy.fight(this, map, xPosition, yPosition, inventory);  // 'this' refers to the current GameEngine instance
@@ -150,23 +157,34 @@ public class GameEngine {
                         System.out.println("There's no enemy here to fight!");
                     }
                 }
-
-                case "move" -> {
-                    System.out.println("Which direction do you want to move? : ");
-                    System.out.print("> ");
-                    String nextLine = scanner.nextLine();
-                    nextLine = nextLine.toLowerCase();
-                    boolean flag = false;
-                    switch (nextLine) {
-                        case "forward" -> {flag = move(Direction.Forward);}
-                        case "backward" -> {flag = move(Direction.Backward);}
-                        case "left" -> {flag = move(Direction.Left);}
-                        case "right" -> {flag = move(Direction.Right);}
+                case "move" -> System.out.println("Please specify the direction you would like to move in, i.e. 'move right'");
+                case "move forward", "move backward", "move left", "move right" -> {
+                    String[] parts = input.split(" ");
+                    if (parts.length == 2) {
+                        String directionStr = parts[1];
+                        Direction direction = null;
+                        if ("forward".equalsIgnoreCase(directionStr)) {
+                            direction = Direction.Forward;
+                        } else if ("backward".equalsIgnoreCase(directionStr)) {
+                            direction = Direction.Backward;
+                        } else if ("left".equalsIgnoreCase(directionStr)) {
+                            direction = Direction.Left;
+                        } else if ("right".equalsIgnoreCase(directionStr)) {
+                            direction = Direction.Right;
+                        }
+                        if (direction != null) {
+                            boolean moveFlag = move(direction);
+                            if (moveFlag) {
+                                System.out.println("Move " + directionStr);
+                            } else {
+                                System.out.println("[" + "Move command is invalid" + "]"
+                            }
+                        } else {
+                            System.out.println("[" + "Move " + directionStr + "]");
+                        }
+                    } else {
+                        System.out.println("Invalid move command. Please specify a direction.");
                     }
-                    // More logic for keyword followed after move, i.e., "move forward" will move forward,
-                    // but if the player is at the edge of our map, then return invalid'
-                    if (flag) {System.out.println("[" + "Move " + nextLine + "]");}
-                    else {System.out.println("[" + "Move command is invalid" + "]");}
                 }
 
                 case "talk" -> {
@@ -184,8 +202,6 @@ public class GameEngine {
                         System.out.println("There is no " + npcName + " here to talk to.");
                     }
                 }
-
-
                 case "take" -> {
                     Entity entity = map.getEntityAt(xPosition, yPosition);
                     if (entity instanceof Item item) {

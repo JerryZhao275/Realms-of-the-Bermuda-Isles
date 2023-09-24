@@ -23,6 +23,7 @@ public class GameEngine {
     private int xPosition;
     private int yPosition;
 
+
     /**
      * Private constructor to initialize the GameEngine instance.
      * It creates a new map, inventory, and scanner for user input.
@@ -69,13 +70,14 @@ public class GameEngine {
 
         System.out.println("Type 'help' for a list of commands.");
         boolean isGameOver = false;
+        xPosition = 0;
+        yPosition = 0;
         int prevXPosition = xPosition; // Store the previous positions
         int prevYPosition = yPosition;
 
         while (!isGameOver) {
             // Check if the player's position has changed and print new dialogue when entering a new area
             if (xPosition != prevXPosition || yPosition != prevYPosition) {
-
                 if (xPosition == 0 && yPosition == 0) {
                     System.out.println("You stand on the desolate beach, with dense forests to the west and south.\n" +
                             "Currently, you have only two paths to choose from: one leading north and one leading east.");
@@ -350,6 +352,21 @@ public class GameEngine {
         this.playerHasWeapon = false;
     }
 
+    /**
+     * Used to restart the game
+     * @author Sam Powell
+     */
+    public void gameOver() {
+        System.out.println("Would you like to play again? [Y/N]: ");
+        System.out.print("> ");
+        String playAgain = scanner.nextLine();
+        switch (playAgain) {
+            case "Y" -> startGame();
+            case "N" -> {
+                System.out.println("See you next time!");
+                System.exit(0);
+            }
+        }
 
     public void openChest(Inventory inventory) {
         Random random = new Random();

@@ -20,7 +20,7 @@ public class Enemy extends Entity{
         } else {
             System.out.println("# " + getName() + " overpowers you!");
             System.out.println("## Game Over ##");
-            System.exit(0); // Ends the game
+            gameEngine.gameOver();
         }
     }
 

@@ -14,7 +14,7 @@ public class EntityTest {
 
     @Test
     void testSetters() {
-        Entity entity = new Entity("Enemy", 1, 1);
+        Entity entity = new Entity("Enemy", 0, 0);
 
         entity.setX(1);
         entity.setY(1);

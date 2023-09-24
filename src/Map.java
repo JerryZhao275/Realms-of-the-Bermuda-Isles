@@ -54,6 +54,8 @@ public class Map {
     /**
      * Check the entity from the given position.
      *
+     * @param row the given row position on the grid
+     * @param col the given column position on the grid
      * @return the position is valid on the grid
      */
     public boolean isValidPosition(int row, int col) {

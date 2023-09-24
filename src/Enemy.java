@@ -1,3 +1,5 @@
+import java.util.Objects;
+
 public class Enemy extends Entity{
     /**
      * Public constructor to initialize the Enemy instance.
@@ -13,14 +15,22 @@ public class Enemy extends Entity{
     /**
      * Initiates a battle with the player.
      */
-    public void fight(GameEngine gameEngine, Map map, int row, int column, Inventory inventory) {
+    public void fight(GameEngine gameEngine, Map map, int row, int column, int HP) {
         if (gameEngine.playerHasWeapon()) {
-            map.removeEntity(row,column);
-            System.out.println("# You have slayed the " + getName() + "!");
+            if (!Objects.equals(getName(), "boss")){
+                map.removeEntity(row,column);
+                System.out.println("# You have slayed the " + getName() + "!");
+            }
         } else {
-            System.out.println("# " + getName() + " overpowers you!");
-            System.out.println("## Game Over ##");
-            gameEngine.gameOver();
+            System.out.println("# The " + getName() + "gains the upper hand in the fight!");
+            HP--;
+            System.out.println("# You lost 1 HP (you may need a weapon to defeat this enemy)");
+            if (HP <= 0){
+                System.out.println("# You have been defeated by the " + getName() + " !");
+                System.out.println("## Game Over ##");
+                gameEngine.gameOver();
+            }
+            System.out.println("You HP has been decrease to "+ HP +".");
         }
     }
 
@@ -38,6 +48,9 @@ public class Enemy extends Entity{
                 break;
             case "ogre":
                 System.out.println("You smell... tasty! Prepare to be my meal!");
+                break;
+            case "boss":
+                System.out.println("Here comes the boss!"); // feel free to change this line
                 break;
             default:
                 System.out.println("There is an enemy!");

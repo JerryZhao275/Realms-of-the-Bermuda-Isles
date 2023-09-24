@@ -177,7 +177,7 @@ public class GameEngine {
                             if (moveFlag) {
                                 System.out.println("Move " + directionStr);
                             } else {
-                                System.out.println("[" + "Move command is invalid" + "]"
+                                System.out.println("[" + "Move command is invalid" + "]");
                             }
                         } else {
                             System.out.println("[" + "Move " + directionStr + "]");

@@ -15,26 +15,27 @@ public class Map {
 //        int mapSize = 2;
 //        grid = new Entity[mapSize][mapSize];
         grid = new Entity[2][2];
-        Entity enemy = new Enemy("Enemy", -1, -1);
-//        Entity npc = new NPC("NPC", -1, -1);
-        Entity item = new Item("Item", -1, -1);
+        Entity goblin = new Enemy("goblin", -1, -1);
+        Entity spider = new Enemy("spider", -1, -1);
+        Entity orge = new Enemy("orge", -1, -1);
+        Entity unknown = new Enemy("unknown", -1, -1);
 
-        NPC.Blacksmith blacksmith = new NPC.Blacksmith("Blacksmith", -1, -1);
-        NPC.Thief thief = new NPC.Thief("Thief", -1, -1);
-        NPC.Dwarf dwarf = new NPC.Dwarf("Dwarf", -1, -1);
+        Entity potion = new Item("potion", -1, -1);
+
+        Entity blacksmith = new NPC.Blacksmith("blacksmith", -1, -1);
+        Entity thief = new NPC.Thief("thief", -1, -1);
+        Entity dwarf = new NPC.Dwarf("dwarf", -1, -1);
 
 
-        placeEntity(blacksmith,0,0);
-
-        placeEntity(item,0,1);
-//        placeEntity(npc,1,0);
-//        placeEntity(enemy,1,1);
+        placeEntity(blacksmith,1,1);
+        placeEntity(potion,0,1);
+        placeEntity(goblin,1,0);
     }
 
     /**
      * Set the entity's position and add it to the grid.
      */
-    private void placeEntity(Entity entity, int row, int col) {
+    public void placeEntity(Entity entity, int row, int col) {
         entity.move(row, col);
         grid[row][col] = entity;
         System.out.println("Placed " + entity.getName() + " at [" + row + "][" + col + "]");
@@ -113,8 +114,6 @@ public class Map {
     }
 
 
-
-
     public static void main(String[] args) {
         Map gameMap = new Map();
 
@@ -134,9 +133,6 @@ public class Map {
         col = 1;
         String entityType3 = gameMap.getEntityTypeAt(row, col);
         System.out.println("Entity at grid[" + row + "][" + col + "]: " + entityType3);
-
-
-
     }
 }
 

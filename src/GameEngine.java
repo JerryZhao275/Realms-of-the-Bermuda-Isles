@@ -15,6 +15,9 @@ public class GameEngine {
     private Map map;
     private Inventory inventory;
 
+    private boolean playerHasWeapon = false;  // At the class level, after other fields (testing boolean)
+
+
     //    xPosition and yPosition can be changed when implementing the proper map and movement.
     private int xPosition;
     private int yPosition;
@@ -26,6 +29,7 @@ public class GameEngine {
     private GameEngine() {
         map = new Map();
         inventory = new Inventory();
+        inventory.addItem(new Item("bow",-1,-1)); // Initial weapon
         this.scanner = new Scanner(System.in);
     }
 
@@ -63,7 +67,6 @@ public class GameEngine {
                     case "Enemy" -> System.out.println("Insert dialogue where the player sees an enemy");
                     case "NPC" -> System.out.println("Insert dialogue where the player sees an NPC");
                     case "Item" -> System.out.println("Insert dialogue where the player sees an item");
-                    default -> System.out.println("Insert dialogue where the player is standing in an open plain field");
                 }
                 prevXPosition = xPosition;
                 prevYPosition = yPosition;
@@ -82,23 +85,43 @@ public class GameEngine {
                 case "attack" -> {
                     // More logic for keyword followed after attack, i.e., "attack goblin" will attack goblin,
                     // but if no goblin exists then return 'That is not a valid action!'
-                    System.out.println("Attack");
-                }
-                case "move" -> {
-                    System.out.println("Which direction do you want to move? : ");
-                    System.out.print("> ");
-                    String nextLine = scanner.nextLine();
-                    nextLine = nextLine.toLowerCase().trim();
-                    boolean flag = false;
-                    switch (nextLine) {
-                        case "forward" -> {flag = move(Direction.Forward);}
-                        case "backward" -> {flag = move(Direction.Backward);}
-                        case "left" -> {flag = move(Direction.Left);}
-                        case "right" -> {flag = move(Direction.Right);}
+                    Entity entity = map.getEntityAt(xPosition, yPosition);
+                    if (entity instanceof Enemy enemy) {
+                        enemy.fight(this, map, xPosition, yPosition, inventory);  // 'this' refers to the current GameEngine instance
+                    } else {
+                        System.out.println("There's no enemy here to fight!");
                     }
-                    if (flag) {System.out.println("You move " + nextLine);}
-                    else {System.out.println("Move command is invalid");}
                 }
+                case "move" -> System.out.println("Please specify the direction you would like to move in, i.e. 'move right'");
+                case "move forward", "move backward", "move left", "move right" -> {
+                    String[] parts = input.split(" ");
+                    if (parts.length == 2) {
+                        String directionStr = parts[1];
+                        Direction direction = null;
+                        if ("forward".equalsIgnoreCase(directionStr)) {
+                            direction = Direction.Forward;
+                        } else if ("backward".equalsIgnoreCase(directionStr)) {
+                            direction = Direction.Backward;
+                        } else if ("left".equalsIgnoreCase(directionStr)) {
+                            direction = Direction.Left;
+                        } else if ("right".equalsIgnoreCase(directionStr)) {
+                            direction = Direction.Right;
+                        }
+                        if (direction != null) {
+                            boolean moveFlag = move(direction);
+                            if (moveFlag) {
+                                System.out.println("Move " + directionStr);
+                            } else {
+                                System.out.println("Move command is invalid");
+                            }
+                        } else {
+                            System.out.println("Invalid direction: " + directionStr);
+                        }
+                    } else {
+                        System.out.println("Invalid move command. Please specify a direction.");
+                    }
+                }
+
                 case "talk" -> {
                     System.out.print("Who do you want to talk to? ");
                     String npcName = scanner.nextLine().toLowerCase().trim();
@@ -108,23 +131,21 @@ public class GameEngine {
                     Entity entity = map.getEntityAt(xPosition, yPosition);
                     if (entity instanceof NPC && entity.getName().equalsIgnoreCase(npcName)) {
                         NPC npc = (NPC) entity;
-                        String message = npc.talk(this.inventory);  // Assuming GameEngine has a field called 'inventory'
+                        String message = npc.talk(this.map,xPosition,yPosition,this.inventory);  // Assuming GameEngine has a field called 'inventory'
                         System.out.println(message);
                     } else {
                         System.out.println("There is no " + npcName + " here to talk to.");
                     }
                 }
-
-
                 case "take" -> {
-                    if (map.getEntityTypeAt(xPosition,yPosition).equalsIgnoreCase("Item")) {
-                       Item item = (Item) map.getEntityAt(xPosition,yPosition);
-                        if (item != null) {
-                            inventory.addItem(item);
-                            System.out.println("Took a " + item.getName());
-                        }
+                    Entity entity = map.getEntityAt(xPosition, yPosition);
+                    if (entity instanceof Item item) {
+                        inventory.addItem(item);
+                        map.removeEntity(xPosition,yPosition);
+                        System.out.println("# You took a " + entity.getName());
                     }
-                    else {System.out.println("Cannot take item here");}
+                    else {System.out.println("There is no item here");}
+
                 }
 
                 case "use" -> {
@@ -239,6 +260,32 @@ public class GameEngine {
         }
         return null;
     }
+
+    /**
+     * Check if the player has weapon or not.
+     *
+     * @return does the player has a weapon.
+     * @author Kwong Yu Zhou
+     * @author Thomas Green
+     */
+    public boolean playerHasWeapon() {
+        for (Item item : inventory.getItems()) {
+            switch (item.getName()) {
+                case "sword", "bow" -> {return true;}
+            }
+        }
+        return playerHasWeapon; // Return false if no weapon was found in the loop
+    }
+
+
+    public void equipPlayerWeapon() {
+        this.playerHasWeapon = true;
+    }
+
+    public void playerLoseWeapon() {
+        this.playerHasWeapon = false;
+    }
+
 
 
 

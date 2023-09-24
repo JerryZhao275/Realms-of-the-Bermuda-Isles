@@ -1,4 +1,5 @@
 import java.util.List;
+import java.util.Objects;
 import java.util.Random;
 import java.util.Scanner;
 
@@ -17,7 +18,9 @@ public class GameEngine {
     private Inventory inventory;
 
     private boolean playerHasWeapon = false;  // At the class level, after other fields (testing boolean)
-
+    private int HP = 4;
+    private int hp_limit = HP;
+    private int attack_time = 3; // the remained times for the boss to be defeated
 
     //    xPosition and yPosition can be changed when implementing the proper map and movement.
     private int xPosition;
@@ -31,7 +34,6 @@ public class GameEngine {
     private GameEngine() {
         map = new Map();
         inventory = new Inventory();
-        inventory.addItem(new Item("bow",-1,-1)); // Initial weapon
         this.scanner = new Scanner(System.in);
     }
 
@@ -141,6 +143,7 @@ public class GameEngine {
                     System.out.println("Thanks for playing!");
                 }
                 case "inventory" -> displayInventory();
+                case "hp" -> System.out.println("You current HP is: "+ HP);
                 case "attack" -> {
                     Entity entity = map.getEntityAt(xPosition, yPosition);
                     if (entity instanceof Enemy) {
@@ -152,11 +155,42 @@ public class GameEngine {
                 case "attack goblin", "attack ogre", "attack spider" -> {
                     Entity entity = map.getEntityAt(xPosition, yPosition);
                     if (entity instanceof Enemy enemy) {
-                        enemy.fight(this, map, xPosition, yPosition, inventory);// 'this' refers to the current GameEngine instance
+                        enemy.fight(this, map, xPosition, yPosition, HP);// 'this' refers to the current GameEngine instance
                         if (map.getEntityAt(xPosition, yPosition) == null){openChest(inventory);}
                     } else {
                         System.out.println("There's no enemy here to fight!");
                     }
+                }
+                case "attack boss"-> {
+                    if(playerHasWeapon()){
+                        Entity entity = map.getEntityAt(xPosition, yPosition);
+                        if (entity instanceof Enemy enemy && Objects.equals(entity.getName(), "boss")) {
+                            enemy.fight(this, map, xPosition, yPosition, HP);
+                            this.attack_time--;
+                            if(this.attack_time == 0){
+                                map.removeEntity(xPosition,yPosition);
+                                // Some extra content can be added here
+                                System.out.println("Congratulations! You've won the game!");
+                                this.gameOver();
+                            }
+                            this.HP -= 2;
+                            System.out.println("The boss hit back at you! You lost 2 HP.");
+                            if (HP <= 0){
+                                isGameOver = true;
+                                System.out.println("# You have been defeated by the boss!");
+                                System.out.println("## Game Over ##");
+                                this.gameOver();
+                            }
+                            if (attack_time == 1){
+                                // Some extra content can be added here
+                                System.out.println("Your current HP is "+ HP +". Start your decisive battle with the boss!");
+                            } else {
+                                System.out.println("Your current HP is "+ HP +". Attack " + attack_time + " more times to defeat the boss.");
+                            }
+                        } else {
+                            System.out.println("There's no enemy here to fight!");
+                        }
+                    } else {System.out.println("You are unable to challenge the boss without a weapon!");}
                 }
                 case "move" -> System.out.println("Please specify the direction you would like to move in, i.e. 'move right'");
                 case "move forward", "move backward", "move left", "move right" -> {
@@ -223,11 +257,21 @@ public class GameEngine {
                     if (selectedItem != null) {
                         switch (selectedItem.getName()) {
                             case "potion" -> {
-                                System.out.println("You used a potion");
-                                inventory.removeItem(selectedItem);
+                                if (HP + 1 <= hp_limit){
+                                    HP++;
+                                    inventory.removeItem(selectedItem);
+                                    System.out.println("# You used a potion (HP:+1). Your HP has been increased to "+ HP +".");
+                                }else {
+                                    System.out.println("# You are unable to use a potion with full HP.");
+                                }
                             }
-                            case "gold" -> System.out.println("You look at the gold in your inventory " +
-                                    "and wonder what purpose it might have.");
+                            case "armor" -> { //Armor is significantly more useful than potions, and there are fewer ways to get it
+                                HP++;
+                                inventory.removeItem(selectedItem);
+                                System.out.println("# You equipped yourself with an armor (HP:+1). Your HP has been increased to "+ HP +".");
+                            }
+                            case "gold" -> System.out.println("You look at the piece of gold, " +
+                                    "maybe someone would like to trade with you.");
                             default -> System.out.println("You are unsure how to use this item, " +
                                     "you place it back into your inventory.");
                             }

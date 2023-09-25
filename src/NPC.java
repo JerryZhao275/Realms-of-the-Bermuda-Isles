@@ -42,7 +42,7 @@ public abstract class NPC extends Entity {
         @Override
         public String talk(Map map, int row, int column, Inventory inventory) {
             System.out.println("Ah, a wanderer! You could use a sword to protect these treacherous lands");
-            Item sword = new Item("sword", -1, -1);
+            Item sword = new Item("sword", -1, -1, ItemType.Sword);
             inventory.addItem(sword);
             map.removeEntity(row,column);
             System.out.println("Use it wisely. The Bermuda Isles are no place for the unprepared");
@@ -84,7 +84,7 @@ public abstract class NPC extends Entity {
         public String talk(Map map, int row, int column, Inventory inventory) {
             System.out.println("Greetings, traveller. I've been on this island for a time unknown. " +
                     "Take this sack of Gold; it may aid you on your journey.");
-            Item gold = new Item("Sack of Gold", -1, -1);
+            Item gold = new Item("Sack of Gold", -1, -1,ItemType.Gold);
             inventory.addItem(gold);
             map.removeEntity(row,column);
             System.out.println("Gold might not have much value here, but it's a start. Seek the exit, and may fortune favor you");
@@ -100,13 +100,13 @@ public abstract class NPC extends Entity {
         public Merchant(String name, int x, int y) {
             super(name, x, y);
             this.itemsForSale = itemsForSale;
-            Item armor = new Item("armor", -1, -1);
+            Item armor = new Item("armor", -1, -1,ItemType.Armor);
             armor.setPrice(2);
 
-            Item potion = new Item("potion", -1, -1);
+            Item potion = new Item("potion", -1, -1,ItemType.Potion);
             potion.setPrice(1);
 
-            Item sword = new Item("sword", -1, -1);
+            Item sword = new Item("sword", -1, -1,ItemType.Sword);
             sword.setPrice(2);
 
             this.itemsForSale = new ArrayList<>(Arrays.asList(armor, potion, sword));

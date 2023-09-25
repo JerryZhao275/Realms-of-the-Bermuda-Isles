@@ -23,7 +23,7 @@ public class Map {
         Entity orge = new Enemy("orge", -1, -1);
         Entity boss = new Enemy("boss", -1, -1);
 
-        Entity potion = new Item("potion", -1, -1);
+        Entity potion = new Item("potion", -1, -1,ItemType.Potion);
 
         Entity blacksmith = new NPC.Blacksmith("blacksmith", -1, -1);
         Entity thief = new NPC.Thief("thief", -1, -1);

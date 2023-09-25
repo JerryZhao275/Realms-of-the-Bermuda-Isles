@@ -66,14 +66,14 @@ public class GameEngine {
             case 0 -> {
                 HP = 5;
                 hp_limit = HP;
-                inventory.addItem(new Item("sword", -1, -1));
-                inventory.addItem(new Item("potion", -1, -1));
+                inventory.addItem(new Item("sword", -1, -1, ItemType.Sword));
+                inventory.addItem(new Item("potion", -1, -1, ItemType.Potion));
                 System.out.println("You are playing easy mode!");
             }
             case 1 -> {
                 HP = 4;
                 hp_limit = HP;
-                inventory.addItem(new Item("sword", -1, -1));
+                inventory.addItem(new Item("sword", -1, -1,ItemType.Sword));
                 System.out.println("You are playing normal mode!");
             }
             case 2 -> {
@@ -268,7 +268,7 @@ public class GameEngine {
                             case "potion" -> {
                                 if (HP + 1 <= hp_limit){
                                     HP++;
-                                    inventory.removeItem(selectedItem);
+                                    selectedItem.use(inventory);
                                     System.out.println("# You used a potion (HP:+1). Your HP has been increased to "+ HP +".");
                                 }else {
                                     System.out.println("# You are unable to use a potion with full HP.");
@@ -371,7 +371,7 @@ public class GameEngine {
         }
         System.out.println("Your inventory contains:");
         for (Item item : items) {
-            System.out.println("- " + item.getName());
+            System.out.println("- " + item.getName() + " (" + item.getDurability() + ")");
         }
     }
 
@@ -402,13 +402,21 @@ public class GameEngine {
      */
     public boolean playerHasWeapon() {
         for (Item item : inventory.getItems()) {
-            switch (item.getName()) {
-                case "sword", "bow" -> {return true;}
+            if (item.getItemType() == ItemType.Sword || item.getItemType() == ItemType.Bow) {
+                return true;
             }
         }
         return playerHasWeapon; // Return false if no weapon was found in the loop
     }
 
+    public Item getWeapon() {
+        for (Item item : inventory.getItems()) {
+            if (item.getItemType() == ItemType.Bow || item.getItemType() == ItemType.Sword) {
+                return item;
+            }
+        }
+        return null;
+    }
 
     public void equipPlayerWeapon() {
         this.playerHasWeapon = true;
@@ -416,6 +424,10 @@ public class GameEngine {
 
     public void playerLoseWeapon() {
         this.playerHasWeapon = false;
+    }
+
+    public Inventory getInventory() {
+        return inventory;
     }
 
     /**
@@ -441,10 +453,10 @@ public class GameEngine {
      */
     public void openChest(Inventory inventory) {
         Random random = new Random();
-        Item sword = new Item("sword", -1, -1);
-        Item potion = new Item("potion", -1, -1);
-        Item bow = new Item("bow", -1, -1);
-        Item armor = new Item("armor", -1, -1);
+        Item sword = new Item("sword", -1, -1,ItemType.Sword);
+        Item potion = new Item("potion", -1, -1,ItemType.Potion);
+        Item bow = new Item("bow", -1, -1,ItemType.Bow);
+        Item armor = new Item("armor", -1, -1,ItemType.Armor);
         Item[] possibleItems = {sword, bow, potion, armor};
         int count_gold = 0;
 
@@ -456,7 +468,7 @@ public class GameEngine {
         int numberOfGolds = random.nextInt(3);
 
         for (int i = 0; i < numberOfGolds; i++) {
-            inventory.addItem(new Item("gold", -1, -1));
+            inventory.addItem(new Item("gold", -1, -1,ItemType.Gold));
             count_gold++;
         }
         if (count_gold == 0){
@@ -470,6 +482,8 @@ public class GameEngine {
                     + " and " + count_gold + " pieces of gold.");
         }
     }
+
+
 
 
 }

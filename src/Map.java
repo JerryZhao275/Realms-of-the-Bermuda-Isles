@@ -1,3 +1,6 @@
+import java.util.Arrays;
+import java.util.List;
+
 /**
  * This class represents a square map, that is the space for the player to explore.
  * It handles the existence of entities on each coordinate.
@@ -27,8 +30,11 @@ public class Map {
         Entity dwarf = new NPC.Dwarf("dwarf", -1, -1);
 
 
+        Entity merchant = new NPC.Merchant("merchant", -1, -1);
+
+
         placeEntity(potion,0,1);
-        placeEntity(blacksmith,1,0);
+        placeEntity(merchant,1,0);
         placeEntity(boss,1,1);
     }
 

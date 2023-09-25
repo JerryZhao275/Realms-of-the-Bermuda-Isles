@@ -289,6 +289,22 @@ public class GameEngine {
                     else {System.out.println("Invalid item name");}
                     }
 
+                case "trade" -> {
+//                    for (int i = 0; i < 5; i++) {
+//                        inventory.addItem(new Item("gold", -1, -1));
+//                    }
+                    // add five gold first for testing
+
+                    Entity entity = map.getEntityAt(xPosition, yPosition);
+                    if (entity instanceof NPC.Merchant) {
+                        NPC.Merchant merchant = (NPC.Merchant) entity;
+                        String message = merchant.talk(map, xPosition, yPosition, this.inventory);
+                        System.out.println(message);
+                    } else {
+                        System.out.println("There is no merchant here to trade with.");
+                    }
+                }
+
                 // Add more commands such as save and load later
                 default -> System.out.println("Please enter a valid command or type help to see the commands.");
             }
@@ -454,5 +470,7 @@ public class GameEngine {
                     + " and " + count_gold + " pieces of gold.");
         }
     }
+
+
 }
 

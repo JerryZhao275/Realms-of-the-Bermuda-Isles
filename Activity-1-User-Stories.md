@@ -12,6 +12,8 @@ As a player, I want to play in a map so that I can experience playing within a l
 
 As a player, I want an HP system for the game, which may decrease the frustration for being defeated instantly.
 
+As a player, I want to have different difficulties for each playthrough so that I can give myself a challenge or make the game easier if desired
+
 As a player, I want to have randomised entities within the game so that I can experience variety within different playthroughs.
 
 As a player, I want to trade with the NPC merchant, which can increase the probability of getting the specific item I want.

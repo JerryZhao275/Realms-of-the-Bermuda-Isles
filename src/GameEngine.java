@@ -1,4 +1,6 @@
 import java.util.List;
+import java.util.Objects;
+import java.util.Random;
 import java.util.Scanner;
 
 /**
@@ -14,9 +16,12 @@ public class GameEngine {
     private Scanner scanner;
     private Map map;
     private Inventory inventory;
+    private int difficulty;
 
     private boolean playerHasWeapon = false;  // At the class level, after other fields (testing boolean)
-
+    private int HP;
+    private int hp_limit;
+    private int attack_time = 3; // the remained times for the boss to be defeated
 
     //    xPosition and yPosition can be changed when implementing the proper map and movement.
     private int xPosition;
@@ -30,7 +35,6 @@ public class GameEngine {
     private GameEngine() {
         map = new Map();
         inventory = new Inventory();
-        inventory.addItem(new Item("bow",-1,-1)); // Initial weapon
         this.scanner = new Scanner(System.in);
     }
 
@@ -50,81 +54,87 @@ public class GameEngine {
     /**
      * startGame() starts the user's playthrough of the game.
      *
+     * @param difficulty integer corresponding to the difficulty of the game; 0 = easy, 1 = normal, 2 = hard
+     *
      * @author Jerry Zhao
      * @author Sam Powell
      */
-    public void startGame() {
+    public void startGame(int difficulty) {
+        this.difficulty = difficulty;
 
+        switch (difficulty) {
+            case 0 -> {
+                HP = 5;
+                hp_limit = HP;
+                inventory.addItem(new Item("sword", -1, -1));
+                inventory.addItem(new Item("potion", -1, -1));
+                System.out.println("You are playing easy mode!");
+            }
+            case 1 -> {
+                HP = 4;
+                hp_limit = HP;
+                inventory.addItem(new Item("sword", -1, -1));
+                System.out.println("You are playing normal mode!");
+            }
+            case 2 -> {
+                HP = 3;
+                hp_limit = HP;
+                System.out.println("You are playing hard mode!");
+            }
+            default -> System.out.println("No difficulty selected");
+        }
+
+        System.out.println("===========================================");
         System.out.println("In the enigmatic expanse of the Bermuda Triangle, an area where time and space mysteriously intertwine, lies a realm unknown to most.\n" +
-                "After surviving a plane crash, our protagonist awakens on a desolate beach.\n" +
-                "Alongside their footprints are ancient and faded symbols, hinting at the land's age-old secrets.\n" +
                 "This place, known as the heart of the Bermuda Triangle, is the Bermuda Isles.\n" +
-                "Its inhabitants, mostly sailors and aviators who vanished over the years, have formed a unique community in this lost world.\n" +
-                "Some have become artisans, some merchants, and other predators.\n" +
-                "To find a way back to reality, the protagonist must explore every nook and cranny of the isles, decipher its enigmas, confront mysterious and perilous creatures,\n" +
-                "and search for a door leading back to the known world…\n");
+                "Its inhabitants, mostly sailors and aviators who vanished over the years, have formed a unique community in this lost world.");
         System.out.println("You stand on the desolate beach, with dense forests to the west and south.\n" +
                 "Currently, you have only two paths to choose from: one leading north and one leading east.");
-
-
+        System.out.println("===========================================");
         System.out.println("Type 'help' for a list of commands.");
+
         boolean isGameOver = false;
         xPosition = 0;
         yPosition = 0;
-        int prevXPosition = xPosition; // Store the previous positions
+        int prevXPosition = xPosition;
         int prevYPosition = yPosition;
 
         while (!isGameOver) {
             // Check if the player's position has changed and print new dialogue when entering a new area
             if (xPosition != prevXPosition || yPosition != prevYPosition) {
                 if (xPosition == 0 && yPosition == 0) {
-                    System.out.println("You stand on the desolate beach, with dense forests to the west and south.\n" +
-                            "Currently, you have only two paths to choose from: one leading north and one leading east.");
+                    System.out.println("You find yourself back at where you started, with dense forests to the west and south.\n" +
+                            "There are only two paths to choose from: one leading north and one leading east.");
                 }
                 else if (xPosition == 0 && yPosition == 1) {
-                    System.out.println("After moving, you enter the depths of the forest.\n" +
-                            "The trees are tall, and sunlight filters through the leaves onto you.\n" +
-                            "You hear the sounds of wildlife, and it seems full of life here.");
-                    System.out.println("The dense forest stretches ahead, offering a direction for further exploration to the east.\n" +
-                            "On the south is the initial beach, but it's just beginning to get interesting here.");
+                    System.out.println("You enter the depths of the forest, stretching ahead of you and offering a direction " +
+                            "for exploration to the east. On the south is the initial beach where you had started on.");
                 }
                 else if (xPosition == 1 && yPosition == 0) {
-                    System.out.println("You arrive in an open area.\n" +
-                            "There are no trees here, only lush grasslands.\n" +
+                    System.out.println("You arrive in an open area with no trees here, only lush grasslands.\n" +
                             "In the distance, there's a mountain range that looks like an intriguing adventure.");
                     System.out.println("The open grasslands extend to the north, where more unknowns seem to await you.\n" +
-                            "You can also move east to the beach and organize the current exploration process.");
+                            "On the west is the initial beach where you had started on.");
                 }
                 else if (xPosition == 1 && yPosition == 1) {
-                    System.out.println("You've reached the top right corner of the map. This is an open highland.\n" +
-                            "From here, you can overlook the entire Bermuda Isles and see the distant coastline.");
-                    System.out.println("Standing on the highland, you feel like you're at the peak of the Bermuda Isles, but there's still much to explore.\n" +
-                            "You can choose to move west or south to continue your journey.");
+                    System.out.println("You've reached an open highland. From here, you can overlook the entire Bermuda Isles and " +
+                            "see the distant coastline.\n You can choose to descend the highlands and move towards west or south.");
                 }
-                // More explanation similar to this for the player to have an idea of where they are
 
                 switch (map.getEntityTypeAt(xPosition, yPosition)) {
                     case "Enemy" -> {
                         Enemy enemy = (Enemy) map.getEntityAt(xPosition, yPosition);
-                        enemy.talk();
+                        System.out.println("You spot a " + enemy.getName() + " wandering about in the distance.");
                     }
                     case "NPC" -> {
                         NPC npc = (NPC) map.getEntityAt(xPosition, yPosition);
-                        String npcDialogue = npc.talk(map,xPosition,yPosition,inventory);
-                        System.out.println(npcDialogue);
+                        System.out.println("There's " + npc.getName() + " wandering about in the distance.");
                     }
                     case "Item" -> {
-                        System.out.println("Amidst the overgrown flora of the Bermuda Isles, a glint catches your eye.\n" +
-                                "Hidden beneath the fallen leaves, you find an artifact, ancient and ornate, perhaps a relic from one of the lost sailors or aviators.\n" +
-                                "Its design is unfamiliar, but it radiates an aura of significance, maybe even power.\n" +
-                                "Do you dare to pick it up? The land's mysteries beckon... But so do its dangers. Choose wisely.");
+                        Item item = (Item) map.getEntityAt(xPosition, yPosition);
+                        System.out.println("You spot a " + item.getName() + " glistening in the grass.");
                     }
-                    default -> {
-                        System.out.println("You stand amidst an expansive open plain, surrounded by endless stretches of tall, waving grass.\n" +
-                                "The sky above is a pristine shade of blue, punctuated by languid clouds drifting lazily.\n" +
-                                "In this moment of solitude, you're enveloped by the sounds of nature, and you can't shake the feeling that the plain holds secrets yet to be discovered.");
-                    }
-
+                    default ->  System.out.println("You stand amidst an expansive open plain, spotting nothing in the distance close by.");
                 }
                 prevXPosition = xPosition;
                 prevYPosition = yPosition;
@@ -140,6 +150,7 @@ public class GameEngine {
                     System.out.println("Thanks for playing!");
                 }
                 case "inventory" -> displayInventory();
+                case "hp" -> System.out.println("You current HP is: "+ HP);
                 case "attack" -> {
                     Entity entity = map.getEntityAt(xPosition, yPosition);
                     if (entity instanceof Enemy) {
@@ -151,10 +162,42 @@ public class GameEngine {
                 case "attack goblin", "attack ogre", "attack spider" -> {
                     Entity entity = map.getEntityAt(xPosition, yPosition);
                     if (entity instanceof Enemy enemy) {
-                        enemy.fight(this, map, xPosition, yPosition, inventory);  // 'this' refers to the current GameEngine instance
+                        enemy.fight(this, map, xPosition, yPosition, HP);// 'this' refers to the current GameEngine instance
+                        if (map.getEntityAt(xPosition, yPosition) == null){openChest(inventory);}
                     } else {
                         System.out.println("There's no enemy here to fight!");
                     }
+                }
+                case "attack boss"-> {
+                    if(playerHasWeapon()){
+                        Entity entity = map.getEntityAt(xPosition, yPosition);
+                        if (entity instanceof Enemy enemy && Objects.equals(entity.getName(), "boss")) {
+                            enemy.fight(this, map, xPosition, yPosition, HP);
+                            this.attack_time--;
+                            if(this.attack_time == 0) {
+                                map.removeEntity(xPosition,yPosition);
+                                // Some extra content can be added here
+                                System.out.println("Congratulations! You've won the game!");
+                                this.gameOver();
+                            }
+                            this.HP -= 2;
+                            System.out.println("The boss hit back at you! You lost 2 HP.");
+                            if (HP <= 0) {
+                                isGameOver = true;
+                                System.out.println("# You have been defeated by the boss!");
+                                System.out.println("## Game Over ##");
+                                this.gameOver();
+                            }
+                            if (attack_time == 1) {
+                                // Some extra content can be added here
+                                System.out.println("Your current HP is "+ HP +". Start your decisive battle with the boss!");
+                            } else {
+                                System.out.println("Your current HP is "+ HP +". Attack " + attack_time + " more times to defeat the boss.");
+                            }
+                        } else {
+                            System.out.println("There's no enemy here to fight!");
+                        }
+                    } else {System.out.println("You are unable to challenge the boss without a weapon!");}
                 }
                 case "move" -> System.out.println("Please specify the direction you would like to move in, i.e. 'move right'");
                 case "move forward", "move backward", "move left", "move right" -> {
@@ -173,9 +216,7 @@ public class GameEngine {
                         }
                         if (direction != null) {
                             boolean moveFlag = move(direction);
-                            if (moveFlag) {
-                                System.out.println("Move " + directionStr);
-                            } else {
+                            if (!moveFlag) {
                                 System.out.println("[" + "Move command is invalid" + "]");
                             }
                         } else {
@@ -187,7 +228,8 @@ public class GameEngine {
                 }
 
                 case "talk" -> {
-                    System.out.print("Who do you want to talk to? ");
+                    System.out.print("Who do you want to talk to?\n");
+                    System.out.print("> ");
                     String npcName = scanner.nextLine().toLowerCase().trim();
                     System.out.println("Trying to talk to: " + npcName);
                     System.out.println("At position: x=" + xPosition + ", y=" + yPosition);
@@ -202,14 +244,17 @@ public class GameEngine {
                     }
                 }
                 case "take" -> {
+                    System.out.print("What would you like to take?\n");
+                    System.out.print("> ");
+                    String itemName = scanner.nextLine().toLowerCase().trim();
+
                     Entity entity = map.getEntityAt(xPosition, yPosition);
-                    if (entity instanceof Item item) {
+                    if (entity instanceof Item item && entity.getName().equalsIgnoreCase(itemName)) {
                         inventory.addItem(item);
                         map.removeEntity(xPosition,yPosition);
                         System.out.println("# You took a " + entity.getName());
                     }
                     else {System.out.println("There is no item here");}
-
                 }
 
                 case "use" -> {
@@ -221,11 +266,21 @@ public class GameEngine {
                     if (selectedItem != null) {
                         switch (selectedItem.getName()) {
                             case "potion" -> {
-                                System.out.println("You used a potion");
-                                inventory.removeItem(selectedItem);
+                                if (HP + 1 <= hp_limit){
+                                    HP++;
+                                    inventory.removeItem(selectedItem);
+                                    System.out.println("# You used a potion (HP:+1). Your HP has been increased to "+ HP +".");
+                                }else {
+                                    System.out.println("# You are unable to use a potion with full HP.");
+                                }
                             }
-                            case "gold" -> System.out.println("You look at the gold in your inventory " +
-                                    "and wonder what purpose it might have.");
+                            case "armor" -> { //Armor is significantly more useful than potions, and there are fewer ways to get it
+                                HP++;
+                                inventory.removeItem(selectedItem);
+                                System.out.println("# You equipped yourself with an armor (HP:+1). Your HP has been increased to "+ HP +".");
+                            }
+                            case "gold" -> System.out.println("You look at the piece of gold, " +
+                                    "maybe someone would like to trade with you.");
                             default -> System.out.println("You are unsure how to use this item, " +
                                     "you place it back into your inventory.");
                             }
@@ -233,6 +288,22 @@ public class GameEngine {
                         }
                     else {System.out.println("Invalid item name");}
                     }
+
+                case "trade" -> {
+//                    for (int i = 0; i < 5; i++) {
+//                        inventory.addItem(new Item("gold", -1, -1));
+//                    }
+                    // add five gold first for testing
+
+                    Entity entity = map.getEntityAt(xPosition, yPosition);
+                    if (entity instanceof NPC.Merchant) {
+                        NPC.Merchant merchant = (NPC.Merchant) entity;
+                        String message = merchant.talk(map, xPosition, yPosition, this.inventory);
+                        System.out.println(message);
+                    } else {
+                        System.out.println("There is no merchant here to trade with.");
+                    }
+                }
 
                 // Add more commands such as save and load later
                 default -> System.out.println("Please enter a valid command or type help to see the commands.");
@@ -245,14 +316,16 @@ public class GameEngine {
      * Commands printed to the user if desired
      */
     private void displayCommands() {
-        // Implement a method to display a list of available commands.
         System.out.println("Available commands:");
-        System.out.println("help - Display this help message");
-        System.out.println("quit - Quit the game");
-        System.out.println("move - Move your character to a new position");
-        if (inventory.getItems().size() > 0) {System.out.println("use - Use an item in your inventory");}
-        if (map.getEntityTypeAt(xPosition,yPosition).equalsIgnoreCase("item")) {System.out.println("take - take item at current position");}
-        // Add more commands as needed.
+        System.out.println("  help - Display this help message");
+        System.out.println("  move [direction] - Move your character towards a direction, i.e. 'move right'");
+        System.out.println("  take - Take a specified item in the current area, i.e. 'take armor'");
+        System.out.println("  inventory - Displays your inventory");
+        System.out.println("  hp - Displays your current HP");
+        System.out.println("  attack [enemy] - Attack the specified enemy, i.e. 'attack goblin'");
+        System.out.println("  talk [entity] - Talk to the specified enemy or NPC");
+        System.out.println("  use [item] - Uses a specific item, i.e. 'use potion'");
+        System.out.println("  quit - Quit the game");
     }
 
     /**
@@ -286,11 +359,6 @@ public class GameEngine {
     public void fightEnemy(Enemy enemy) {
         enemy.talk();
     }
-
-//    public void talkToNPC(NPC npc) {
-//        npc.talk();
-//    }
-
 
     /**
      * Prints the players current inventory
@@ -359,18 +427,49 @@ public class GameEngine {
         System.out.print("> ");
         String playAgain = scanner.nextLine();
         switch (playAgain) {
-            case "Y" -> startGame();
+            case "Y" -> startGame(difficulty);
             case "N" -> {
                 System.out.println("See you next time!");
                 System.exit(0);
             }
         }
-
     }
 
+    /**
+     * Open a chest and add the items to the inventory
+     * @author Kwong Yu Zhou
+     */
+    public void openChest(Inventory inventory) {
+        Random random = new Random();
+        Item sword = new Item("sword", -1, -1);
+        Item potion = new Item("potion", -1, -1);
+        Item bow = new Item("bow", -1, -1);
+        Item armor = new Item("armor", -1, -1);
+        Item[] possibleItems = {sword, bow, potion, armor};
+        int count_gold = 0;
 
+        // Randomly select a weapon (sword or bow) or a supplement (armor or potion)
+        Item chosenItem = possibleItems[random.nextInt(4)];
+        inventory.addItem(chosenItem);
 
+        // Generate a random number of golds between 0 and 2
+        int numberOfGolds = random.nextInt(3);
 
+        for (int i = 0; i < numberOfGolds; i++) {
+            inventory.addItem(new Item("gold", -1, -1));
+            count_gold++;
+        }
+        if (count_gold == 0){
+            System.out.println("# You have opened a chest. You've got a " + chosenItem.getName()
+                + ".");
+        } else if (count_gold == 1) {
+            System.out.println("# You have opened a chest. You've got a " + chosenItem.getName()
+                    + " and a piece of gold.");
+        } else{
+            System.out.println("# You have opened a chest. You've got a " + chosenItem.getName()
+                    + " and " + count_gold + " pieces of gold.");
+        }
+    }
 
 
 }

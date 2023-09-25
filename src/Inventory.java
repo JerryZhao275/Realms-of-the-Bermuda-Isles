@@ -28,5 +28,16 @@ public class Inventory {
         return items;
     }
 
+    public int getItemCount(String itemName) {
+        int count = 0;
+        for (Item item : items) {
+            if (item.getName().equalsIgnoreCase(itemName)) {
+                count++;
+            }
+        }
+        return count;
+    }
+
+
 
 }

@@ -20,9 +20,15 @@ public class MainMenu {
      * @author Jerry Zhao
      */
     public void initialise() {
-        System.out.println("Welcome to Text-based RPG!");
-        System.out.println("Type 'play' to dive into the game!");
-        System.out.println("Type 'quit' to quit the game.");
+        System.out.println("===========================================");
+        System.out.println("Welcome to the Realms of the Bermuda Isles!");
+        System.out.println("===========================================");
+        System.out.println("Enter 'play easy' to play on easy mode!");
+        System.out.println("Enter 'play normal' to play on normal mode!");
+        System.out.println("Enter 'play hard' to play on hard mode!");
+        System.out.println("Enter 'quit' to quit the game.");
+        System.out.println("===========================================");
+
 
         boolean isInMenu = true;
         while (isInMenu) {
@@ -30,17 +36,34 @@ public class MainMenu {
             String input = scanner.nextLine();
             input = input.toLowerCase();
 
+
             switch (input) {
                 case "quit":
                     isInMenu = false;
                     System.out.println("Thanks for playing!");
                     break;
                 case "play":
+                    System.out.println("Please select the difficult you would like to play on");
+                    break;
+                case "play easy":
                     if (gameEngine == null) {
                         isInMenu = false;
-                        gameEngine = GameEngine.getInstance(); // Retrieve the existing instance
-                        System.out.println("Game Start!");
-                        gameEngine.startGame();
+                        gameEngine = GameEngine.getInstance();
+                        gameEngine.startGame(0);
+                    }
+                    break;
+                case "play normal":
+                    if (gameEngine == null) {
+                        isInMenu = false;
+                        gameEngine = GameEngine.getInstance();
+                        gameEngine.startGame(1);
+                    }
+                    break;
+                case "play hard":
+                    if (gameEngine == null) {
+                        isInMenu = false;
+                        gameEngine = GameEngine.getInstance();
+                        gameEngine.startGame(2);
                     }
                     break;
                 default:

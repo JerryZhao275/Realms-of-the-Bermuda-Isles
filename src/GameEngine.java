@@ -16,10 +16,11 @@ public class GameEngine {
     private Scanner scanner;
     private Map map;
     private Inventory inventory;
+    private int difficulty;
 
     private boolean playerHasWeapon = false;  // At the class level, after other fields (testing boolean)
-    private int HP = 4;
-    private int hp_limit = HP;
+    private int HP;
+    private int hp_limit;
     private int attack_time = 3; // the remained times for the boss to be defeated
 
     //    xPosition and yPosition can be changed when implementing the proper map and movement.
@@ -53,10 +54,13 @@ public class GameEngine {
     /**
      * startGame() starts the user's playthrough of the game.
      *
+     * @param difficulty integer corresponding to the difficulty of the game; 0 = easy, 1 = normal, 2 = hard
+     *
      * @author Jerry Zhao
      * @author Sam Powell
      */
-    public void startGame() {
+    public void startGame(int difficulty) {
+        this.difficulty = difficulty;
 
         System.out.println("In the enigmatic expanse of the Bermuda Triangle, an area where time and space mysteriously intertwine, lies a realm unknown to most.\n" +
                 "After surviving a plane crash, our protagonist awakens on a desolate beach.\n" +
@@ -69,6 +73,21 @@ public class GameEngine {
         System.out.println("You stand on the desolate beach, with dense forests to the west and south.\n" +
                 "Currently, you have only two paths to choose from: one leading north and one leading east.");
 
+        if (difficulty == 0) {
+            HP = 5;
+            hp_limit = HP;
+            inventory.addItem(new Item("sword", -1, -1));
+            inventory.addItem(new Item("potion", -1, -1));
+        }
+        else if (difficulty == 1) {
+            HP = 4;
+            hp_limit = HP;
+            inventory.addItem(new Item("sword", -1, -1));
+        }
+        else if (difficulty == 2) {
+            HP = 3;
+            hp_limit = HP;
+        }
 
         System.out.println("Type 'help' for a list of commands.");
         boolean isGameOver = false;
@@ -405,7 +424,7 @@ public class GameEngine {
         System.out.print("> ");
         String playAgain = scanner.nextLine();
         switch (playAgain) {
-            case "Y" -> startGame();
+            case "Y" -> startGame(difficulty);
             case "N" -> {
                 System.out.println("See you next time!");
                 System.exit(0);
@@ -448,11 +467,5 @@ public class GameEngine {
                     + " and " + count_gold + " pieces of gold.");
         }
     }
-
-
-
-
-
-
 }
 

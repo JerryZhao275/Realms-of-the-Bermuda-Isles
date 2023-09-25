@@ -73,20 +73,23 @@ public class GameEngine {
         System.out.println("You stand on the desolate beach, with dense forests to the west and south.\n" +
                 "Currently, you have only two paths to choose from: one leading north and one leading east.");
 
-        if (difficulty == 0) {
-            HP = 5;
-            hp_limit = HP;
-            inventory.addItem(new Item("sword", -1, -1));
-            inventory.addItem(new Item("potion", -1, -1));
-        }
-        else if (difficulty == 1) {
-            HP = 4;
-            hp_limit = HP;
-            inventory.addItem(new Item("sword", -1, -1));
-        }
-        else if (difficulty == 2) {
-            HP = 3;
-            hp_limit = HP;
+        switch (difficulty) {
+            case 0 -> {
+                HP = 5;
+                hp_limit = HP;
+                inventory.addItem(new Item("sword", -1, -1));
+                inventory.addItem(new Item("potion", -1, -1));
+            }
+            case 1 -> {
+                HP = 4;
+                hp_limit = HP;
+                inventory.addItem(new Item("sword", -1, -1));
+            }
+            case 2 -> {
+                HP = 3;
+                hp_limit = HP;
+            }
+            default -> System.out.println("No difficulty selected");
         }
 
         System.out.println("Type 'help' for a list of commands.");

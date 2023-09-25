@@ -4,8 +4,8 @@ import static org.junit.jupiter.api.Assertions.*;
 public class InventoryTest {
 
     private Inventory inventory;
-    private Item item1 = new Item("Health Potion", 0, 0);
-    private Item item2 = new Item("Mana Elixir", 0, 0);
+    private Item item1 = new Item("Health Potion", 0, 0,ItemType.Potion);
+    private Item item2 = new Item("Mana Elixir", 0, 0,ItemType.Potion);
 
     @Test
     void testAddItem() {

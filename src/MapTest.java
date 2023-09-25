@@ -21,7 +21,7 @@ public class MapTest {
     @Test
     void testRemoveEntity() {
         map = new Map();
-        Entity entity = new Item("Item", 1, 0);
+        Entity entity = new Item("Item", 1, 0,ItemType.Gold);
         map.placeEntity(entity, 1, 0);
         map.removeEntity(1, 0);
         assertNull(map.getEntityAt(1, 0));

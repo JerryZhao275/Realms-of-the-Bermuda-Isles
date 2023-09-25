@@ -16,7 +16,9 @@ public class Enemy extends Entity{
      * Initiates a battle with the player.
      */
     public void fight(GameEngine gameEngine, Map map, int row, int column, int HP) {
-        if (gameEngine.playerHasWeapon()) {
+        Item weapon = gameEngine.getWeapon();
+        if (weapon != null && weapon.canUse()) {
+            weapon.use(gameEngine.getInventory());
             if (!Objects.equals(getName(), "boss")){
                 map.removeEntity(row,column);
                 System.out.println("# You have slayed the " + getName() + "!");

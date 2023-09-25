@@ -117,9 +117,9 @@ public class GameEngine {
                         System.out.println("Do you want to talk to him?");
                     }
                     case "Item" -> {
-                        System.out.println(
-                                "There seems to be something not far away.\n" +
-                                "Do you want to pick it up?");
+                        Item item = (Item) map.getEntityAt(xPosition, yPosition);
+                        System.out.println("You spot a " + item.getName() + " glistening in the grass");
+                        System.out.println("Do you want to pick it up?");
                     }
                     default -> {
                         System.out.println("You stand amidst an expansive open plain, surrounded by endless stretches of tall, waving grass.\n" +

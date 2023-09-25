@@ -109,18 +109,17 @@ public class GameEngine {
                 switch (map.getEntityTypeAt(xPosition, yPosition)) {
                     case "Enemy" -> {
                         Enemy enemy = (Enemy) map.getEntityAt(xPosition, yPosition);
-                        enemy.talk();
+                        System.out.println("You spot a " + enemy.getName() + " wandering about in the distance");
                     }
                     case "NPC" -> {
                         NPC npc = (NPC) map.getEntityAt(xPosition, yPosition);
-                        String npcDialogue = npc.talk(map,xPosition,yPosition,inventory);
-                        System.out.println(npcDialogue);
+                        System.out.println("There's " + npc.getName() + " wandering about in the distance");
+                        System.out.println("Do you want to talk to him?");
                     }
                     case "Item" -> {
-                        System.out.println("Amidst the overgrown flora of the Bermuda Isles, a glint catches your eye.\n" +
-                                "Hidden beneath the fallen leaves, you find an artifact, ancient and ornate, perhaps a relic from one of the lost sailors or aviators.\n" +
-                                "Its design is unfamiliar, but it radiates an aura of significance, maybe even power.\n" +
-                                "Do you dare to pick it up? The land's mysteries beckon... But so do its dangers. Choose wisely.");
+                        Item item = (Item) map.getEntityAt(xPosition, yPosition);
+                        System.out.println("You spot a " + item.getName() + " glistening in the grass");
+                        System.out.println("Do you want to pick it up?");
                     }
                     default -> {
                         System.out.println("You stand amidst an expansive open plain, surrounded by endless stretches of tall, waving grass.\n" +

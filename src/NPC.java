@@ -1,4 +1,4 @@
-import java.util.ArrayList;
+import java.util.*;
 
 /**
  * The NPC class represents non-playable characters (NPCs) in the game.
@@ -91,4 +91,80 @@ public abstract class NPC extends Entity {
             return "# The Dwarf left you a piece of gold. A piece of 'gold' has been added to your inventory.";
         }
     }
+
+
+
+    public static class Merchant extends NPC {
+        private List<Item> itemsForSale;
+
+        public Merchant(String name, int x, int y) {
+            super(name, x, y);
+            this.itemsForSale = itemsForSale;
+            Item armor = new Item("armor", -1, -1);
+            armor.setPrice(2);
+
+            Item potion = new Item("potion", -1, -1);
+            potion.setPrice(1);
+
+            Item sword = new Item("sword", -1, -1);
+            sword.setPrice(2);
+
+            this.itemsForSale = new ArrayList<>(Arrays.asList(armor, potion, sword));
+
+        }
+
+        public String talk(Map map, int row, int column, Inventory inventory) {
+            while (true) {
+                System.out.println("Greetings, traveler! Here are my wares:");
+                for (Item item : itemsForSale) {
+                    System.out.println(item.getName() + ": " + item.getPrice() + " gold");
+                }
+
+                System.out.print("What would you like to buy? (Enter 'exit' to leave) > ");
+                Scanner scanner = new Scanner(System.in);
+                String itemName = scanner.nextLine();
+
+                if ("exit".equalsIgnoreCase(itemName)) {
+                    return "# Farewell, traveler!";
+                }
+
+                boolean itemFound = false;
+                for (Item item : new ArrayList<>(itemsForSale)) {  // Create a copy of itemsForSale for safe iteration and removal
+                    if (item.getName().equalsIgnoreCase(itemName)) {
+                        itemFound = true;
+                        int goldCount = inventory.getItemCount("gold");
+                        if (item.getPrice() <= goldCount) {
+                            // Remove gold pieces from inventory
+                            for (int i = 0; i < item.getPrice(); i++) {
+                                inventory.removeItem(inventory.getItem("gold"));
+                            }
+                            // Add the purchased item to player's inventory
+                            inventory.addItem(item);
+                            // Remove the purchased item from merchant's inventory
+                            itemsForSale.remove(item);
+                            System.out.println("# You bought a " + itemName + ".");
+                        } else {
+                            System.out.println("You don't have enough gold!");
+                        }
+                        break;  // Exit the loop once the item is found
+                    }
+                }
+
+                if (!itemFound) {
+                    System.out.println("I don't have that item for sale. Please choose a valid item.");
+                }
+
+                if (itemsForSale.isEmpty()) {
+                    map.removeEntity(row, column);
+                    return "# Thank you for your purchases! I have nothing more to sell.";
+                }
+            }
+        }
+
+
+
+
+    }
+
+
 }

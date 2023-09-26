@@ -154,7 +154,7 @@ public class GameEngine {
                 case "attack" -> {
                     Entity entity = map.getEntityAt(xPosition, yPosition);
                     if (entity instanceof Enemy) {
-                        System.out.println("Please specify an enemy you would like to fight, i.e. 'fight ogre'.");
+                        System.out.println("Please specify an enemy you would like to fight, i.e. 'attack ogre'.");
                     } else {
                         System.out.println("There's no enemy here to fight!");
                     }
@@ -238,6 +238,10 @@ public class GameEngine {
                     if (entity instanceof NPC && entity.getName().equalsIgnoreCase(npcName)) {
                         NPC npc = (NPC) entity;
                         String message = npc.talk(this.map,xPosition,yPosition,this.inventory);  // Assuming GameEngine has a field called 'inventory'
+                        System.out.println(message);
+                    } else if (entity instanceof Enemy && entity.getName().equalsIgnoreCase(npcName)) {
+                        Enemy enemy = (Enemy) entity;
+                        String message = enemy.talk();  // Assuming GameEngine has a field called 'inventory'
                         System.out.println(message);
                     } else {
                         System.out.println("There is no " + npcName + " here to talk to.");

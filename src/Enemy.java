@@ -24,7 +24,7 @@ public class Enemy extends Entity{
                 System.out.println("# You have slayed the " + getName() + "!");
             }
         } else {
-            System.out.println("# The " + getName() + "gains the upper hand in the fight!");
+            System.out.println("# The " + getName() + " gains the upper hand in the fight!");
             HP--;
             System.out.println("# You lost 1 HP (you may need a weapon to defeat this enemy)");
             if (HP <= 0){
@@ -40,23 +40,25 @@ public class Enemy extends Entity{
     /**
      * Handles interaction and dialogue with the player.
      */
-    public void talk() {
+    public String talk() {
+        String response;
         switch (getName().toLowerCase()) {
             case "goblin":
-                System.out.println("A puny traveler dares enter my territory? Face my wrath!");
+                response = "A puny traveler dares enter my territory? Face my wrath!";
                 break;
             case "spider":
-                System.out.println("Hssss... Another prey entangled in my web!");
+                response = "Hssss... Another prey entangled in my web!";
                 break;
             case "ogre":
-                System.out.println("You smell... tasty! Prepare to be my meal!");
+                response = "You smell... tasty! Prepare to be my meal!";
                 break;
             case "boss":
-                System.out.println("Here comes the boss!"); // feel free to change this line
+                response = "Impressive that you've come this far, but do you really think you can defeat me?"; // feel free to change this line
                 break;
             default:
-                System.out.println("There is an enemy!");
+                response = "There is an enemy!";
                 break;
         }
+        return response;
     }
 }

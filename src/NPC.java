@@ -160,11 +160,5 @@ public abstract class NPC extends Entity {
                 }
             }
         }
-
-
-
-
     }
-
-
 }

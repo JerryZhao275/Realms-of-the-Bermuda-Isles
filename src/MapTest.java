@@ -34,6 +34,12 @@ public class MapTest {
     }
 
     @Test
+    void testGetEntityOutOfBounds() {
+        map = new Map();
+        assertNull(map.getEntityAt(-4, -4));
+    }
+
+    @Test
     void testGetEntityTypeNPC() {
         map = new Map();
         Entity entity = new NPC.Blacksmith("Blacksmith", 0, 0);
@@ -52,8 +58,18 @@ public class MapTest {
     @Test
     void testGetEntityTypeItem() {
         map = new Map();
-        Entity entity = new Enemy("Enemy", 1, 1);
+        Entity entity = new Item("Sword", 1, 1, ItemType.Sword);
         map.placeEntity(entity, 1, 1);
-        assertEquals("Enemy", map.getEntityTypeAt(1, 1));
+        assertEquals("Item", map.getEntityTypeAt(1, 1));
     }
+
+    @Test
+    void testGetEntityTypeOther() {
+        map = new Map();
+        Entity entity = new Entity("null", 1, 1);
+        map.placeEntity(entity, 1, 1);
+        assertEquals("Unknown Entity", map.getEntityTypeAt(1, 1));
+    }
+
+
 }

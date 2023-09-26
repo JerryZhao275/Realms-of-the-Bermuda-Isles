@@ -81,7 +81,8 @@ public class Map {
                 return "NPC";
             } else if (grid[row][col] instanceof Item) {
                 return "Item";
-            } else {
+            }
+            else {
                 return "Unknown Entity";
             }
         } else {

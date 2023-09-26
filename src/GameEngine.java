@@ -13,26 +13,26 @@ import java.util.Scanner;
  */
 public class GameEngine {
     private static GameEngine instance;
-    private Scanner scanner;
-    private Map map;
-    private Inventory inventory;
-    private int difficulty;
+    protected Scanner scanner;
+    protected Map map;
+    protected Inventory inventory;
+    protected int difficulty;
 
-    private boolean playerHasWeapon = false;  // At the class level, after other fields (testing boolean)
-    private int HP;
-    private int hp_limit;
-    private int attack_time = 3; // the remained times for the boss to be defeated
+    protected boolean playerHasWeapon = false;  // At the class level, after other fields (testing boolean)
+    protected int HP;
+    protected int hp_limit;
+    protected int attack_time = 3; // the remained times for the boss to be defeated
 
     //    xPosition and yPosition can be changed when implementing the proper map and movement.
-    private int xPosition;
-    private int yPosition;
+    protected int xPosition;
+    protected int yPosition;
 
 
     /**
      * Private constructor to initialize the GameEngine instance.
      * It creates a new map, inventory, and scanner for user input.
      */
-    private GameEngine() {
+    public GameEngine() {
         map = new Map();
         inventory = new Inventory();
         this.scanner = new Scanner(System.in);
@@ -357,11 +357,6 @@ public class GameEngine {
             else {return false;}
         }
         return false;
-    }
-
-
-    public void fightEnemy(Enemy enemy) {
-        enemy.talk();
     }
 
     /**

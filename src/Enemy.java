@@ -24,7 +24,7 @@ public class Enemy extends Entity{
                 System.out.println("# You have slayed the " + getName() + "!");
             }
         } else {
-            System.out.println("# The " + getName() + "gains the upper hand in the fight!");
+            System.out.println("# The " + getName() + " gains the upper hand in the fight!");
             HP--;
             System.out.println("# You lost 1 HP (you may need a weapon to defeat this enemy)");
             if (HP <= 0){

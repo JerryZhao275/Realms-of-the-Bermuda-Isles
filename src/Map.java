@@ -1,6 +1,3 @@
-import java.util.Arrays;
-import java.util.List;
-
 /**
  * This class represents a square map, that is the space for the player to explore.
  * It handles the existence of entities on each coordinate.
@@ -19,7 +16,7 @@ public class Map {
         grid = new Entity[mapSize][mapSize];
         Entity goblin = new Enemy("goblin", -1, -1);
         Entity spider = new Enemy("spider", -1, -1);
-        Entity orge = new Enemy("orge", -1, -1);
+        Entity ogre = new Enemy("ogre", -1, -1);
         Entity boss = new Enemy("boss", -1, -1);
 
         Entity potion = new Item("potion", -1, -1,ItemType.Potion);
@@ -39,7 +36,7 @@ public class Map {
         placeEntity(armor,3,0);
 
         Entity[][] entities = { // row 1-3
-                {bow, dwarf, orge, gold},
+                {bow, dwarf, ogre, gold},
                 {goblin, gold, merchant, goblin},
                 {blacksmith, goblin, spider, boss}
         };
@@ -103,25 +100,6 @@ public class Map {
         }
     }
 
-    /**
-     * Visualize the contents of the map, showing entity names or '-' for empty cells
-     *
-     * @author Kwong Yu Zhou
-     */
-    public void printMap() {
-        for (int col = grid.length-1; col >= 0; col--) {
-            for (Entity[] entities : grid) {
-                if (entities[col] != null) {
-                    // Display the first character of the entity's name
-                    System.out.print(entities[col].getName().charAt(0) + " ");
-                } else {
-                    System.out.print("- "); // Display a '-' if empty
-                }
-            }
-            System.out.println();
-        }
-    }
-
 
     public Entity getEntityAt(int row, int col) {
         if (isValidPosition(row, col)) {
@@ -132,27 +110,4 @@ public class Map {
         System.out.println("Invalid position: [" + row + "][" + col + "]");
         return null;
     }
-
-
-    public static void main(String[] args) {
-        Map gameMap = new Map();
-
-        // Test: Print and display the skeleton map
-//        int row = 0;
-//        int col = 0;
-        gameMap.printMap();
-//        String entityType0 = gameMap.getEntityTypeAt(row, col);
-//        System.out.println("Entity at grid[" + row + "][" + col + "]: " + entityType0);
-//        col = 1;
-//        String entityType1 = gameMap.getEntityTypeAt(row, col);
-//        System.out.println("Entity at grid[" + row + "][" + col + "]: " + entityType1);
-//        row = 1;
-//        col = 0;
-//        String entityType2 = gameMap.getEntityTypeAt(row, col);
-//        System.out.println("Entity at grid[" + row + "][" + col + "]: " + entityType2);
-//        col = 1;
-//        String entityType3 = gameMap.getEntityTypeAt(row, col);
-//        System.out.println("Entity at grid[" + row + "][" + col + "]: " + entityType3);
-    }
 }
-

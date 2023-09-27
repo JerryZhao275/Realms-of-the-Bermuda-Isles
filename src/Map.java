@@ -1,15 +1,21 @@
 /**
  * This class represents a square map, that is the space for the player to explore.
  * It handles the existence of entities on each coordinate.
+ * The map provides function on placing, removing or retrieving entities from specific coordinates.
  *
  * @author Kwong Yu Zhou
  */
+
 public class Map {
     private Entity[][] grid;
 
     /**
-     * Public constructor to initialize the Map instance.
+     * Public constructor to initialize the Map instance with predefined entities like enemies, items, and NPCs.
+     * The map is initialized with a default size of 4 * 4.
      * It creates a new grid, which is a nxn entity array.
+     *
+     * @author Kwong Yu Zhou
+     *
      */
     public Map() {
         int mapSize = 4;
@@ -50,6 +56,12 @@ public class Map {
 
     /**
      * Set the entity's position and add it to the grid.
+     *
+     * @author Kwong Yu Zhou
+     *
+     * @param entity The entity to be placed.
+     * @param row    The row position on the grid.
+     * @param col    The column position on the grid.
      */
     public void placeEntity(Entity entity, int row, int col) {
         entity.move(row, col);
@@ -60,6 +72,11 @@ public class Map {
 
     /**
      * Remove the entity from the given position.
+     *
+     * @author Kwong Yu Zhou
+     *
+     * @param row    The row position from which to remove on the grid.
+     * @param col    The column position from which to remove on the grid.
      */
     public void removeEntity(int row, int col) {
         if (isValidPosition(row, col)) {
@@ -70,9 +87,11 @@ public class Map {
     /**
      * Check the entity from the given position.
      *
+     * @author Kwong Yu Zhou
+     *
      * @param row the given row position on the grid
      * @param col the given column position on the grid
-     * @return the position is valid on the grid
+     * @return True if the position is valid, otherwise false.
      */
     public boolean isValidPosition(int row, int col) {
         return row >= 0 && row < grid.length && col >= 0 && col < grid.length;
@@ -82,6 +101,10 @@ public class Map {
      * Get the type of entity at a specific position in the grid
      *
      * @author Kwong Yu Zhou
+     *
+     * @param row the row position on the grid
+     * @param col the column position on the grid
+     * @return A string indicating the type of entity.
      */
     public String getEntityTypeAt(int row, int col) {
         if (row >= 0 && row < grid.length && col >= 0 && col < grid[row].length && grid[row][col] != null) {
@@ -100,7 +123,15 @@ public class Map {
         }
     }
 
-
+    /**
+     * Get the actual entity object at a specific position in the grid
+     *
+     * @author Thomas Green
+     *
+     * @param row the row position on the grid
+     * @param col the column position on the grid
+     * @return A string indicating actual entity if it exists, otherwise return null.
+     */
     public Entity getEntityAt(int row, int col) {
         if (isValidPosition(row, col)) {
             Entity entity = grid[row][col];

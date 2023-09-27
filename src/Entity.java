@@ -12,6 +12,12 @@ public class Entity {
     /**
      * Public constructor to initialize the Entity instance.
      * It creates a new name, x-axis coordinate, and y-axis coordinate.
+     *
+     * @author Kwong Yu Zhou
+     *
+     * @param name The name of the entity
+     * @param x    The x-coordinate of the entity on the map.
+     * @param y    The y-coordinate of the entity on the map.
      */
     public Entity(String name, int x, int y) {
         this.name = name;
@@ -22,6 +28,8 @@ public class Entity {
     /**
      * Get the name of the Entity.
      *
+     * @author Kwong Yu Zhou
+     *
      * @return The Entity name.
      */
     public String getName() {
@@ -31,6 +39,8 @@ public class Entity {
     /**
      * Get the x-axis coordinate of the Entity.
      *
+     * @author Kwong Yu Zhou
+     *
      * @return The x-axis coordinate of the Entity.
      */
     public int getX() {
@@ -38,7 +48,9 @@ public class Entity {
     }
 
     /**
-     * Get the y-axis coordinate of the Entity.
+     * Set the y-axis coordinate of the Entity.
+     *
+     * @author Kwong Yu Zhou
      *
      * @return The y-axis coordinate of the Entity.
      */
@@ -47,14 +59,22 @@ public class Entity {
     }
 
     /**
-     * Set a new x-axis coordinate for the Entity.
+     * Set the x-axis coordinate of the Entity.
+     *
+     * @author Kwong Yu Zhou
+     *
+     * @param x  The x-axis coordinate of the Entity.
      */
     public void setX(int x) {
         this.x = x;
     }
 
     /**
-     * Set a new y-axis coordinate for the Entity.
+     * Set the y-axis coordinate of the Entity.
+     *
+     * @author Kwong Yu Zhou
+     *
+     * @param y  The y-axis coordinate of the Entity.
      */
     public void setY(int y) {
         this.y = y;
@@ -62,15 +82,17 @@ public class Entity {
 
     /**
      * Set a new (x,y) coordinate for the Entity.
+     *
+     * @author Kwong Yu Zhou
+     *
+     * @param newX  The new x-axis coordinate of the Entity.
+     * @param newY  The new y-axis coordinate of the Entity.
+     *
      */
     public void move(int newX, int newY) {
         x = newX;
         y = newY;
     }
 
-    @Override
-    public String toString() {
-        return name;
-    }
 }
 

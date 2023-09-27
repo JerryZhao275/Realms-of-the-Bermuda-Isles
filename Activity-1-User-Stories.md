@@ -23,3 +23,5 @@ As a player, I want to open treasure chests with randomness so that I can have a
 As a player, I want to add a boss enemy at the end of the game that is harder to defeat, which can increase the challenge and sense of achievement.
 
 As a developer, I want to set a durability for the weapons, which makes the game more challenging for players.
+
+As a player, I want to be able to choose the difficulty level of the game, so I can play step by step.

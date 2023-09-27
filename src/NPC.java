@@ -60,30 +60,45 @@ public abstract class NPC extends Entity {
 
         @Override
         public String talk(Map map, int row, int column, Inventory inventory) {
-            Random random = new Random();
-            List<Item> playerItems = new ArrayList<>(inventory.getItems());
-
-            // Check if inventory is empty
-            if (playerItems.isEmpty()) {
+            if (inventory.getItems().isEmpty()) {
+                System.out.println("Hmm, you have nothing worth stealing!");
                 map.removeEntity(row, column);
-                System.out.println("Psst, newcomer, seems like you have nothing valuable!");
-                return "# The thief found nothing to steal and left.";
-            } else {
-                // If inventory is not empty, select a random item to steal
-                Item stolenItem = playerItems.get(random.nextInt(playerItems.size()));
-                if (!stolenItem.getName().equalsIgnoreCase("sword")) {
-                    inventory.removeItem(stolenItem);
-                    map.removeEntity(row, column);
-                    System.out.println("Thanks for the loot! Better luck next time!");
-                    return "# The thief took your " + stolenItem.getName() + " and escaped.";
-                } else {
-                    map.removeEntity(row, column);
-                    System.out.println("Psst, newcomer, watch your pockets! Oops, I can't take that sword.");
-                    return "# The thief found he couldn't steal the sword and left.";
+                return "# The thief found nothing and quickly disappeared.";
+            }
+
+            System.out.println("Psst, newcomer, watch your pockets!");
+            List<Item> stolenItems = new ArrayList<>();
+            for (Item item : new ArrayList<>(inventory.getItems())) {
+                if (!item.getName().equalsIgnoreCase("sword")) {
+                    stolenItems.add(item);
+                    inventory.removeItem(item);
                 }
             }
+
+            map.removeEntity(row, column);
+            System.out.println("Thanks for the loot! Better luck next time!");
+
+            if (stolenItems.isEmpty()) {
+                return "# The thief took nothing and escaped.";
+            } else {
+                return "# The thief took your " + listItems(stolenItems) + " and escaped.";
+            }
+        }
+
+        private String listItems(List<Item> items) {
+            StringBuilder sb = new StringBuilder();
+            for (int i = 0; i < items.size(); i++) {
+                sb.append(items.get(i).getName());
+                if (i < items.size() - 2) {
+                    sb.append(", ");
+                } else if (i == items.size() - 2) {
+                    sb.append(" and ");
+                }
+            }
+            return sb.toString();
         }
     }
+
 
     /**
      * A Dwarf NPC that offers a sack of gold to the player.

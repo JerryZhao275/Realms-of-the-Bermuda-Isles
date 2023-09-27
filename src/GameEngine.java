@@ -59,7 +59,7 @@ public class GameEngine {
      * @author Jerry Zhao
      * @author Sam Powell
      */
-    public void startGame(int difficulty) {
+    public void startGame(int difficulty, String[] testInput) {
         this.difficulty = difficulty;
 
         switch (difficulty) {
@@ -99,7 +99,8 @@ public class GameEngine {
         int prevXPosition = xPosition;
         int prevYPosition = yPosition;
 
-        while (!isGameOver) {
+        int currInput = 0;
+        while (!isGameOver && currInput < testInput.length) {
             // Check if the player's position has changed and print new dialogue when entering a new area
             if (xPosition != prevXPosition || yPosition != prevYPosition) {
                 if (xPosition == 0 && yPosition == 0) {
@@ -132,7 +133,6 @@ public class GameEngine {
                     System.out.println("You stand amidst an expansive open plain with all directions open to walk in.");
                 }
 
-
                 switch (map.getEntityTypeAt(xPosition, yPosition)) {
                     case "Enemy" -> {
                         Enemy enemy = (Enemy) map.getEntityAt(xPosition, yPosition);
@@ -152,9 +152,16 @@ public class GameEngine {
                 prevYPosition = yPosition;
             }
 
+            String input;
             System.out.print("> ");
-            String input = scanner.nextLine();
-            input = input.toLowerCase().trim(); // Convert input to lowercase for case-insensitivity.
+            if (Objects.equals(testInput[0], "playthrough")) {
+                input = scanner.nextLine();
+                input = input.toLowerCase();
+            } else {
+                input = testInput[currInput];
+                currInput++;
+            }
+
             switch (input) {
                 case "help" -> displayCommands();
                 case "quit" -> {
@@ -299,11 +306,11 @@ public class GameEngine {
                                     "maybe someone would like to trade with you.");
                             default -> System.out.println("You are unsure how to use this item, " +
                                     "you place it back into your inventory.");
-                            }
-
                         }
-                    else {System.out.println("Invalid item name");}
+
                     }
+                    else {System.out.println("Invalid item name");}
+                }
 
                 case "trade" -> {
 //                    for (int i = 0; i < 5; i++) {
@@ -450,7 +457,7 @@ public class GameEngine {
         System.out.print("> ");
         String playAgain = scanner.nextLine();
         switch (playAgain) {
-            case "Y" -> startGame(difficulty);
+            case "Y" -> startGame(difficulty, null);
             case "N" -> {
                 System.out.println("See you next time!");
                 System.exit(0);
@@ -484,7 +491,7 @@ public class GameEngine {
         }
         if (count_gold == 0){
             System.out.println("# You have opened a chest. You've got a " + chosenItem.getName()
-                + ".");
+                    + ".");
         } else if (count_gold == 1) {
             System.out.println("# You have opened a chest. You've got a " + chosenItem.getName()
                     + " and a piece of gold.");
@@ -493,9 +500,4 @@ public class GameEngine {
                     + " and " + count_gold + " pieces of gold.");
         }
     }
-
-
-
-
 }
-

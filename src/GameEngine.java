@@ -106,20 +106,32 @@ public class GameEngine {
                     System.out.println("You find yourself back at where you started, with dense forests to the west and south.\n" +
                             "There are only two paths to choose from: one leading north and one leading east.");
                 }
-                else if (xPosition == 0 && yPosition == 1) {
-                    System.out.println("You enter the depths of the forest, stretching ahead of you and offering a direction " +
-                            "for exploration to the east. On the south is the initial beach where you had started on.");
+                else if (xPosition == 0 && yPosition == 3) {
+                    System.out.println("You find yourself cornered by the dense forest. There seems to be only a path leading south and east.");
                 }
-                else if (xPosition == 1 && yPosition == 0) {
-                    System.out.println("You arrive in an open area with no trees here, only lush grasslands.\n" +
-                            "In the distance, there's a mountain range that looks like an intriguing adventure.");
-                    System.out.println("The open grasslands extend to the north, where more unknowns seem to await you.\n" +
-                            "On the west is the initial beach where you had started on.");
+                else if (xPosition == 3 && yPosition == 0) {
+                    System.out.println("You find yourself cornered by the dense forest. There seems to be only a path leading north and west.");
                 }
-                else if (xPosition == 1 && yPosition == 1) {
+                else if (xPosition == 3 && yPosition == 3) {
                     System.out.println("You've reached an open highland. From here, you can overlook the entire Bermuda Isles and " +
                             "see the distant coastline.\n You can choose to descend the highlands and move towards west or south.");
                 }
+                else if (xPosition == 0 && yPosition == 1 || xPosition == 0 && yPosition == 2 ) {
+                    System.out.println("You continue traversing alongside the dense forest towards west, leaving all other directions open.");
+                }
+                else if (xPosition == 1 && yPosition == 0 || xPosition == 2 && yPosition == 0) {
+                    System.out.println("You continue traversing alongside the lonesome beach towards south, leaving all other directions open.");
+                }
+                else if (xPosition == 3 && yPosition == 1 || xPosition == 3 && yPosition == 2 ) {
+                    System.out.println("You find yourself following the cliff of the highlands on your east, leaving all other directions open.");
+                }
+                else if (xPosition == 1 && yPosition == 3 || xPosition == 2 && yPosition == 3) {
+                    System.out.println("You find yourself following the cliff of the highlands on your north, leaving all other directions open.");
+                }
+                else if (xPosition == 1 && yPosition == 1 || xPosition == 2 && yPosition == 1 || xPosition == 1 && yPosition == 2 || xPosition == 2 && yPosition == 2) {
+                    System.out.println("You stand amidst an expansive open plain with all directions open to walk in.");
+                }
+
 
                 switch (map.getEntityTypeAt(xPosition, yPosition)) {
                     case "Enemy" -> {
@@ -134,7 +146,7 @@ public class GameEngine {
                         Item item = (Item) map.getEntityAt(xPosition, yPosition);
                         System.out.println("You spot a " + item.getName() + " glistening in the grass.");
                     }
-                    default ->  System.out.println("You stand amidst an expansive open plain, spotting nothing in the distance close by.");
+                    default ->  System.out.println("You spot nothing in the distance close by.");
                 }
                 prevXPosition = xPosition;
                 prevYPosition = yPosition;

@@ -33,7 +33,7 @@ public class Enemy extends Entity{
             if (HP <= 0){
                 System.out.println("# You have been defeated by the " + getName() + " !");
                 System.out.println("## Game Over ##");
-                gameEngine.gameOver();
+                gameEngine.gameOver(null);
             }
             System.out.println("You HP has been decrease to "+ HP +".");
         }

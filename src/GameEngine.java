@@ -74,6 +74,10 @@ public class GameEngine {
                 hp_limit = HP;
                 inventory.addItem(new Item("sword", -1, -1, ItemType.Sword));
                 inventory.addItem(new Item("potion", -1, -1, ItemType.Potion));
+                inventory.addItem(new Item("gold", -1, -1, ItemType.Gold));
+                inventory.addItem(new Item("gold", -1, -1, ItemType.Gold));
+                inventory.addItem(new Item("gold", -1, -1, ItemType.Gold));
+                inventory.addItem(new Item("gold", -1, -1, ItemType.Gold));
                 System.out.println("You are playing easy mode!");
             }
             case 1 -> {
@@ -87,7 +91,6 @@ public class GameEngine {
                 hp_limit = HP;
                 System.out.println("You are playing hard mode!");
             }
-            default -> System.out.println("No difficulty selected");
         }
 
         System.out.println("===========================================");
@@ -202,21 +205,28 @@ public class GameEngine {
                         if (entity instanceof Enemy enemy && Objects.equals(entity.getName(), "boss")) {
                             enemy.fight(this, map, xPosition, yPosition, HP);
                             this.attack_time--;
-                            if(this.attack_time == 0) {
+                            this.HP -= 2;
+                            if (this.attack_time == 0 && HP > 0) {
                                 map.removeEntity(xPosition,yPosition);
                                 // Some extra content can be added here
                                 System.out.println("Congratulations! You've won the game!");
-                                this.gameOver();
+
+                                int newListSize = testInput.length - currInput;
+                                String[] newList = new String[newListSize];
+                                System.arraycopy(testInput, currInput, newList, 0, testInput.length - currInput);
+                                this.gameOver(newList);
                             }
-                            this.HP -= 2;
                             System.out.println("The boss hit back at you! You lost 2 HP.");
                             if (HP <= 0) {
                                 isGameOver = true;
                                 System.out.println("# You have been defeated by the boss!");
                                 System.out.println("## Game Over ##");
-                                this.gameOver();
+                                int newListSize = testInput.length - currInput;
+                                String[] newList = new String[newListSize];
+                                System.arraycopy(testInput, currInput, newList, 0, testInput.length - currInput);
+                                this.gameOver(newList);
                             }
-                            if (attack_time == 1) {
+                            else if (attack_time == 1) {
                                 // Some extra content can be added here
                                 System.out.println("Your current HP is "+ HP +". Start your decisive battle with the boss!");
                             } else {
@@ -255,33 +265,42 @@ public class GameEngine {
                     }
                 }
 
-                case "talk" -> {
-                    System.out.print("Who do you want to talk to?\n");
-                    System.out.print("> ");
-                    String npcName = scanner.nextLine().toLowerCase().trim();
-                    System.out.println("Trying to talk to: " + npcName);
-                    System.out.println("At position: x=" + xPosition + ", y=" + yPosition);
-
+                case "talk" -> System.out.println("Specify who you would like to talk to, i.e. 'talk [Entity]'");
+                case "talk dwarf", "talk merchant", "talk thief", "talk blacksmith",
+                        "talk goblin", "talk spider", "talk boss", "talk ogre" -> {
+                    String[] parts = input.split(" ");
                     Entity entity = map.getEntityAt(xPosition, yPosition);
-                    if (entity instanceof NPC && entity.getName().equalsIgnoreCase(npcName)) {
+                    if (entity instanceof NPC.Merchant) {
+                        NPC.Merchant merchant = (NPC.Merchant) entity;
+                        int newListSize = testInput.length - currInput;
+                        String[] newList = new String[newListSize];
+                        System.arraycopy(testInput, currInput, newList, 0, testInput.length - currInput);
+                        String message = "";
+                        if (newList != null && !Objects.equals(newList[0], "playthrough")) {
+                            testInput = merchant.talk(map, xPosition, yPosition, this.inventory, newList);
+                            currInput = 0;
+                        } else {
+                            message = merchant.talk(map, xPosition, yPosition, this.inventory);
+                        }
+                        System.out.println(message);
+                    }
+                    else if (entity instanceof NPC && entity.getName().equalsIgnoreCase(parts[1])) {
                         NPC npc = (NPC) entity;
                         String message = npc.talk(this.map,xPosition,yPosition,this.inventory);  // Assuming GameEngine has a field called 'inventory'
                         System.out.println(message);
-                    } else if (entity instanceof Enemy && entity.getName().equalsIgnoreCase(npcName)) {
+                    } else if (entity instanceof Enemy && entity.getName().equalsIgnoreCase(parts[1])) {
                         Enemy enemy = (Enemy) entity;
                         String message = enemy.talk();  // Assuming GameEngine has a field called 'inventory'
                         System.out.println(message);
                     } else {
-                        System.out.println("There is no " + npcName + " here to talk to.");
+                        System.out.println("There is no " + parts[1] + " here to talk to.");
                     }
                 }
-                case "take" -> {
-                    System.out.print("What would you like to take?\n");
-                    System.out.print("> ");
-                    String itemName = scanner.nextLine().toLowerCase().trim();
-
+                case "take" -> System.out.println("What would you like to take?");
+                case "take potion", "take armor", "take gold", "take bow" -> {
+                    String[] parts = input.split(" ");
                     Entity entity = map.getEntityAt(xPosition, yPosition);
-                    if (entity instanceof Item item && entity.getName().equalsIgnoreCase(itemName)) {
+                    if (entity instanceof Item item && entity.getName().equalsIgnoreCase(parts[1])) {
                         inventory.addItem(item);
                         map.removeEntity(xPosition,yPosition);
                         System.out.println("# You took a " + entity.getName());
@@ -290,11 +309,13 @@ public class GameEngine {
                 }
 
                 case "use" -> {
-                    displayInventory();
                     System.out.println("Which item do you want to use: ");
-                    System.out.print("> ");
-                    String itemName = scanner.nextLine().trim();
-                    Item selectedItem = inventory.getItem(itemName);
+                    displayInventory();
+                    System.out.println("Type 'use [item]'");
+                }
+                case "use potion", "use armor", "use gold", "use sword", "use bow" -> {
+                    String[] parts = input.split(" ");
+                    Item selectedItem = inventory.getItem(parts[1]);
                     if (selectedItem != null) {
                         switch (selectedItem.getName()) {
                             case "potion" -> {
@@ -322,15 +343,21 @@ public class GameEngine {
                 }
 
                 case "trade" -> {
-//                    for (int i = 0; i < 5; i++) {
-//                        inventory.addItem(new Item("gold", -1, -1));
-//                    }
-                    // add five gold first for testing
-
                     Entity entity = map.getEntityAt(xPosition, yPosition);
                     if (entity instanceof NPC.Merchant) {
                         NPC.Merchant merchant = (NPC.Merchant) entity;
-                        String message = merchant.talk(map, xPosition, yPosition, this.inventory);
+
+                        int newListSize = testInput.length - currInput;
+                        String[] newList = new String[newListSize];
+                        System.arraycopy(testInput, currInput, newList, 0, testInput.length - currInput);
+
+                        String message = "";
+                        if (newList != null) {
+                            testInput = merchant.talk(map, xPosition, yPosition, this.inventory, newList);
+                            currInput = 0;
+                        } else {
+                            message = merchant.talk(map, xPosition, yPosition, this.inventory);
+                        }
                         System.out.println(message);
                     } else {
                         System.out.println("There is no merchant here to trade with.");
@@ -404,23 +431,6 @@ public class GameEngine {
         }
     }
 
-    /**
-     * Get an NPC instance at the specified position.
-     *
-     * @param x       The x-coordinate of the NPC.
-     * @param y       The y-coordinate of the NPC.
-     * @param npcName The name of the NPC to look for.
-     * @return If a matching NPC is found, return the corresponding NPC instance; otherwise, return null.
-     */
-    public NPC getNPCAtPosition(int x, int y, String npcName) {
-        Entity entity = map.getEntityAt(x, y);
-        System.out.println("Entity at position: " + entity);
-        if (entity instanceof NPC && entity.getName().equalsIgnoreCase(npcName)) {
-            System.out.println("Found matching NPC: " + entity.getName());
-            return (NPC) entity;
-        }
-        return null;
-    }
 
     /**
      * Check if the player has weapon or not.
@@ -447,14 +457,6 @@ public class GameEngine {
         return null;
     }
 
-    public void equipPlayerWeapon() {
-        this.playerHasWeapon = true;
-    }
-
-    public void playerLoseWeapon() {
-        this.playerHasWeapon = false;
-    }
-
     //   Getter methods to allow Reading and Writing to JSON with Jackson library
     //    Unless alternative method implemented, do not remove.
     public Inventory getInventory() {
@@ -479,15 +481,31 @@ public class GameEngine {
      * Used to restart the game
      * @author Sam Powell
      */
-    public void gameOver() {
-        System.out.println("Would you like to play again? [Y/N]: ");
-        System.out.print("> ");
-        String playAgain = scanner.nextLine();
-        switch (playAgain) {
-            case "Y" -> startGame(difficulty, null);
-            case "N" -> {
-                System.out.println("See you next time!");
-                System.exit(0);
+    public void gameOver(String[] testInput) {
+        if (testInput != null) {
+            switch (testInput[0]) {
+                case "Y" -> {
+                    int newListSize = testInput.length - 1;
+                    String[] newList = new String[newListSize];
+                    System.arraycopy(testInput, 1, newList, 0, testInput.length - 1);
+                    startGame(difficulty, newList);
+                }
+                case "N" -> {
+                    System.out.println("See you next time!");
+                    System.exit(0);
+                }
+            }
+        }
+        else {
+            System.out.println("Would you like to play again? [Y/N]: ");
+            System.out.print("> ");
+            String playAgain = scanner.nextLine();
+            switch (playAgain) {
+                case "Y" -> startGame(difficulty, null);
+                case "N" -> {
+                    System.out.println("See you next time!");
+                    System.exit(0);
+                }
             }
         }
     }

@@ -1,3 +1,6 @@
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Objects;
 import java.util.Scanner;
 
 /**
@@ -7,9 +10,11 @@ import java.util.Scanner;
 public class MainMenu {
     private Scanner scanner;
     private GameEngine gameEngine;
-
     public MainMenu() {
-        this.scanner = new Scanner(System.in);
+        this(new Scanner(System.in));
+    }
+    public MainMenu(Scanner scanner) {
+        this.scanner = scanner;
         this.gameEngine = null;
     }
 
@@ -19,7 +24,7 @@ public class MainMenu {
      *
      * @author Jerry Zhao
      */
-    public void initialise() {
+    public void initialise(String[] testInput) {
         System.out.println("===========================================");
         System.out.println("Welcome to the Realms of the Bermuda Isles!");
         System.out.println("===========================================");
@@ -29,17 +34,24 @@ public class MainMenu {
         System.out.println("Enter 'quit' to quit the game.");
         System.out.println("===========================================");
 
-
+        int currInput = 0;
         boolean isInMenu = true;
-        while (isInMenu) {
+        while (isInMenu && currInput < testInput.length) {
+            String input;
             System.out.print("> ");
-            String input = scanner.nextLine();
-            input = input.toLowerCase();
-
+            if (Objects.equals(testInput[0], "playthrough")) {
+                input = scanner.nextLine();
+                input = input.toLowerCase();
+            }
+            else {
+                input = testInput[currInput];
+                currInput++;
+            }
 
             switch (input) {
                 case "quit":
                     isInMenu = false;
+//                    System.out.println("hi");
                     System.out.println("Thanks for playing!");
                     break;
                 case "play":
@@ -47,23 +59,41 @@ public class MainMenu {
                     break;
                 case "play easy":
                     if (gameEngine == null) {
+                        int newListSize = testInput.length - currInput;
+                        String[] newList = new String[newListSize];
+                        for (int i = 0; currInput < testInput.length; i++, currInput++) {
+                            newList[i] = testInput[currInput];
+                        }
+
                         isInMenu = false;
                         gameEngine = GameEngine.getInstance();
-                        gameEngine.startGame(0);
+                        gameEngine.startGame(0, newList);
                     }
                     break;
                 case "play normal":
                     if (gameEngine == null) {
+                        int newListSize = testInput.length - currInput;
+                        String[] newList = new String[newListSize];
+                        for (int i = 0; currInput < testInput.length; i++, currInput++) {
+                            newList[i] = testInput[currInput];
+                        }
+
                         isInMenu = false;
                         gameEngine = GameEngine.getInstance();
-                        gameEngine.startGame(1);
+                        gameEngine.startGame(1, newList);
                     }
                     break;
                 case "play hard":
                     if (gameEngine == null) {
+                        int newListSize = testInput.length - currInput;
+                        String[] newList = new String[newListSize];
+                        for (int i = 0; currInput < testInput.length; i++, currInput++) {
+                            newList[i] = testInput[currInput];
+                        }
+
                         isInMenu = false;
                         gameEngine = GameEngine.getInstance();
-                        gameEngine.startGame(2);
+                        gameEngine.startGame(2, newList);
                     }
                     break;
                 default:
@@ -77,6 +107,6 @@ public class MainMenu {
     public static void main(String[] args) {
         // Initialize the program for the user
         MainMenu mainMenu = new MainMenu();
-        mainMenu.initialise();
+        mainMenu.initialise(new String[]{"playthrough"});
     }
 }

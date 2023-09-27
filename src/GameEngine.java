@@ -429,14 +429,6 @@ public class GameEngine {
         return null;
     }
 
-    public void equipPlayerWeapon() {
-        this.playerHasWeapon = true;
-    }
-
-    public void playerLoseWeapon() {
-        this.playerHasWeapon = false;
-    }
-
     public Inventory getInventory() {
         return inventory;
     }

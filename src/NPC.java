@@ -60,15 +60,28 @@ public abstract class NPC extends Entity {
 
         @Override
         public String talk(Map map, int row, int column, Inventory inventory) {
-            System.out.println("Psst, newcomer, watch your pockets!");
-            for (Item item : new ArrayList<>(inventory.getItems())) {
-                if (!item.getName().equalsIgnoreCase("sword")) {
-                    inventory.removeItem(item);
+            Random random = new Random();
+            List<Item> playerItems = new ArrayList<>(inventory.getItems());
+
+            // Check if inventory is empty
+            if (playerItems.isEmpty()) {
+                map.removeEntity(row, column);
+                System.out.println("Psst, newcomer, seems like you have nothing valuable!");
+                return "# The thief found nothing to steal and left.";
+            } else {
+                // If inventory is not empty, select a random item to steal
+                Item stolenItem = playerItems.get(random.nextInt(playerItems.size()));
+                if (!stolenItem.getName().equalsIgnoreCase("sword")) {
+                    inventory.removeItem(stolenItem);
+                    map.removeEntity(row, column);
+                    System.out.println("Thanks for the loot! Better luck next time!");
+                    return "# The thief took your " + stolenItem.getName() + " and escaped.";
+                } else {
+                    map.removeEntity(row, column);
+                    System.out.println("Psst, newcomer, watch your pockets! Oops, I can't take that sword.");
+                    return "# The thief found he couldn't steal the sword and left.";
                 }
             }
-            map.removeEntity(row,column);
-            System.out.println("Thanks for the loot! Better luck next time!");
-            return "# The thief took your (item being stolen) and escaped.";
         }
     }
 

@@ -106,19 +106,17 @@ public abstract class NPC extends Entity {
      */
 
     public static class Thief extends NPC {
-
         /**
          * Constructs a Thief NPC with the specified name and coordinates.
          *
          * @author Thomas Green
          *
-         * @param name The name of the Thief.
          * @param x    The x-coordinate of the Thief's location.
          * @param y    The y-coordinate of the Thief's location.
          */
 
         public Thief(String name, int x, int y) {
-            super(name, x, y);
+            super("stranger", x, y);
         }
 
         /**
@@ -137,13 +135,13 @@ public abstract class NPC extends Entity {
 
         @Override
         public String talk(Map map, int row, int column, Inventory inventory) {
+            System.out.println("Hey there! It's not often I see new faces around here. Stay safe and watch your belongings!");
+
             if (inventory.getItems().isEmpty()) {
-                System.out.println("Hmm, you have nothing worth stealing!");
                 map.removeEntity(row, column);
-                return "# The thief found nothing and quickly disappeared.";
+                return "# After the brief conversation, the stranger quickly disappeared.";
             }
 
-            System.out.println("Psst, newcomer, watch your pockets!");
             List<Item> stolenItems = new ArrayList<>();
             for (Item item : new ArrayList<>(inventory.getItems())) {
                 if (!item.getName().equalsIgnoreCase("sword")) {
@@ -153,14 +151,15 @@ public abstract class NPC extends Entity {
             }
 
             map.removeEntity(row, column);
-            System.out.println("Thanks for the loot! Better luck next time!");
 
             if (stolenItems.isEmpty()) {
-                return "# The thief took nothing and escaped.";
+                return "# After the brief conversation, the stranger quickly disappeared.";
             } else {
-                return "# The thief took your " + listItems(stolenItems) + " and escaped.";
+                return "# You figured that your " + listItems(stolenItems) + " is missing. You turned around to look for the stranger "
+                        +  ". He/She’s already gone, leaving no trace. That guy was a THIEF!";
             }
         }
+
 
         /**
          * Utility method to format the list of stolen items into a readable string format.

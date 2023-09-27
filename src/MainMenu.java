@@ -1,3 +1,7 @@
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+import java.io.FileReader;
+import java.io.Reader;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Objects;
@@ -32,6 +36,7 @@ public class MainMenu {
         System.out.println("Enter 'play normal' to play on normal mode!");
         System.out.println("Enter 'play hard' to play on hard mode!");
         System.out.println("Enter 'quit' to quit the game.");
+        System.out.println("Enter 'load' to load a previously saved game");
         System.out.println("===========================================");
 
         int currInput = 0;
@@ -94,6 +99,40 @@ public class MainMenu {
                         isInMenu = false;
                         gameEngine = GameEngine.getInstance();
                         gameEngine.startGame(2, newList);
+                    }
+                    break;
+                case "load":
+                    if (gameEngine == null) {
+
+
+
+                        Reader fileReader = null;
+                        try {
+                            ObjectMapper objectMapper = new ObjectMapper();
+                            fileReader = new FileReader("saves/savefile.json");
+                            gameEngine = objectMapper.readValue(fileReader,GameEngine.class);
+                            fileReader.close();
+                            isInMenu = false;
+
+                            int newListSize = testInput.length - currInput;
+                            String[] newList = new String[newListSize];
+                            for (int i = 0; currInput < testInput.length; i++, currInput++) {
+                                newList[i] = testInput[currInput];
+                            }
+
+                            gameEngine.startGame(4,newList);
+                        } catch (Exception e) {
+                            System.out.println("Failed to load game");
+                            gameEngine = null;
+                            isInMenu = true;
+                            if (fileReader != null) {
+                                try {
+                                    fileReader.close();
+                                } catch (Exception f) {
+                                    System.out.println("Could not close reader");
+                                }
+                            }
+                        }
                     }
                     break;
                 default:

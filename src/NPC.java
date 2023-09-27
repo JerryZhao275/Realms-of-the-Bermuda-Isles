@@ -21,6 +21,8 @@ public abstract class NPC extends Entity {
     public NPC(String name, int x, int y) {
         super(name, x, y);
     }
+    //    Empty Constructor to allow JSON mapping
+    public NPC() {}
 
     /**
      * Abstract method to facilitate conversation with the NPC and potentially modify the player's inventory.
@@ -38,6 +40,8 @@ public abstract class NPC extends Entity {
         public Blacksmith(String name, int x, int y) {
             super(name, x, y);
         }
+        //    Empty Constructor to allow JSON mapping
+        public Blacksmith() {}
 
         @Override
         public String talk(Map map, int row, int column, Inventory inventory) {
@@ -57,6 +61,8 @@ public abstract class NPC extends Entity {
         public Thief(String name, int x, int y) {
             super(name, x, y);
         }
+        //    Empty Constructor to allow JSON mapping
+        public Thief() {}
 
         @Override
         public String talk(Map map, int row, int column, Inventory inventory) {
@@ -108,6 +114,9 @@ public abstract class NPC extends Entity {
             super(name, x, y);
         }
 
+        //    Empty Constructor to allow JSON mapping
+        public Dwarf() {}
+
         @Override
         public String talk(Map map, int row, int column, Inventory inventory) {
             System.out.println("Greetings, traveller. I've been on this island for a time unknown. " +
@@ -140,6 +149,8 @@ public abstract class NPC extends Entity {
             this.itemsForSale = new ArrayList<>(Arrays.asList(armor, potion, sword));
 
         }
+        //    Empty Constructor to allow JSON mapping
+        public Merchant() {}
 
         public String talk(Map map, int row, int column, Inventory inventory) {
             while (true) {

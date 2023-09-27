@@ -1,3 +1,9 @@
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.core.JsonFactoryBuilder;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+import java.io.File;
+import java.io.FileWriter;
 import java.util.List;
 import java.util.Objects;
 import java.util.Random;
@@ -13,17 +19,19 @@ import java.util.Scanner;
  */
 public class GameEngine {
     private static GameEngine instance;
-    protected Scanner scanner;
+    protected transient Scanner scanner;
     protected Map map;
     protected Inventory inventory;
     protected int difficulty;
 
     protected boolean playerHasWeapon = false;  // At the class level, after other fields (testing boolean)
+    @JsonProperty("hp")
     protected int HP;
     protected int hp_limit;
     protected int attack_time = 3; // the remained times for the boss to be defeated
 
     //    xPosition and yPosition can be changed when implementing the proper map and movement.
+
     protected int xPosition;
     protected int yPosition;
 
@@ -60,8 +68,6 @@ public class GameEngine {
      * @author Sam Powell
      */
     public void startGame(int difficulty, String[] testInput) {
-        this.difficulty = difficulty;
-
         switch (difficulty) {
             case 0 -> {
                 HP = 5;
@@ -94,8 +100,11 @@ public class GameEngine {
         System.out.println("Type 'help' for a list of commands.");
 
         boolean isGameOver = false;
-        xPosition = 0;
-        yPosition = 0;
+        if (difficulty != 4) {
+            xPosition = 0;
+            yPosition = 0;
+            this.difficulty = difficulty;
+        }
         int prevXPosition = xPosition;
         int prevYPosition = yPosition;
 
@@ -327,6 +336,7 @@ public class GameEngine {
                         System.out.println("There is no merchant here to trade with.");
                     }
                 }
+                case "save" -> {saveGame();}
 
                 // Add more commands such as save and load later
                 default -> System.out.println("Please enter a valid command or type help to see the commands.");
@@ -348,6 +358,7 @@ public class GameEngine {
         System.out.println("  attack [enemy] - Attack the specified enemy, i.e. 'attack goblin'");
         System.out.println("  talk [entity] - Talk to the specified enemy or NPC");
         System.out.println("  use [item] - Uses a specific item, i.e. 'use potion'");
+        System.out.println("  save - Saves the game.");
         System.out.println("  quit - Quit the game");
     }
 
@@ -427,7 +438,7 @@ public class GameEngine {
         return playerHasWeapon; // Return false if no weapon was found in the loop
     }
 
-    public Item getWeapon() {
+    public Item returnWeapon() {
         for (Item item : inventory.getItems()) {
             if (item.getItemType() == ItemType.Bow || item.getItemType() == ItemType.Sword) {
                 return item;
@@ -444,9 +455,25 @@ public class GameEngine {
         this.playerHasWeapon = false;
     }
 
+    //   Getter methods to allow Reading and Writing to JSON with Jackson library
+    //    Unless alternative method implemented, do not remove.
     public Inventory getInventory() {
         return inventory;
     }
+    public Map getMap() {return map;}
+
+
+    public int getxPosition() {return xPosition;}
+    public int getyPosition() {return yPosition;}
+    public int getHP() {return HP;}
+
+    public int getAttack_time() {return attack_time;}
+
+    public int getDifficulty() {return difficulty;}
+
+    public int getHp_limit() {return hp_limit;}
+
+
 
     /**
      * Used to restart the game
@@ -500,4 +527,18 @@ public class GameEngine {
                     + " and " + count_gold + " pieces of gold.");
         }
     }
+
+    public void saveGame() {
+        ObjectMapper objectMapper = new ObjectMapper();
+        try {
+            FileWriter writer = new FileWriter("saves/savefile.json");
+            objectMapper.writerWithDefaultPrettyPrinter().writeValue(writer,this);
+            writer.close();
+        } catch (Exception e) {
+            System.out.println("Failed to save game.");
+        }
+    }
+
+
+
 }

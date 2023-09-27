@@ -12,11 +12,14 @@ public class Enemy extends Entity{
         super(name, x, y);
     }
 
+//    Empty Constructor to allow JSON mapping
+    public Enemy() {}
+
     /**
      * Initiates a battle with the player.
      */
     public void fight(GameEngine gameEngine, Map map, int row, int column, int HP) {
-        Item weapon = gameEngine.getWeapon();
+        Item weapon = gameEngine.returnWeapon();
         if (weapon != null && weapon.canUse()) {
             weapon.use(gameEngine.getInventory());
             if (!Objects.equals(getName(), "boss")){

@@ -1,3 +1,5 @@
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
+
 import java.util.Arrays;
 import java.util.List;
 
@@ -7,8 +9,14 @@ import java.util.List;
  *
  * @author Kwong Yu Zhou
  */
+@JsonTypeInfo(use = JsonTypeInfo.Id.CLASS, include = JsonTypeInfo.As.PROPERTY, property = "@class")
 public class Map {
     private Entity[][] grid;
+
+//   Getter method to allow JSON saving and loading
+    public Entity[][] getGrid() {
+        return grid;
+    }
 
     /**
      * Public constructor to initialize the Map instance.

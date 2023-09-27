@@ -196,7 +196,8 @@ public class GameEngine {
                         if (entity instanceof Enemy enemy && Objects.equals(entity.getName(), "boss")) {
                             enemy.fight(this, map, xPosition, yPosition, HP);
                             this.attack_time--;
-                            if(this.attack_time == 0) {
+                            this.HP -= 2;
+                            if (this.attack_time == 0 && HP > 0) {
                                 map.removeEntity(xPosition,yPosition);
                                 // Some extra content can be added here
                                 System.out.println("Congratulations! You've won the game!");
@@ -206,7 +207,6 @@ public class GameEngine {
                                 System.arraycopy(testInput, currInput, newList, 0, testInput.length - currInput);
                                 this.gameOver(newList);
                             }
-                            this.HP -= 2;
                             System.out.println("The boss hit back at you! You lost 2 HP.");
                             if (HP <= 0) {
                                 isGameOver = true;

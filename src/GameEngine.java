@@ -99,9 +99,8 @@ public class GameEngine {
         int prevXPosition = xPosition;
         int prevYPosition = yPosition;
 
-        while (!isGameOver) {
-            System.out.println(xPosition);
-            System.out.println(yPosition);
+        int currInput = 0;
+        while (!isGameOver && currInput < testInput.length) {
             // Check if the player's position has changed and print new dialogue when entering a new area
             if (xPosition != prevXPosition || yPosition != prevYPosition) {
                 if (xPosition == 0 && yPosition == 0) {
@@ -153,187 +152,184 @@ public class GameEngine {
                 prevYPosition = yPosition;
             }
 
-            int currInput = 0;
-            while (currInput < testInput.length) {
-                String input;
-                System.out.print("> ");
-                if (Objects.equals(testInput[0], "playthrough")) {
-                    input = scanner.nextLine();
-                    input = input.toLowerCase();
-                } else {
-                    input = testInput[currInput];
-                    currInput++;
+            String input;
+            System.out.print("> ");
+            if (Objects.equals(testInput[0], "playthrough")) {
+                input = scanner.nextLine();
+                input = input.toLowerCase();
+            } else {
+                input = testInput[currInput];
+                currInput++;
+            }
+
+            switch (input) {
+                case "help" -> displayCommands();
+                case "quit" -> {
+                    isGameOver = true;
+                    System.out.println("Thanks for playing!");
+                }
+                case "inventory" -> displayInventory();
+                case "hp" -> System.out.println("You current HP is: "+ HP);
+                case "attack" -> {
+                    Entity entity = map.getEntityAt(xPosition, yPosition);
+                    if (entity instanceof Enemy) {
+                        System.out.println("Please specify an enemy you would like to fight, i.e. 'attack ogre'.");
+                    } else {
+                        System.out.println("There's no enemy here to fight!");
+                    }
+                }
+                case "attack goblin", "attack ogre", "attack spider" -> {
+                    Entity entity = map.getEntityAt(xPosition, yPosition);
+                    if (entity instanceof Enemy enemy) {
+                        enemy.fight(this, map, xPosition, yPosition, HP);// 'this' refers to the current GameEngine instance
+                        if (map.getEntityAt(xPosition, yPosition) == null){openChest(inventory);}
+                    } else {
+                        System.out.println("There's no enemy here to fight!");
+                    }
+                }
+                case "attack boss"-> {
+                    if(playerHasWeapon()){
+                        Entity entity = map.getEntityAt(xPosition, yPosition);
+                        if (entity instanceof Enemy enemy && Objects.equals(entity.getName(), "boss")) {
+                            enemy.fight(this, map, xPosition, yPosition, HP);
+                            this.attack_time--;
+                            if(this.attack_time == 0) {
+                                map.removeEntity(xPosition,yPosition);
+                                // Some extra content can be added here
+                                System.out.println("Congratulations! You've won the game!");
+                                this.gameOver();
+                            }
+                            this.HP -= 2;
+                            System.out.println("The boss hit back at you! You lost 2 HP.");
+                            if (HP <= 0) {
+                                isGameOver = true;
+                                System.out.println("# You have been defeated by the boss!");
+                                System.out.println("## Game Over ##");
+                                this.gameOver();
+                            }
+                            if (attack_time == 1) {
+                                // Some extra content can be added here
+                                System.out.println("Your current HP is "+ HP +". Start your decisive battle with the boss!");
+                            } else {
+                                System.out.println("Your current HP is "+ HP +". Attack " + attack_time + " more times to defeat the boss.");
+                            }
+                        } else {
+                            System.out.println("There's no enemy here to fight!");
+                        }
+                    } else {System.out.println("You are unable to challenge the boss without a weapon!");}
+                }
+                case "move" -> System.out.println("Please specify the direction you would like to move in, i.e. 'move right'");
+                case "move forward", "move backward", "move left", "move right" -> {
+                    String[] parts = input.split(" ");
+                    if (parts.length == 2) {
+                        String directionStr = parts[1];
+                        Direction direction = null;
+                        if ("forward".equalsIgnoreCase(directionStr)) {
+                            direction = Direction.Forward;
+                        } else if ("backward".equalsIgnoreCase(directionStr)) {
+                            direction = Direction.Backward;
+                        } else if ("left".equalsIgnoreCase(directionStr)) {
+                            direction = Direction.Left;
+                        } else if ("right".equalsIgnoreCase(directionStr)) {
+                            direction = Direction.Right;
+                        }
+                        if (direction != null) {
+                            boolean moveFlag = move(direction);
+                            if (!moveFlag) {
+                                System.out.println("[" + "Move command is invalid" + "]");
+                            }
+                        } else {
+                            System.out.println("[" + "Move " + directionStr + "]");
+                        }
+                    } else {
+                        System.out.println("Invalid move command. Please specify a direction.");
+                    }
                 }
 
-                switch (input) {
-                    case "help" -> displayCommands();
-                    case "quit" -> {
-                        isGameOver = true;
-                        System.out.println("Thanks for playing!");
-                    }
-                    case "inventory" -> displayInventory();
-                    case "hp" -> System.out.println("You current HP is: "+ HP);
-                    case "attack" -> {
-                        Entity entity = map.getEntityAt(xPosition, yPosition);
-                        if (entity instanceof Enemy) {
-                            System.out.println("Please specify an enemy you would like to fight, i.e. 'attack ogre'.");
-                        } else {
-                            System.out.println("There's no enemy here to fight!");
-                        }
-                    }
-                    case "attack goblin", "attack ogre", "attack spider" -> {
-                        Entity entity = map.getEntityAt(xPosition, yPosition);
-                        if (entity instanceof Enemy enemy) {
-                            enemy.fight(this, map, xPosition, yPosition, HP);// 'this' refers to the current GameEngine instance
-                            if (map.getEntityAt(xPosition, yPosition) == null){openChest(inventory);}
-                        } else {
-                            System.out.println("There's no enemy here to fight!");
-                        }
-                    }
-                    case "attack boss"-> {
-                        if(playerHasWeapon()){
-                            Entity entity = map.getEntityAt(xPosition, yPosition);
-                            if (entity instanceof Enemy enemy && Objects.equals(entity.getName(), "boss")) {
-                                enemy.fight(this, map, xPosition, yPosition, HP);
-                                this.attack_time--;
-                                if(this.attack_time == 0) {
-                                    map.removeEntity(xPosition,yPosition);
-                                    // Some extra content can be added here
-                                    System.out.println("Congratulations! You've won the game!");
-                                    this.gameOver();
-                                }
-                                this.HP -= 2;
-                                System.out.println("The boss hit back at you! You lost 2 HP.");
-                                if (HP <= 0) {
-                                    isGameOver = true;
-                                    System.out.println("# You have been defeated by the boss!");
-                                    System.out.println("## Game Over ##");
-                                    this.gameOver();
-                                }
-                                if (attack_time == 1) {
-                                    // Some extra content can be added here
-                                    System.out.println("Your current HP is "+ HP +". Start your decisive battle with the boss!");
-                                } else {
-                                    System.out.println("Your current HP is "+ HP +". Attack " + attack_time + " more times to defeat the boss.");
-                                }
-                            } else {
-                                System.out.println("There's no enemy here to fight!");
-                            }
-                        } else {System.out.println("You are unable to challenge the boss without a weapon!");}
-                    }
-                    case "move" -> System.out.println("Please specify the direction you would like to move in, i.e. 'move right'");
-                    case "move forward", "move backward", "move left", "move right" -> {
-                        String[] parts = input.split(" ");
-                        if (parts.length == 2) {
-                            String directionStr = parts[1];
-                            Direction direction = null;
-                            if ("forward".equalsIgnoreCase(directionStr)) {
-                                direction = Direction.Forward;
-                            } else if ("backward".equalsIgnoreCase(directionStr)) {
-                                direction = Direction.Backward;
-                            } else if ("left".equalsIgnoreCase(directionStr)) {
-                                direction = Direction.Left;
-                            } else if ("right".equalsIgnoreCase(directionStr)) {
-                                direction = Direction.Right;
-                            }
-                            if (direction != null) {
-                                boolean moveFlag = move(direction);
-                                if (!moveFlag) {
-                                    System.out.println("[" + "Move command is invalid" + "]");
-                                }
-                            } else {
-                                System.out.println("[" + "Move " + directionStr + "]");
-                            }
-                        } else {
-                            System.out.println("Invalid move command. Please specify a direction.");
-                        }
-                    }
+                case "talk" -> {
+                    System.out.print("Who do you want to talk to?\n");
+                    System.out.print("> ");
+                    String npcName = scanner.nextLine().toLowerCase().trim();
+                    System.out.println("Trying to talk to: " + npcName);
+                    System.out.println("At position: x=" + xPosition + ", y=" + yPosition);
 
-                    case "talk" -> {
-                        System.out.print("Who do you want to talk to?\n");
-                        System.out.print("> ");
-                        String npcName = scanner.nextLine().toLowerCase().trim();
-                        System.out.println("Trying to talk to: " + npcName);
-                        System.out.println("At position: x=" + xPosition + ", y=" + yPosition);
-
-                        Entity entity = map.getEntityAt(xPosition, yPosition);
-                        if (entity instanceof NPC && entity.getName().equalsIgnoreCase(npcName)) {
-                            NPC npc = (NPC) entity;
-                            String message = npc.talk(this.map,xPosition,yPosition,this.inventory);  // Assuming GameEngine has a field called 'inventory'
-                            System.out.println(message);
-                        } else if (entity instanceof Enemy && entity.getName().equalsIgnoreCase(npcName)) {
-                            Enemy enemy = (Enemy) entity;
-                            String message = enemy.talk();  // Assuming GameEngine has a field called 'inventory'
-                            System.out.println(message);
-                        } else {
-                            System.out.println("There is no " + npcName + " here to talk to.");
-                        }
+                    Entity entity = map.getEntityAt(xPosition, yPosition);
+                    if (entity instanceof NPC && entity.getName().equalsIgnoreCase(npcName)) {
+                        NPC npc = (NPC) entity;
+                        String message = npc.talk(this.map,xPosition,yPosition,this.inventory);  // Assuming GameEngine has a field called 'inventory'
+                        System.out.println(message);
+                    } else if (entity instanceof Enemy && entity.getName().equalsIgnoreCase(npcName)) {
+                        Enemy enemy = (Enemy) entity;
+                        String message = enemy.talk();  // Assuming GameEngine has a field called 'inventory'
+                        System.out.println(message);
+                    } else {
+                        System.out.println("There is no " + npcName + " here to talk to.");
                     }
-                    case "take" -> {
-                        System.out.print("What would you like to take?\n");
-                        System.out.print("> ");
-                        String itemName = scanner.nextLine().toLowerCase().trim();
+                }
+                case "take" -> {
+                    System.out.print("What would you like to take?\n");
+                    System.out.print("> ");
+                    String itemName = scanner.nextLine().toLowerCase().trim();
 
-                        Entity entity = map.getEntityAt(xPosition, yPosition);
-                        if (entity instanceof Item item && entity.getName().equalsIgnoreCase(itemName)) {
-                            inventory.addItem(item);
-                            map.removeEntity(xPosition,yPosition);
-                            System.out.println("# You took a " + entity.getName());
-                        }
-                        else {System.out.println("There is no item here");}
+                    Entity entity = map.getEntityAt(xPosition, yPosition);
+                    if (entity instanceof Item item && entity.getName().equalsIgnoreCase(itemName)) {
+                        inventory.addItem(item);
+                        map.removeEntity(xPosition,yPosition);
+                        System.out.println("# You took a " + entity.getName());
                     }
+                    else {System.out.println("There is no item here");}
+                }
 
-                    case "use" -> {
-                        displayInventory();
-                        System.out.println("Which item do you want to use: ");
-                        System.out.print("> ");
-                        String itemName = scanner.nextLine().trim();
-                        Item selectedItem = inventory.getItem(itemName);
-                        if (selectedItem != null) {
-                            switch (selectedItem.getName()) {
-                                case "potion" -> {
-                                    if (HP + 1 <= hp_limit){
-                                        HP++;
-                                        selectedItem.use(inventory);
-                                        System.out.println("# You used a potion (HP:+1). Your HP has been increased to "+ HP +".");
-                                    }else {
-                                        System.out.println("# You are unable to use a potion with full HP.");
-                                    }
-                                }
-                                case "armor" -> { //Armor is significantly more useful than potions, and there are fewer ways to get it
+                case "use" -> {
+                    displayInventory();
+                    System.out.println("Which item do you want to use: ");
+                    System.out.print("> ");
+                    String itemName = scanner.nextLine().trim();
+                    Item selectedItem = inventory.getItem(itemName);
+                    if (selectedItem != null) {
+                        switch (selectedItem.getName()) {
+                            case "potion" -> {
+                                if (HP + 1 <= hp_limit){
                                     HP++;
-                                    inventory.removeItem(selectedItem);
-                                    System.out.println("# You equipped yourself with an armor (HP:+1). Your HP has been increased to "+ HP +".");
+                                    selectedItem.use(inventory);
+                                    System.out.println("# You used a potion (HP:+1). Your HP has been increased to "+ HP +".");
+                                }else {
+                                    System.out.println("# You are unable to use a potion with full HP.");
                                 }
-                                case "gold" -> System.out.println("You look at the piece of gold, " +
-                                        "maybe someone would like to trade with you.");
-                                default -> System.out.println("You are unsure how to use this item, " +
-                                        "you place it back into your inventory.");
                             }
-
+                            case "armor" -> { //Armor is significantly more useful than potions, and there are fewer ways to get it
+                                HP++;
+                                inventory.removeItem(selectedItem);
+                                System.out.println("# You equipped yourself with an armor (HP:+1). Your HP has been increased to "+ HP +".");
+                            }
+                            case "gold" -> System.out.println("You look at the piece of gold, " +
+                                    "maybe someone would like to trade with you.");
+                            default -> System.out.println("You are unsure how to use this item, " +
+                                    "you place it back into your inventory.");
                         }
-                        else {System.out.println("Invalid item name");}
-                    }
 
-                    case "trade" -> {
+                    }
+                    else {System.out.println("Invalid item name");}
+                }
+
+                case "trade" -> {
 //                    for (int i = 0; i < 5; i++) {
 //                        inventory.addItem(new Item("gold", -1, -1));
 //                    }
-                        // add five gold first for testing
+                    // add five gold first for testing
 
-                        Entity entity = map.getEntityAt(xPosition, yPosition);
-                        if (entity instanceof NPC.Merchant) {
-                            NPC.Merchant merchant = (NPC.Merchant) entity;
-                            String message = merchant.talk(map, xPosition, yPosition, this.inventory);
-                            System.out.println(message);
-                        } else {
-                            System.out.println("There is no merchant here to trade with.");
-                        }
+                    Entity entity = map.getEntityAt(xPosition, yPosition);
+                    if (entity instanceof NPC.Merchant) {
+                        NPC.Merchant merchant = (NPC.Merchant) entity;
+                        String message = merchant.talk(map, xPosition, yPosition, this.inventory);
+                        System.out.println(message);
+                    } else {
+                        System.out.println("There is no merchant here to trade with.");
                     }
-
-                    // Add more commands such as save and load later
-                    default -> System.out.println("Please enter a valid command or type help to see the commands.");
                 }
+
+                // Add more commands such as save and load later
+                default -> System.out.println("Please enter a valid command or type help to see the commands.");
             }
         }
         scanner.close();
@@ -495,7 +491,7 @@ public class GameEngine {
         }
         if (count_gold == 0){
             System.out.println("# You have opened a chest. You've got a " + chosenItem.getName()
-                + ".");
+                    + ".");
         } else if (count_gold == 1) {
             System.out.println("# You have opened a chest. You've got a " + chosenItem.getName()
                     + " and a piece of gold.");
@@ -504,9 +500,4 @@ public class GameEngine {
                     + " and " + count_gold + " pieces of gold.");
         }
     }
-
-
-
-
 }
-

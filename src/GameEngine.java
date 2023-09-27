@@ -73,7 +73,7 @@ public class GameEngine {
             case 1 -> {
                 HP = 4;
                 hp_limit = HP;
-                inventory.addItem(new Item("sword", -1, -1,ItemType.Sword));
+                inventory.addItem(new Item("sword", -1, -1, ItemType.Sword));
                 System.out.println("You are playing normal mode!");
             }
             case 2 -> {
@@ -105,20 +105,23 @@ public class GameEngine {
                 if (xPosition == 0 && yPosition == 0) {
                     System.out.println("You find yourself back at where you started, with dense forests to the west and south.\n" +
                             "There are only two paths to choose from: one leading north and one leading east.");
-                }
-                else if (xPosition == 0 && yPosition == 1) {
-                    System.out.println("You enter the depths of the forest, stretching ahead of you and offering a direction " +
-                            "for exploration to the east. On the south is the initial beach where you had started on.");
-                }
-                else if (xPosition == 1 && yPosition == 0) {
-                    System.out.println("You arrive in an open area with no trees here, only lush grasslands.\n" +
-                            "In the distance, there's a mountain range that looks like an intriguing adventure.");
-                    System.out.println("The open grasslands extend to the north, where more unknowns seem to await you.\n" +
-                            "On the west is the initial beach where you had started on.");
-                }
-                else if (xPosition == 1 && yPosition == 1) {
+                } else if (xPosition == 0 && yPosition == 3) {
+                    System.out.println("You find yourself cornered by the dense forest. There seems to be only a path leading south and east.");
+                } else if (xPosition == 3 && yPosition == 0) {
+                    System.out.println("You find yourself cornered by the dense forest. There seems to be only a path leading north and west.");
+                } else if (xPosition == 3 && yPosition == 3) {
                     System.out.println("You've reached an open highland. From here, you can overlook the entire Bermuda Isles and " +
                             "see the distant coastline.\n You can choose to descend the highlands and move towards west or south.");
+                } else if (xPosition == 0 && yPosition == 1 || xPosition == 0 && yPosition == 2) {
+                    System.out.println("You continue traversing alongside the dense forest towards west, leaving all other directions open.");
+                } else if (xPosition == 1 && yPosition == 0 || xPosition == 2 && yPosition == 0) {
+                    System.out.println("You continue traversing alongside the lonesome beach towards south, leaving all other directions open.");
+                } else if (xPosition == 3 && yPosition == 1 || xPosition == 3 && yPosition == 2) {
+                    System.out.println("You find yourself following the cliff of the highlands on your east, leaving all other directions open.");
+                } else if (xPosition == 1 && yPosition == 3 || xPosition == 2 && yPosition == 3) {
+                    System.out.println("You find yourself following the cliff of the highlands on your north, leaving all other directions open.");
+                } else if (xPosition == 1 && yPosition == 1 || xPosition == 2 && yPosition == 1 || xPosition == 1 && yPosition == 2 || xPosition == 2 && yPosition == 2) {
+                    System.out.println("You stand amidst an expansive open plain with all directions open to walk in.");
                 }
 
                 switch (map.getEntityTypeAt(xPosition, yPosition)) {
@@ -134,7 +137,7 @@ public class GameEngine {
                         Item item = (Item) map.getEntityAt(xPosition, yPosition);
                         System.out.println("You spot a " + item.getName() + " glistening in the grass.");
                     }
-                    default ->  System.out.println("You stand amidst an expansive open plain, spotting nothing in the distance close by.");
+                    default -> System.out.println("You stand amidst an expansive open plain, spotting nothing in the distance close by.");
                 }
                 prevXPosition = xPosition;
                 prevYPosition = yPosition;
@@ -147,8 +150,7 @@ public class GameEngine {
                 if (Objects.equals(testInput[0], "playthrough")) {
                     input = scanner.nextLine();
                     input = input.toLowerCase();
-                }
-                else {
+                } else {
                     input = testInput[currInput];
                     currInput++;
                 }
@@ -164,7 +166,7 @@ public class GameEngine {
                     case "attack" -> {
                         Entity entity = map.getEntityAt(xPosition, yPosition);
                         if (entity instanceof Enemy) {
-                            System.out.println("Please specify an enemy you would like to fight, i.e. 'fight ogre'.");
+                            System.out.println("Please specify an enemy you would like to fight, i.e. 'attack ogre'.");
                         } else {
                             System.out.println("There's no enemy here to fight!");
                         }
@@ -253,6 +255,10 @@ public class GameEngine {
                             NPC npc = (NPC) entity;
                             String message = npc.talk(this.map, xPosition, yPosition, this.inventory);  // Assuming GameEngine has a field called 'inventory'
                             System.out.println(message);
+                        } else if (entity instanceof Enemy && entity.getName().equalsIgnoreCase(npcName)) {
+                            Enemy enemy = (Enemy) entity;
+                            String message = enemy.talk();  // Assuming GameEngine has a field called 'inventory'
+                            System.out.println(message);
                         } else {
                             System.out.println("There is no " + npcName + " here to talk to.");
                         }
@@ -306,9 +312,9 @@ public class GameEngine {
                     }
 
                     case "trade" -> {
-                        //                    for (int i = 0; i < 5; i++) {
-                        //                        inventory.addItem(new Item("gold", -1, -1));
-                        //                    }
+//                    for (int i = 0; i < 5; i++) {
+//                        inventory.addItem(new Item("gold", -1, -1));
+//                    }
                         // add five gold first for testing
 
                         Entity entity = map.getEntityAt(xPosition, yPosition);
@@ -325,13 +331,13 @@ public class GameEngine {
                     default -> System.out.println("Please enter a valid command or type help to see the commands.");
                 }
             }
+            scanner.close();
         }
-        scanner.close();
     }
 
-    /**
-     * Commands printed to the user if desired
-     */
+        /**
+         * Commands printed to the user if desired
+         */
     private void displayCommands() {
         System.out.println("Available commands:");
         System.out.println("  help - Display this help message");

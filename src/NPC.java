@@ -101,7 +101,7 @@ public abstract class NPC extends Entity {
 
 
     /**
-     * A Dwarf NPC that offers a sack of gold to the player.
+     * A Dwarf NPC that offers some gold to the player.
      */
     public static class Dwarf extends NPC {
         public Dwarf(String name, int x, int y) {
@@ -111,8 +111,8 @@ public abstract class NPC extends Entity {
         @Override
         public String talk(Map map, int row, int column, Inventory inventory) {
             System.out.println("Greetings, traveller. I've been on this island for a time unknown. " +
-                    "Take this sack of Gold; it may aid you on your journey.");
-            Item gold = new Item("Sack of Gold", -1, -1,ItemType.Gold);
+                    "Take some gold; it may aid you on your journey.");
+            Item gold = new Item("gold", -1, -1,ItemType.Gold);
             inventory.addItem(gold);
             map.removeEntity(row,column);
             System.out.println("Gold might not have much value here, but it's a start. Seek the exit, and may fortune favor you");
@@ -141,6 +141,7 @@ public abstract class NPC extends Entity {
 
         }
 
+        @Override
         public String talk(Map map, int row, int column, Inventory inventory) {
             while (true) {
                 System.out.println("Greetings, traveler! Here are my wares:");
@@ -148,7 +149,8 @@ public abstract class NPC extends Entity {
                     System.out.println(item.getName() + ": " + item.getPrice() + " gold");
                 }
 
-                System.out.print("What would you like to buy? (Enter 'exit' to leave) > ");
+                System.out.print("What would you like to buy? Enter 'trade [item]' to trade or 'exit' to leave.");
+                System.out.println("> ");
                 Scanner scanner = new Scanner(System.in);
                 String itemName = scanner.nextLine();
 
@@ -186,6 +188,61 @@ public abstract class NPC extends Entity {
                     map.removeEntity(row, column);
                     return "# Thank you for your purchases! I have nothing more to sell.";
                 }
+            }
+        }
+
+        public String[] talk(Map map, int row, int column, Inventory inventory, String[] listInputs) {
+            while (true) {
+                System.out.println("Greetings, traveler! Here are my wares:");
+                for (Item item : itemsForSale) {
+                    System.out.println(item.getName() + ": " + item.getPrice() + " gold");
+                }
+
+                int lastInput = 0;
+                for (int i = 0; i < listInputs.length; i++) {
+                    lastInput = i+1;
+                    String itemName = listInputs[i];
+
+                    if ("exit".equalsIgnoreCase(itemName)) {
+                        System.out.println("# Farewell, traveler!");
+                    }
+
+                    boolean itemFound = false;
+                    for (Item item : new ArrayList<>(itemsForSale)) {  // Create a copy of itemsForSale for safe iteration and removal
+                        if (item.getName().equalsIgnoreCase(itemName)) {
+                            itemFound = true;
+                            int goldCount = inventory.getItemCount("gold");
+                            if (item.getPrice() <= goldCount) {
+                                // Remove gold pieces from inventory
+                                for (int j = 0; j < item.getPrice(); j++) {
+                                    inventory.removeItem(inventory.getItem("gold"));
+                                }
+                                // Add the purchased item to player's inventory
+                                inventory.addItem(item);
+                                // Remove the purchased item from merchant's inventory
+                                itemsForSale.remove(item);
+                                System.out.println("# You bought a " + itemName + ".");
+                            } else {
+                                System.out.println("You don't have enough gold!");
+                            }
+                            break;  // Exit the loop once the item is found
+                        }
+                    }
+
+                    if (!itemFound) {
+                        System.out.println("I don't have that item for sale. Please choose a valid item.");
+                    }
+
+                    if (itemsForSale.isEmpty()) {
+                        map.removeEntity(row, column);
+                        System.out.println("# Thank you for your purchases! I have nothing more to sell.");
+                    }
+                }
+
+                int newListSize = listInputs.length - lastInput;
+                String[] newList = new String[newListSize];
+                System.arraycopy(listInputs, lastInput, newList, 0, listInputs.length - lastInput);
+                return newList;
             }
         }
     }

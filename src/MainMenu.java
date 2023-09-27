@@ -1,3 +1,4 @@
+import java.util.Arrays;
 import java.util.Scanner;
 
 /**
@@ -7,9 +8,11 @@ import java.util.Scanner;
 public class MainMenu {
     private Scanner scanner;
     private GameEngine gameEngine;
-
     public MainMenu() {
-        this.scanner = new Scanner(System.in);
+        this(new Scanner(System.in));
+    }
+    public MainMenu(Scanner scanner) {
+        this.scanner = scanner;
         this.gameEngine = null;
     }
 
@@ -19,7 +22,7 @@ public class MainMenu {
      *
      * @author Jerry Zhao
      */
-    public void initialise() {
+    public void initialise(String[] testInput) {
         System.out.println("===========================================");
         System.out.println("Welcome to the Realms of the Bermuda Isles!");
         System.out.println("===========================================");
@@ -29,17 +32,25 @@ public class MainMenu {
         System.out.println("Enter 'quit' to quit the game.");
         System.out.println("===========================================");
 
-
+        int currInput = 0;
         boolean isInMenu = true;
-        while (isInMenu) {
+        while (isInMenu && currInput < testInput.length) {
+            String input;
             System.out.print("> ");
-            String input = scanner.nextLine();
-            input = input.toLowerCase();
-
+            if (testInput == null) {
+                input = scanner.nextLine();
+                input = input.toLowerCase();
+            }
+            else {
+                input = testInput[currInput];
+                currInput++;
+            }
 
             switch (input) {
+
                 case "quit":
                     isInMenu = false;
+//                    System.out.println("hi");
                     System.out.println("Thanks for playing!");
                     break;
                 case "play":
@@ -77,6 +88,6 @@ public class MainMenu {
     public static void main(String[] args) {
         // Initialize the program for the user
         MainMenu mainMenu = new MainMenu();
-        mainMenu.initialise();
+        mainMenu.initialise(null);
     }
 }

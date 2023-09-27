@@ -60,17 +60,45 @@ public abstract class NPC extends Entity {
 
         @Override
         public String talk(Map map, int row, int column, Inventory inventory) {
+            if (inventory.getItems().isEmpty()) {
+                System.out.println("Hmm, you have nothing worth stealing!");
+                map.removeEntity(row, column);
+                return "# The thief found nothing and quickly disappeared.";
+            }
+
             System.out.println("Psst, newcomer, watch your pockets!");
+            List<Item> stolenItems = new ArrayList<>();
             for (Item item : new ArrayList<>(inventory.getItems())) {
                 if (!item.getName().equalsIgnoreCase("sword")) {
+                    stolenItems.add(item);
                     inventory.removeItem(item);
                 }
             }
-            map.removeEntity(row,column);
+
+            map.removeEntity(row, column);
             System.out.println("Thanks for the loot! Better luck next time!");
-            return "# The thief took your (item being stolen) and escaped.";
+
+            if (stolenItems.isEmpty()) {
+                return "# The thief took nothing and escaped.";
+            } else {
+                return "# The thief took your " + listItems(stolenItems) + " and escaped.";
+            }
+        }
+
+        private String listItems(List<Item> items) {
+            StringBuilder sb = new StringBuilder();
+            for (int i = 0; i < items.size(); i++) {
+                sb.append(items.get(i).getName());
+                if (i < items.size() - 2) {
+                    sb.append(", ");
+                } else if (i == items.size() - 2) {
+                    sb.append(" and ");
+                }
+            }
+            return sb.toString();
         }
     }
+
 
     /**
      * A Dwarf NPC that offers a sack of gold to the player.
@@ -160,11 +188,5 @@ public abstract class NPC extends Entity {
                 }
             }
         }
-
-
-
-
     }
-
-
 }

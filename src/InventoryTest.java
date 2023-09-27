@@ -6,6 +6,7 @@ public class InventoryTest {
     private Inventory inventory;
     private Item item1 = new Item("Health Potion", 0, 0,ItemType.Potion);
     private Item item2 = new Item("Mana Elixir", 0, 0,ItemType.Potion);
+    private Item item3 = new Item("Bow", 0, 0,ItemType.Bow);
 
     @Test
     void testAddItem() {
@@ -46,5 +47,13 @@ public class InventoryTest {
         inventory.addItem(item1);
         inventory.addItem(item2);
         assertEquals(2, inventory.getItems().size(), "Inventory should contain two items");
+    }
+
+    @Test
+    void testGetItemCount() {
+        inventory = new Inventory();
+        inventory.addItem(item1);
+        inventory.addItem(item3);
+        assertEquals(2, inventory.getItemCount(item1.getName()) + inventory.getItemCount(item3.getName()), "Inventory should contain two items");
     }
 }

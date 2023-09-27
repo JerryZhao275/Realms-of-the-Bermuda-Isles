@@ -15,27 +15,40 @@ public class Map {
      * It creates a new grid, which is a nxn entity array.
      */
     public Map() {
-//        int mapSize = 2;
-//        grid = new Entity[mapSize][mapSize];
-        grid = new Entity[2][2];
+        int mapSize = 4;
+        grid = new Entity[mapSize][mapSize];
         Entity goblin = new Enemy("goblin", -1, -1);
         Entity spider = new Enemy("spider", -1, -1);
         Entity orge = new Enemy("orge", -1, -1);
         Entity boss = new Enemy("boss", -1, -1);
 
         Entity potion = new Item("potion", -1, -1,ItemType.Potion);
+        Entity armor = new Item("armor", -1, -1,ItemType.Armor);
+        Entity sword = new Item("sword", -1, -1,ItemType.Sword);
+        Entity bow = new Item("bow", -1, -1,ItemType.Bow);
+        Entity gold = new Item("gold", -1, -1,ItemType.Gold);
 
         Entity blacksmith = new NPC.Blacksmith("blacksmith", -1, -1);
         Entity thief = new NPC.Thief("thief", -1, -1);
         Entity dwarf = new NPC.Dwarf("dwarf", -1, -1);
-
-
         Entity merchant = new NPC.Merchant("merchant", -1, -1);
 
+        // row 0
+        placeEntity(spider,1,0);
+        placeEntity(potion,2,0);
+        placeEntity(armor,3,0);
 
-        placeEntity(potion,0,1);
-        placeEntity(merchant,1,0);
-        placeEntity(boss,1,1);
+        Entity[][] entities = { // row 1-3
+                {bow, dwarf, orge, gold},
+                {goblin, gold, merchant, goblin},
+                {blacksmith, goblin, spider, boss}
+        };
+
+        for (int row = 0; row < 3; row++) {
+            for (int col = 0; col < 4; col++) {
+                placeEntity(entities[row][col], col, row+1);
+            }
+        }
     }
 
     /**
@@ -81,7 +94,8 @@ public class Map {
                 return "NPC";
             } else if (grid[row][col] instanceof Item) {
                 return "Item";
-            } else {
+            }
+            else {
                 return "Unknown Entity";
             }
         } else {
@@ -124,21 +138,21 @@ public class Map {
         Map gameMap = new Map();
 
         // Test: Print and display the skeleton map
-        int row = 0;
-        int col = 0;
+//        int row = 0;
+//        int col = 0;
         gameMap.printMap();
-        String entityType0 = gameMap.getEntityTypeAt(row, col);
-        System.out.println("Entity at grid[" + row + "][" + col + "]: " + entityType0);
-        col = 1;
-        String entityType1 = gameMap.getEntityTypeAt(row, col);
-        System.out.println("Entity at grid[" + row + "][" + col + "]: " + entityType1);
-        row = 1;
-        col = 0;
-        String entityType2 = gameMap.getEntityTypeAt(row, col);
-        System.out.println("Entity at grid[" + row + "][" + col + "]: " + entityType2);
-        col = 1;
-        String entityType3 = gameMap.getEntityTypeAt(row, col);
-        System.out.println("Entity at grid[" + row + "][" + col + "]: " + entityType3);
+//        String entityType0 = gameMap.getEntityTypeAt(row, col);
+//        System.out.println("Entity at grid[" + row + "][" + col + "]: " + entityType0);
+//        col = 1;
+//        String entityType1 = gameMap.getEntityTypeAt(row, col);
+//        System.out.println("Entity at grid[" + row + "][" + col + "]: " + entityType1);
+//        row = 1;
+//        col = 0;
+//        String entityType2 = gameMap.getEntityTypeAt(row, col);
+//        System.out.println("Entity at grid[" + row + "][" + col + "]: " + entityType2);
+//        col = 1;
+//        String entityType3 = gameMap.getEntityTypeAt(row, col);
+//        System.out.println("Entity at grid[" + row + "][" + col + "]: " + entityType3);
     }
 }
 

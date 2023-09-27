@@ -2,8 +2,8 @@ public class Item extends Entity{
     // This is the initialisation of a java class in a source folder
     private int price;
     private int durability;
-
     private ItemType itemType;
+
     /**
      * Public constructor to initialize the Item instance.
      * It creates a new name, x-axis coordinate, and y-axis coordinate for the Item.
@@ -49,11 +49,10 @@ public class Item extends Entity{
             return;
         }
         switch (durability) {
-            case 0 -> {
-                System.out.println("This item appears to be broken");
-            }
+            case 0 -> System.out.println("This item appears to be broken");
             case 1 -> {
                 System.out.println("You feel the " + getName() + " break in your hands, you will not be able to use this anymore.");
+                durability -= 1;
                 inventory.removeItem(this);
             }
             default -> {durability -= 1;}
@@ -63,7 +62,6 @@ public class Item extends Entity{
     public boolean canUse() {
         return durability > 0;
     }
-
     public static Item ARMOR = new Item("Armor", 0, 0,ItemType.Armor);  // x and y set to 0 just for initialization.
     public static Item POTION = new Item("Potion", 0, 0,ItemType.Potion);
     public static Item SWORD = new Item("Sword", 0, 0,ItemType.Sword);
@@ -73,5 +71,4 @@ public class Item extends Entity{
         POTION.setPrice(1);
         SWORD.setPrice(2);
     }
-
 }

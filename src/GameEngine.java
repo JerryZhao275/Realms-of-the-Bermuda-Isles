@@ -100,6 +100,8 @@ public class GameEngine {
         int prevYPosition = yPosition;
 
         while (!isGameOver) {
+            System.out.println(xPosition);
+            System.out.println(yPosition);
             // Check if the player's position has changed and print new dialogue when entering a new area
             if (xPosition != prevXPosition || yPosition != prevYPosition) {
                 if (xPosition == 0 && yPosition == 0) {
@@ -146,7 +148,6 @@ public class GameEngine {
                         System.out.println("You spot a " + item.getName() + " glistening in the grass.");
                     }
                     default ->  System.out.println("You spot nothing in the distance close by.");
-                    default -> System.out.println("You stand amidst an expansive open plain, spotting nothing in the distance close by.");
                 }
                 prevXPosition = xPosition;
                 prevYPosition = yPosition;

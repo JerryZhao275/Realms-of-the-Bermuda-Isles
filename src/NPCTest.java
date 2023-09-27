@@ -62,7 +62,7 @@ public class NPCTest {
         map = new Map();
         NPC.Dwarf dwarf = new NPC.Dwarf("Dwarf", 0, 0);
         dwarf.talk(map, 0, 0, inventory);
-        assertNotNull(inventory.getItem("Sack of Gold"), "Inventory should contain a 'Sack of Gold'");
+        assertNotNull(inventory.getItem("gold"), "Inventory should contain a 'gold'");
         assertNull(map.getEntityAt(0, 0), "Dwarf should be removed from the map");
     }
 }

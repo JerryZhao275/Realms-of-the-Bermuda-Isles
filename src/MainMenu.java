@@ -1,4 +1,6 @@
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Objects;
 import java.util.Scanner;
 
 /**
@@ -37,7 +39,7 @@ public class MainMenu {
         while (isInMenu && currInput < testInput.length) {
             String input;
             System.out.print("> ");
-            if (testInput == null) {
+            if (Objects.equals(testInput[0], "playthrough")) {
                 input = scanner.nextLine();
                 input = input.toLowerCase();
             }
@@ -47,7 +49,6 @@ public class MainMenu {
             }
 
             switch (input) {
-
                 case "quit":
                     isInMenu = false;
 //                    System.out.println("hi");
@@ -58,23 +59,41 @@ public class MainMenu {
                     break;
                 case "play easy":
                     if (gameEngine == null) {
+                        int newListSize = testInput.length - currInput;
+                        String[] newList = new String[newListSize];
+                        for (int i = 0; currInput < testInput.length; i++, currInput++) {
+                            newList[i] = testInput[currInput];
+                        }
+
                         isInMenu = false;
                         gameEngine = GameEngine.getInstance();
-                        gameEngine.startGame(0);
+                        gameEngine.startGame(0, newList);
                     }
                     break;
                 case "play normal":
                     if (gameEngine == null) {
+                        int newListSize = testInput.length - currInput;
+                        String[] newList = new String[newListSize];
+                        for (int i = 0; currInput < testInput.length; i++, currInput++) {
+                            newList[i] = testInput[currInput];
+                        }
+
                         isInMenu = false;
                         gameEngine = GameEngine.getInstance();
-                        gameEngine.startGame(1);
+                        gameEngine.startGame(1, newList);
                     }
                     break;
                 case "play hard":
                     if (gameEngine == null) {
+                        int newListSize = testInput.length - currInput;
+                        String[] newList = new String[newListSize];
+                        for (int i = 0; currInput < testInput.length; i++, currInput++) {
+                            newList[i] = testInput[currInput];
+                        }
+
                         isInMenu = false;
                         gameEngine = GameEngine.getInstance();
-                        gameEngine.startGame(2);
+                        gameEngine.startGame(2, newList);
                     }
                     break;
                 default:
@@ -88,6 +107,6 @@ public class MainMenu {
     public static void main(String[] args) {
         // Initialize the program for the user
         MainMenu mainMenu = new MainMenu();
-        mainMenu.initialise(null);
+        mainMenu.initialise(new String[]{"playthrough"});
     }
 }

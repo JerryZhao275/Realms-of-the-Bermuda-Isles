@@ -1,3 +1,8 @@
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
+
+import java.util.Arrays;
+import java.util.List;
+
 /**
  * This class represents a square map, that is the space for the player to explore.
  * It handles the existence of entities on each coordinate.
@@ -5,9 +10,14 @@
  *
  * @author Kwong Yu Zhou
  */
-
+@JsonTypeInfo(use = JsonTypeInfo.Id.CLASS, include = JsonTypeInfo.As.PROPERTY, property = "@class")
 public class Map {
     private Entity[][] grid;
+
+//   Getter method to allow JSON saving and loading
+    public Entity[][] getGrid() {
+        return grid;
+    }
 
     /**
      * Public constructor to initialize the Map instance with predefined entities like enemies, items, and NPCs.

@@ -20,6 +20,9 @@ public class Item extends Entity{
         }
     }
 
+    //    Empty Constructor to allow JSON mapping
+    public Item() {}
+
     // other attributes
     public int getPrice() {
         return price;

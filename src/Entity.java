@@ -1,9 +1,13 @@
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
+
 /**
  * This class represents the entity of the non-playable roles of the game (Enemy/NPC/Item).
  * It handles the character's name and its coordinate related to the map.
  *
  * @author Kwong Yu Zhou
  */
+@JsonTypeInfo(use = JsonTypeInfo.Id.CLASS, include = JsonTypeInfo.As.PROPERTY, property = "@class")
 public class Entity {
     private String name;
     private int x;
@@ -24,6 +28,8 @@ public class Entity {
         this.x = x;
         this.y = y;
     }
+    //    Empty Constructor to allow JSON mapping
+    public Entity() {}
 
     /**
      * Get the name of the Entity.

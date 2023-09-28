@@ -26,6 +26,9 @@ public class Enemy extends Entity{
         super(name, x, y);
     }
 
+//    Empty Constructor to allow JSON mapping
+    public Enemy() {}
+
     /**
      * Initiates a battle between the enemy and the player.
      * The outcome of the battle is determined by the player's current weapon and its usability.
@@ -41,7 +44,7 @@ public class Enemy extends Entity{
      * @param HP         The current HP of the player.
      */
     public void fight(GameEngine gameEngine, Map map, int row, int column, int HP) {
-        Item weapon = gameEngine.getWeapon();
+        Item weapon = gameEngine.returnWeapon();
         if (weapon != null && weapon.canUse()) {
             weapon.use(gameEngine.getInventory());
             if (!Objects.equals(getName(), "boss")){

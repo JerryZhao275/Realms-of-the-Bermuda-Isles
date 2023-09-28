@@ -28,6 +28,8 @@ public abstract class NPC extends Entity {
     public NPC(String name, int x, int y) {
         super(name, x, y);
     }
+    //    Empty Constructor to allow JSON mapping
+    public NPC() {}
 
     /**
      * Engages the player in a conversation or interaction. The nature and outcome of this interaction
@@ -69,6 +71,8 @@ public abstract class NPC extends Entity {
         public Blacksmith(String name, int x, int y) {
             super(name, x, y);
         }
+        //    Empty Constructor to allow JSON mapping
+        public Blacksmith() {}
 
 
         /**
@@ -118,6 +122,8 @@ public abstract class NPC extends Entity {
         public Thief(String name, int x, int y) {
             super("stranger", x, y);
         }
+        //    Empty Constructor to allow JSON mapping
+        public Thief() {}
 
         /**
          * Interacts with the Thief NPC, resulting in potential theft from the player's inventory.
@@ -207,7 +213,8 @@ public abstract class NPC extends Entity {
         public Dwarf(String name, int x, int y) {
             super(name, x, y);
         }
-
+        //    Empty Constructor to allow JSON mapping
+        public Dwarf() {}
         /**
          * Represents the interaction between the player and the Dwarf NPC.
          * When the player interacts with the Dwarf, the Dwarf offers them some gold.
@@ -223,7 +230,6 @@ public abstract class NPC extends Entity {
          * @param inventory The player's inventory.
          * @return A message to the player describing the outcome of the interaction.
          */
-
         @Override
         public String talk(Map map, int row, int column, Inventory inventory) {
             System.out.println("Greetings, traveller. I've been on this island for a time unknown. " +
@@ -276,6 +282,8 @@ public abstract class NPC extends Entity {
             this.itemsForSale = new ArrayList<>(Arrays.asList(armor, potion, sword));
 
         }
+        //    Empty Constructor to allow JSON mapping
+        public Merchant() {}
 
         /**
          * Represents the interaction between the player and the Merchant NPC.

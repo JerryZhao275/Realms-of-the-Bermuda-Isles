@@ -14,7 +14,7 @@ public class EnemyTest {
     @Test
     void testFight() {
         // Add sword and test for fighting goblin
-        gameEngine.inventory.addItem(new Item("sword", -1, -1, ItemType.Sword));
+        gameEngine.inventory.addItem(new Item(GameEngine.sword, -1, -1, ItemType.Sword));
         gameEngine.map.placeEntity(goblin, 0, 0);
         assertEquals("Enemy", gameEngine.map.getEntityTypeAt(0,0));
         goblin.fight(gameEngine, gameEngine.map, 0, 0, 5);
@@ -27,7 +27,7 @@ public class EnemyTest {
         assertEquals("Empty Space", gameEngine.map.getEntityTypeAt(0,1));
 
         // Add sword and test for fighting ogre
-        gameEngine.inventory.addItem(new Item("sword", -1, -1, ItemType.Sword));
+        gameEngine.inventory.addItem(new Item(GameEngine.sword, -1, -1, ItemType.Sword));
         gameEngine.map.placeEntity(ogre, 1, 0);
         assertEquals("Enemy", gameEngine.map.getEntityTypeAt(1,0));
         ogre.fight(gameEngine, gameEngine.map, 1, 0, 5);
@@ -39,7 +39,7 @@ public class EnemyTest {
         boss.fight(gameEngine, gameEngine.map, 1, 1, 5);
         assertEquals("Enemy", gameEngine.map.getEntityTypeAt(1,1));
 
-        // Test for fighting goblin with no weapno
+        // Test for fighting goblin with no weapon
         gameEngine.map.placeEntity(goblin, 0, 0);
         assertEquals("Enemy", gameEngine.map.getEntityTypeAt(0,0));
         goblin.fight(gameEngine, gameEngine.map, 0, 0, 5);

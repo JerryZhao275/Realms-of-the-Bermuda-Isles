@@ -61,17 +61,8 @@ public class Item extends Entity{
             default -> {durability -= 1;}
         }
     }
-
     public boolean canUse() {
         return durability > 0;
     }
-    public static Item ARMOR = new Item("Armor", 0, 0,ItemType.Armor);  // x and y set to 0 just for initialization.
-    public static Item POTION = new Item("Potion", 0, 0,ItemType.Potion);
-    public static Item SWORD = new Item("Sword", 0, 0,ItemType.Sword);
 
-    static {
-        ARMOR.setPrice(2);
-        POTION.setPrice(1);
-        SWORD.setPrice(2);
-    }
 }

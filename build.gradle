@@ -1,4 +1,5 @@
 plugins {
+    id 'com.github.johnrengelman.shadow' version '8.1.1'
     id 'java'
 }
 
@@ -9,7 +10,7 @@ tasks.jar {
 }
 
 
-group 'org.example'
+group 'org.bermudagame'
 version '1.0-SNAPSHOT'
 
 repositories {

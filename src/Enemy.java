@@ -1,5 +1,15 @@
 import java.util.Objects;
 
+/**
+ * Represents Enemy.
+ * This class represents interaction between the user and enemy by fighting or talking with them.
+ * There are different kinds of enemies each with their unique dialogue.
+ * </p>
+ *
+ * @author
+ */
+
+
 public class Enemy extends Entity{
     /**
      * Public constructor to initialize the Enemy instance.
@@ -7,6 +17,10 @@ public class Enemy extends Entity{
      *
      * @author Kwong Yu Zhou
      * @author Hsuan Chu Shih
+     *
+     * @param name The name of the enemy (e.g., goblin, spider, ogre, boss).
+     * @param x    The x-coordinate of the enemy on the map.
+     * @param y    The y-coordinate of the enemy on the map.
      */
     public Enemy(String name, int x, int y) {
         super(name, x, y);
@@ -16,7 +30,18 @@ public class Enemy extends Entity{
     public Enemy() {}
 
     /**
-     * Initiates a battle with the player.
+     * Initiates a battle between the enemy and the player.
+     * The outcome of the battle is determined by the player's current weapon and its usability.
+     * If the player is equipped with a usable weapon, the enemy (except for the boss) can be defeated.
+     * Otherwise, the player loses HP.
+     *
+     * @author
+     *
+     * @param gameEngine The game engine.
+     * @param map        The game map where enemies are located.
+     * @param row        The row coordinate of the enemy on the map.
+     * @param column     The column coordinate of the enemy on the map.
+     * @param HP         The current HP of the player.
      */
     public void fight(GameEngine gameEngine, Map map, int row, int column, int HP) {
         Item weapon = gameEngine.returnWeapon();
@@ -41,9 +66,12 @@ public class Enemy extends Entity{
 
 
     /**
-     * Handles interaction and dialogue with the player.
+     * This method is to talk with different kinds of enemy based on type of enemy the player encounters.
+     * Different kinds of enemy(e.g., goblin, spider, ogre, boss) will return different dialogue results.
      *
-     * @return
+     * @author
+     *
+     * @return A string representing the dialogue between the user and the enemy
      */
     public String talk() {
         String response;

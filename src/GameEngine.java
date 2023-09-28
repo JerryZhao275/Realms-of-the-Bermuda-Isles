@@ -152,7 +152,12 @@ public class GameEngine {
                     }
                     case "NPC" -> {
                         NPC npc = (NPC) map.getEntityAt(xPosition, yPosition);
-                        System.out.println("There's " + npc.getName() + " wandering about in the distance.");
+                        if (npc instanceof NPC.Thief) {
+                            System.out.println("There's a stranger wandering about in the distance.");
+                        } else {
+                            System.out.println("There's " + npc.getName() + " wandering about in the distance.");
+                        }
+
                     }
                     case "Item" -> {
                         Item item = (Item) map.getEntityAt(xPosition, yPosition);
@@ -266,7 +271,7 @@ public class GameEngine {
                 }
 
                 case "talk" -> System.out.println("Specify who you would like to talk to, i.e. 'talk [Entity]'");
-                case "talk dwarf", "talk merchant", "talk thief", "talk blacksmith",
+                case "talk dwarf", "talk merchant", "talk stranger", "talk blacksmith",
                         "talk goblin", "talk spider", "talk boss", "talk ogre" -> {
                     String[] parts = input.split(" ");
                     Entity entity = map.getEntityAt(xPosition, yPosition);
@@ -288,10 +293,12 @@ public class GameEngine {
                         NPC npc = (NPC) entity;
                         String message = npc.talk(this.map,xPosition,yPosition,this.inventory);  // Assuming GameEngine has a field called 'inventory'
                         System.out.println(message);
+
                     } else if (entity instanceof Enemy && entity.getName().equalsIgnoreCase(parts[1])) {
                         Enemy enemy = (Enemy) entity;
                         String message = enemy.talk();  // Assuming GameEngine has a field called 'inventory'
                         System.out.println(message);
+
                     } else {
                         System.out.println("There is no " + parts[1] + " here to talk to.");
                     }

@@ -1,3 +1,5 @@
+package org.bermudagame;
+
 public class Item extends Entity{
     // This is the initialisation of a java class in a source folder
     private int price;

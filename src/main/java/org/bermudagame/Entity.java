@@ -1,4 +1,5 @@
-import com.fasterxml.jackson.annotation.JsonProperty;
+package org.bermudagame;
+
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 
 /**
@@ -98,6 +99,11 @@ public class Entity {
     public void move(int newX, int newY) {
         x = newX;
         y = newY;
+    }
+
+    @Override
+    public String toString() {
+        return name;
     }
 
 }

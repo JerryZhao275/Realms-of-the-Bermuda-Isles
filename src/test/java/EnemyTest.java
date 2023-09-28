@@ -1,3 +1,7 @@
+import org.bermudagame.Enemy;
+import org.bermudagame.GameEngine;
+import org.bermudagame.Item;
+import org.bermudagame.ItemType;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;

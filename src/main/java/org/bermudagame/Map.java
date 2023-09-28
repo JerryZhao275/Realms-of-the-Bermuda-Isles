@@ -1,7 +1,6 @@
-import com.fasterxml.jackson.annotation.JsonTypeInfo;
+package org.bermudagame;
 
-import java.util.Arrays;
-import java.util.List;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 
 /**
  * This class represents a square map, that is the space for the player to explore.

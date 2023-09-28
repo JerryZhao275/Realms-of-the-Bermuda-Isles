@@ -1,3 +1,4 @@
+import org.bermudagame.*;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -25,7 +26,7 @@ public class NPCTest {
     void testThiefTalkWeapon() {
         inventory = new Inventory();
         map = new Map();
-        inventory.addItem(new Item("Sword", 0, 0,ItemType.Sword));
+        inventory.addItem(new Item("Sword", 0, 0, ItemType.Sword));
         NPC.Thief thief = new NPC.Thief("Thief", 0, 0);
         thief.talk(map, 0, 0, inventory);
         assertEquals(1, inventory.getItems().size(), "Inventory should be empty after the thief's visit");
@@ -36,7 +37,7 @@ public class NPCTest {
     void testThiefTalkSingle() {
         inventory = new Inventory();
         map = new Map();
-        inventory.addItem(new Item("Coin", 0, 0,ItemType.Gold));
+        inventory.addItem(new Item("Coin", 0, 0, ItemType.Gold));
         NPC.Thief thief = new NPC.Thief("Thief", 0, 0);
         thief.talk(map, 0, 0, inventory);
         assertEquals(0, inventory.getItems().size(), "Inventory should be empty after the thief's visit");
@@ -47,9 +48,9 @@ public class NPCTest {
     void testThiefTalkMultiple() {
         inventory = new Inventory();
         map = new Map();
-        inventory.addItem(new Item("Coin", 0, 0,ItemType.Gold));
-        inventory.addItem(new Item("Belt", 0, 1,ItemType.Armor));
-        inventory.addItem(new Item("Sword", 1, 0,ItemType.Sword));
+        inventory.addItem(new Item("Coin", 0, 0, ItemType.Gold));
+        inventory.addItem(new Item("Belt", 0, 1, ItemType.Armor));
+        inventory.addItem(new Item("Sword", 1, 0, ItemType.Sword));
         NPC.Thief thief = new NPC.Thief("Thief", 1, 0);
         thief.talk(map, 1, 0, inventory);
         assertEquals(1, inventory.getItems().size(), "Inventory should only contain sword after the thief's visit");

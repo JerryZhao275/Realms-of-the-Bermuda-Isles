@@ -1,0 +1,153 @@
+{
+  "map" : {
+    "@class" : "org.bermudagame.Map",
+    "grid" : [ [ null, null, {
+      "@class" : "org.bermudagame.Enemy",
+      "name" : "goblin",
+      "x" : 1,
+      "y" : 3
+    }, {
+      "@class" : "org.bermudagame.NPC$Blacksmith",
+      "name" : "blacksmith",
+      "x" : 0,
+      "y" : 3
+    } ], [ {
+      "@class" : "org.bermudagame.Enemy",
+      "name" : "spider",
+      "x" : 2,
+      "y" : 3
+    }, {
+      "@class" : "org.bermudagame.NPC$Dwarf",
+      "name" : "dwarf",
+      "x" : 1,
+      "y" : 1
+    }, {
+      "@class" : "org.bermudagame.Item",
+      "name" : "gold",
+      "x" : 1,
+      "y" : 2,
+      "price" : 1,
+      "durability" : 0,
+      "itemType" : "Gold"
+    }, {
+      "@class" : "org.bermudagame.Enemy",
+      "name" : "goblin",
+      "x" : 1,
+      "y" : 3
+    } ], [ {
+      "@class" : "org.bermudagame.Item",
+      "name" : "potion",
+      "x" : 2,
+      "y" : 0,
+      "price" : 1,
+      "durability" : 2,
+      "itemType" : "Potion"
+    }, {
+      "@class" : "org.bermudagame.Enemy",
+      "name" : "ogre",
+      "x" : 2,
+      "y" : 1
+    }, {
+      "@class" : "org.bermudagame.NPC$Merchant",
+      "name" : "merchant",
+      "x" : 2,
+      "y" : 2
+    }, {
+      "@class" : "org.bermudagame.Enemy",
+      "name" : "spider",
+      "x" : 2,
+      "y" : 3
+    } ], [ {
+      "@class" : "org.bermudagame.Item",
+      "name" : "armor",
+      "x" : 3,
+      "y" : 0,
+      "price" : 2,
+      "durability" : 0,
+      "itemType" : "Armor"
+    }, {
+      "@class" : "org.bermudagame.Item",
+      "name" : "gold",
+      "x" : 1,
+      "y" : 2,
+      "price" : 1,
+      "durability" : 0,
+      "itemType" : "Gold"
+    }, {
+      "@class" : "org.bermudagame.Enemy",
+      "name" : "goblin",
+      "x" : 1,
+      "y" : 3
+    }, {
+      "@class" : "org.bermudagame.Enemy",
+      "name" : "boss",
+      "x" : 3,
+      "y" : 3
+    } ] ]
+  },
+  "inventory" : {
+    "items" : [ {
+      "@class" : "org.bermudagame.Item",
+      "name" : "sword",
+      "x" : -1,
+      "y" : -1,
+      "price" : 2,
+      "durability" : 3,
+      "itemType" : "Sword"
+    }, {
+      "@class" : "org.bermudagame.Item",
+      "name" : "potion",
+      "x" : -1,
+      "y" : -1,
+      "price" : 1,
+      "durability" : 2,
+      "itemType" : "Potion"
+    }, {
+      "@class" : "org.bermudagame.Item",
+      "name" : "gold",
+      "x" : -1,
+      "y" : -1,
+      "price" : 1,
+      "durability" : 0,
+      "itemType" : "Gold"
+    }, {
+      "@class" : "org.bermudagame.Item",
+      "name" : "gold",
+      "x" : -1,
+      "y" : -1,
+      "price" : 1,
+      "durability" : 0,
+      "itemType" : "Gold"
+    }, {
+      "@class" : "org.bermudagame.Item",
+      "name" : "gold",
+      "x" : -1,
+      "y" : -1,
+      "price" : 1,
+      "durability" : 0,
+      "itemType" : "Gold"
+    }, {
+      "@class" : "org.bermudagame.Item",
+      "name" : "gold",
+      "x" : -1,
+      "y" : -1,
+      "price" : 1,
+      "durability" : 0,
+      "itemType" : "Gold"
+    }, {
+      "@class" : "org.bermudagame.Item",
+      "name" : "bow",
+      "x" : 0,
+      "y" : 1,
+      "price" : 3,
+      "durability" : 3,
+      "itemType" : "Bow"
+    } ]
+  },
+  "difficulty" : 0,
+  "hp_limit" : 5,
+  "attack_time" : 3,
+  "xPosition" : 0,
+  "yPosition" : 1,
+  "hp" : 5
+}

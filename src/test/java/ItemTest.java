@@ -1,13 +1,16 @@
+import org.bermudagame.Inventory;
+import org.bermudagame.Item;
+import org.bermudagame.ItemType;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class ItemTest {
     Inventory inventory = new Inventory();
-    private final Item item1 = new Item("Greatsword", 0, 0,ItemType.Sword);
-    private final Item item2 = new Item("Mana Elixir", 0, 0,ItemType.Potion);
-    private final Item item3 = new Item("Long Bow", 0, 0,ItemType.Bow);
-    private final Item item4 = new Item("Steel Plated Chestplate", 0, 0,ItemType.Armor);
-    private final Item item5 = new Item("Gold", 0, 0,ItemType.Gold);
+    private final Item item1 = new Item("Greatsword", 0, 0, ItemType.Sword);
+    private final Item item2 = new Item("Mana Elixir", 0, 0, ItemType.Potion);
+    private final Item item3 = new Item("Long Bow", 0, 0, ItemType.Bow);
+    private final Item item4 = new Item("Steel Plated Chestplate", 0, 0, ItemType.Armor);
+    private final Item item5 = new Item("Gold", 0, 0, ItemType.Gold);
 
     @Test
     void testGetPrice() {

@@ -17,7 +17,7 @@ stages:
 gradle-build:
   stage: build
   tags:
-    -comp2120
+    - comp2120
   script:
     - ./gradlew assemble
   artifacts:
@@ -27,7 +27,7 @@ gradle-build:
 gradle-test:
   stage: test
   tags:
-    -comp2120
+    - comp2120
   script:
     - ./gradlew test
   artifacts:

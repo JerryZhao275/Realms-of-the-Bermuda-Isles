@@ -1,8 +1,5 @@
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 
-import java.util.Arrays;
-import java.util.List;
-
 /**
  * This class represents a square map, that is the space for the player to explore.
  * It handles the existence of entities on each coordinate.
@@ -47,7 +44,7 @@ public class Map {
         Entity merchant = new NPC.Merchant("merchant", -1, -1);
 
         // row 0
-        placeEntity(spider,1,0);
+        placeEntity(merchant,1,0);
         placeEntity(potion,2,0);
         placeEntity(armor,3,0);
 

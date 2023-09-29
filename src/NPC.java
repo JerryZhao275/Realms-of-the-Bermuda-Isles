@@ -9,6 +9,8 @@ import java.util.*;
  * </p>
  *
  * @author Thomas Green
+ * @author Kwong Yu Zhou
+ * @author Jerry Zhao
  */
 
 
@@ -22,13 +24,16 @@ public abstract class NPC extends Entity {
      * @param name The name of the NPC.
      * @param x    The x-coordinate of the NPC.
      * @param y    The y-coordinate of the NPC.
-     *
      */
-
     public NPC(String name, int x, int y) {
         super(name, x, y);
     }
-    //    Empty Constructor to allow JSON mapping
+
+    /**
+     * Empty Constructor to allow JSON mapping
+     *
+     * @author Sam Powell
+     */
     public NPC() {}
 
     /**
@@ -44,7 +49,6 @@ public abstract class NPC extends Entity {
      *
      * @return A message to the player describing the result of the interaction.
      */
-
     public abstract String talk(Map map, int row, int column, Inventory inventory);
 
     /**
@@ -55,7 +59,6 @@ public abstract class NPC extends Entity {
      *
      * @author Thomas Green
      */
-
     public static class Blacksmith extends NPC {
 
         /**
@@ -71,6 +74,7 @@ public abstract class NPC extends Entity {
         public Blacksmith(String name, int x, int y) {
             super(name, x, y);
         }
+
         //    Empty Constructor to allow JSON mapping
         public Blacksmith() {}
 
@@ -80,6 +84,7 @@ public abstract class NPC extends Entity {
          * After the interaction, the Blacksmith is removed from the map.
          *
          * @author Thomas Green
+         * @author Kwong Yu Zhou
          *
          * @param map       The game map where entities, including the Blacksmith, are located.
          * @param row       The row coordinate of the Blacksmith on the map.
@@ -122,6 +127,7 @@ public abstract class NPC extends Entity {
         public Thief(String name, int x, int y) {
             super("stranger", x, y);
         }
+
         //    Empty Constructor to allow JSON mapping
         public Thief() {}
 
@@ -213,8 +219,10 @@ public abstract class NPC extends Entity {
         public Dwarf(String name, int x, int y) {
             super(name, x, y);
         }
+
         //    Empty Constructor to allow JSON mapping
         public Dwarf() {}
+
         /**
          * Represents the interaction between the player and the Dwarf NPC.
          * When the player interacts with the Dwarf, the Dwarf offers them some gold.
@@ -241,9 +249,6 @@ public abstract class NPC extends Entity {
             return "# The Dwarf left you a piece of gold. A piece of 'gold' has been added to your inventory.";
         }
     }
-
-
-
 
     /**
      * Represents a Merchant NPC, a character in the game from whom the player can buy items.

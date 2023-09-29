@@ -16,6 +16,8 @@ import java.util.Scanner;
  * @author Hsuan-Chu Shih
  * @author Jerry Zhao
  * @author Sam Powell
+ * @author Thomas Green
+ * @author Kwong Yu Zhou
  */
 public class GameEngine {
     private static GameEngine instance;
@@ -39,6 +41,8 @@ public class GameEngine {
     /**
      * Private constructor to initialize the GameEngine instance.
      * It creates a new map, inventory, and scanner for user input.
+     *
+     * @author Jerry Zhao
      */
     public GameEngine() {
         map = new Map();
@@ -48,6 +52,8 @@ public class GameEngine {
 
     /**
      * Get the singleton instance of the GameEngine class.
+     *
+     * @author Jerry Zhao
      *
      * @return The GameEngine instance.
      */
@@ -62,10 +68,10 @@ public class GameEngine {
     /**
      * startGame() starts the user's playthrough of the game.
      *
-     * @param difficulty integer corresponding to the difficulty of the game; 0 = easy, 1 = normal, 2 = hard
-     *
      * @author Jerry Zhao
      * @author Sam Powell
+     *
+     * @param difficulty integer corresponding to the difficulty of the game; 0 = easy, 1 = normal, 2 = hard
      */
     public void startGame(int difficulty, String[] testInput) {
         switch (difficulty) {
@@ -180,13 +186,32 @@ public class GameEngine {
             }
 
             switch (input) {
+                /*
+                  Displays a list of available commands to the player.
+                 */
                 case "help" -> displayCommands();
+
+                /*
+                 * Quits the game, ending the current session.
+                 */
                 case "quit" -> {
                     isGameOver = true;
                     System.out.println("Thanks for playing!");
                 }
+
+                /*
+                 * Display the contents of the inventory
+                 */
                 case "inventory" -> displayInventory();
+
+                /*
+                 * Display the player's current HP
+                 */
                 case "hp" -> System.out.println("You current HP is: "+ HP);
+
+                /*
+                 * Initiates an attack on enemy entity.
+                 */
                 case "attack" -> {
                     Entity entity = map.getEntityAt(xPosition, yPosition);
                     if (entity instanceof Enemy) {
@@ -195,6 +220,10 @@ public class GameEngine {
                         System.out.println("There's no enemy here to fight!");
                     }
                 }
+                /*
+                 * Handles the attack on a specific enemy type. If the enemy exists in the player's current
+                 * location, a fight is initiated.
+                 */
                 case "attack goblin", "attack ogre", "attack spider" -> {
                     Entity entity = map.getEntityAt(xPosition, yPosition);
                     if (entity instanceof Enemy enemy) {
@@ -204,6 +233,10 @@ public class GameEngine {
                         System.out.println("There's no enemy here to fight!");
                     }
                 }
+                /**
+                 * Attempts to attack the main boss of the game.
+                 * The player can only challenge the boss if they possess a weapon.
+                 */
                 case "attack boss"-> {
                     if(playerHasWeapon()){
                         Entity entity = map.getEntityAt(xPosition, yPosition);
@@ -242,7 +275,13 @@ public class GameEngine {
                         }
                     } else {System.out.println("You are unable to challenge the boss without a weapon!");}
                 }
+                /**
+                 * Prompts the player to specify a direction they'd like to move in.
+                 */
                 case "move" -> System.out.println("Please specify the direction you would like to move in, i.e. 'move right'");
+                /**
+                 * Handles movement commands and moves the player to the specified direction.
+                 */
                 case "move forward", "move backward", "move left", "move right" -> {
                     String[] parts = input.split(" ");
                     if (parts.length == 2) {
@@ -269,8 +308,13 @@ public class GameEngine {
                         System.out.println("Invalid move command. Please specify a direction.");
                     }
                 }
-
+                /**
+                 * Prompts the player to specify an entity they'd like to converse with.
+                 */
                 case "talk" -> System.out.println("Specify who you would like to talk to, i.e. 'talk [Entity]'");
+                /**
+                 * Handles conversations with various entities within the game.
+                 */
                 case "talk dwarf", "talk merchant", "talk stranger", "talk blacksmith",
                         "talk goblin", "talk spider", "talk boss", "talk ogre" -> {
                     String[] parts = input.split(" ");
@@ -303,7 +347,13 @@ public class GameEngine {
                         System.out.println("There is no " + parts[1] + " here to talk to.");
                     }
                 }
+                /**
+                 * Prompts the player to specify an item they'd like to take.
+                 */
                 case "take" -> System.out.println("What would you like to take?");
+                /**
+                 * Handles the action of the player taking items within the game world.
+                 */
                 case "take potion", "take armor", "take gold", "take bow" -> {
                     String[] parts = input.split(" ");
                     Entity entity = map.getEntityAt(xPosition, yPosition);
@@ -314,12 +364,17 @@ public class GameEngine {
                     }
                     else {System.out.println("There is no item here");}
                 }
-
+                /**
+                 * Prompts the player to specify an item they'd like to use from their inventory.
+                 */
                 case "use" -> {
                     System.out.println("Which item do you want to use: ");
                     displayInventory();
                     System.out.println("Type 'use [item]'");
                 }
+                /**
+                 * Handles the action of the player using items from their inventory.
+                 */
                 case "use potion", "use armor", "use gold", "use sword", "use bow" -> {
                     String[] parts = input.split(" ");
                     Item selectedItem = inventory.getItem(parts[1]);

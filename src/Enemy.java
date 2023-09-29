@@ -6,7 +6,11 @@ import java.util.Objects;
  * There are different kinds of enemies each with their unique dialogue.
  * </p>
  *
- * @author
+ * @author Sam Powell
+ * @author Kwong Yu Zhou
+ * @author Thomas Green
+ * @author Jerry Zhao
+ * @author Hsuan-Chu Shih
  */
 
 
@@ -26,7 +30,11 @@ public class Enemy extends Entity{
         super(name, x, y);
     }
 
-//    Empty Constructor to allow JSON mapping
+    /**
+     * Empty Constructor to allow JSON mapping
+     *
+     * @author Sam Powell
+     */
     public Enemy() {}
 
     /**
@@ -35,7 +43,11 @@ public class Enemy extends Entity{
      * If the player is equipped with a usable weapon, the enemy (except for the boss) can be defeated.
      * Otherwise, the player loses HP.
      *
-     * @author
+     * @author Sam Powell
+     * @author Kwong Yu Zhou
+     * @author Thomas Green
+     * @author Jerry Zhao
+     * @author Hsuan-Chu Shih
      *
      * @param gameEngine The game engine.
      * @param map        The game map where enemies are located.
@@ -69,7 +81,8 @@ public class Enemy extends Entity{
      * This method is to talk with different kinds of enemy based on type of enemy the player encounters.
      * Different kinds of enemy(e.g., goblin, spider, ogre, boss) will return different dialogue results.
      *
-     * @author
+     * @author Kwong Yu Zhou
+     * @author Hsuan-Chu Shih
      *
      * @return A string representing the dialogue between the user and the enemy
      */

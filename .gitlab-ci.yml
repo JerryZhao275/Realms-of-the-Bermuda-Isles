@@ -10,33 +10,28 @@
 # https://gradle.org/
 # https://github.com/gradle/gradle
 
-image: gradle:alpine
-
-before_script:
-  - GRADLE_USER_HOME="$(pwd)/.gradle"
-  - export GRADLE_USER_HOME
-
-build:
+stages:
+  - build
+  - test
+  -
+gradle-build:
   stage: build
-  script: gradle --build-cache assemble
-  cache:
-    key: "$CI_COMMIT_REF_NAME"
-    policy: push
+  tags:
+    -comp2120
+  script:
+    - ./gradlew assemble
+  artifacts:
     paths:
-      - build
-      - .gradle
+      - build/
 
-test:
+gradle-test:
   stage: test
-  script: gradle check
-  cache:
-    key: "$CI_COMMIT_REF_NAME"
-    policy: pull
-    paths:
-      - build
-      - .gradle
+  tags:
+    -comp2120
+  script:
+    - ./gradlew test
+  artifacts:
+    reports:
+      junit: build/test-results/test/TEST-*.xml
 
-deploy:
-  stage: deploy
-  script: echo "Define your deployment script!"
-  environment: production
+

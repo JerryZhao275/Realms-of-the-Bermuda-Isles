@@ -1,7 +1,11 @@
 import org.junit.jupiter.api.Test;
-
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * This is a JUnit test class responsible for covering all tests for the Enemy class.
+ *
+ * @author Jerry Zhao
+ */
 public class EnemyTest {
 
     private GameEngine gameEngine = new GameEngine();

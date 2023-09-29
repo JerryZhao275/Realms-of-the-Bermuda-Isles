@@ -259,6 +259,10 @@ public abstract class NPC extends Entity {
     public static class Merchant extends NPC {
         private List<Item> itemsForSale;
 
+        public List<Item> getItemsForSale() {
+            return itemsForSale;
+        }
+
         /**
          * Constructs a Merchant NPC with the specified name and coordinates.
          *

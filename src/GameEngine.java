@@ -428,37 +428,13 @@ public class GameEngine {
                 }
 
                 /*
-                 * Interacts with an NPC to perform a trade if the NPC is a merchant.
-                 * It determines whether there's a merchant in the player's position and allows the
-                 * player to trade items with the merchant.
-                 * There are three items in total for player to trade.
-                 */
-                case "trade" -> {
-                    Entity entity = map.getEntityAt(xPosition, yPosition);
-                    if (entity instanceof NPC.Merchant) {
-                        NPC.Merchant merchant = (NPC.Merchant) entity;
-
-                        int newListSize = testInput.length - currInput;
-                        String[] newList = new String[newListSize];
-                        System.arraycopy(testInput, currInput, newList, 0, testInput.length - currInput);
-
-                        String message = "";
-                        if (newList != null) {
-                            testInput = merchant.talk(map, xPosition, yPosition, this.inventory, newList);
-                            currInput = 0;
-                        } else {
-                            message = merchant.talk(map, xPosition, yPosition, this.inventory);
-                        }
-                        System.out.println(message);
-                    } else {
-                        System.out.println("There is no merchant here to trade with.");
-                    }
-                }
-
-                /*
                  * Saves the current state of the game.
                  */
-                case "save" -> {saveGame();}
+                case "save" -> {
+                    System.out.println("You have saved the game!");
+                    saveGame();
+                }
+
 
                 // Add more commands such as save and load later
                 default -> System.out.println("Please enter a valid command or type help to see the commands.");

@@ -141,7 +141,6 @@ public class Map {
             Entity entity = grid[row][col];
             return entity;
         }
-        System.out.println("Invalid position: [" + row + "][" + col + "]");
         return null;
     }
 }

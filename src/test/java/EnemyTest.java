@@ -3,9 +3,13 @@ import org.bermudagame.GameEngine;
 import org.bermudagame.Item;
 import org.bermudagame.ItemType;
 import org.junit.jupiter.api.Test;
-
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * This is a JUnit test class responsible for covering all tests for the Enemy class.
+ *
+ * @author Jerry Zhao
+ */
 public class EnemyTest {
 
     private GameEngine gameEngine = new GameEngine();
@@ -15,6 +19,13 @@ public class EnemyTest {
     private Enemy boss = new Enemy("boss", 1, 1);
     private Enemy other = new Enemy("other", -1, -1);
 
+
+    /**
+     * Tests the behavior of fighting various enemies and with different weapons in the game.
+     * Expected outcome: Correct enemy or space state should be reflected on the game map.
+     *
+     * @author Jerry Zhao
+     */
     @Test
     void testFight() {
         // Add sword and test for fighting goblin
@@ -43,7 +54,7 @@ public class EnemyTest {
         boss.fight(gameEngine, gameEngine.map, 1, 1, 5);
         assertEquals("Enemy", gameEngine.map.getEntityTypeAt(1,1));
 
-        // Test for fighting goblin with no weapno
+        // Test for fighting goblin with no weapon
         gameEngine.map.placeEntity(goblin, 0, 0);
         assertEquals("Enemy", gameEngine.map.getEntityTypeAt(0,0));
         goblin.fight(gameEngine, gameEngine.map, 0, 0, 5);
@@ -56,6 +67,12 @@ public class EnemyTest {
         assertEquals("Enemy", gameEngine.map.getEntityTypeAt(0,0));
     }
 
+    /**
+     * Tests the scenario where talking with different kinds of enemies.
+     * Expected outcome: Each enemy should return its unique dialogue.
+     *
+     * @author Jerry Zhao
+     */
     @Test
     void testTalk() {
         assertEquals("A puny traveler dares enter my territory? Face my wrath!", goblin.talk());

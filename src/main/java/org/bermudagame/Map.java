@@ -45,13 +45,12 @@ public class Map {
         Entity dwarf = new NPC.Dwarf("dwarf", -1, -1);
         Entity merchant = new NPC.Merchant("merchant", -1, -1);
 
-        // row 0
         placeEntity(spider,1,0);
         placeEntity(potion,2,0);
         placeEntity(armor,3,0);
 
         Entity[][] entities = { // row 1-3
-                {bow, dwarf, ogre, gold},
+                {thief, dwarf, ogre, gold},
                 {goblin, gold, merchant, goblin},
                 {blacksmith, goblin, spider, boss}
         };
@@ -75,9 +74,7 @@ public class Map {
     public void placeEntity(Entity entity, int row, int col) {
         entity.move(row, col);
         grid[row][col] = entity;
-        System.out.println("Placed " + entity.getName() + " at [" + row + "][" + col + "]");
     }
-
 
     /**
      * Remove the entity from the given position.
@@ -144,7 +141,6 @@ public class Map {
     public Entity getEntityAt(int row, int col) {
         if (isValidPosition(row, col)) {
             Entity entity = grid[row][col];
-            System.out.println("Entity at [" + row + "][" + col + "]: " + entity);
             return entity;
         }
         System.out.println("Invalid position: [" + row + "][" + col + "]");

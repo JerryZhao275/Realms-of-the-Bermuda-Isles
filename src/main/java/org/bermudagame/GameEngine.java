@@ -16,12 +16,14 @@ import java.util.Scanner;
  * @author Hsuan-Chu Shih
  * @author Jerry Zhao
  * @author Sam Powell
+ * @author Thomas Green
+ * @author Kwong Yu Zhou
  */
 public class GameEngine {
     private static GameEngine instance;
     protected transient Scanner scanner;
-    public Map map;
-    public Inventory inventory;
+    protected Map map;
+    protected Inventory inventory;
     protected int difficulty;
 
     protected boolean playerHasWeapon = false;  // At the class level, after other fields (testing boolean)
@@ -29,9 +31,6 @@ public class GameEngine {
     protected int HP;
     protected int hp_limit;
     protected int attack_time = 3; // the remained times for the boss to be defeated
-
-    //    xPosition and yPosition can be changed when implementing the proper map and movement.
-
     protected int xPosition;
     protected int yPosition;
 
@@ -39,6 +38,8 @@ public class GameEngine {
     /**
      * Private constructor to initialize the GameEngine instance.
      * It creates a new map, inventory, and scanner for user input.
+     *
+     * @author Jerry Zhao
      */
     public GameEngine() {
         map = new Map();
@@ -48,6 +49,8 @@ public class GameEngine {
 
     /**
      * Get the singleton instance of the GameEngine class.
+     *
+     * @author Jerry Zhao
      *
      * @return The GameEngine instance.
      */
@@ -62,10 +65,13 @@ public class GameEngine {
     /**
      * startGame() starts the user's playthrough of the game.
      *
-     * @param difficulty integer corresponding to the difficulty of the game; 0 = easy, 1 = normal, 2 = hard
-     *
+     * @author Hsuan-Chu Shih
      * @author Jerry Zhao
      * @author Sam Powell
+     * @author Thomas Green
+     * @author Kwong Yu Zhou
+     *
+     * @param difficulty integer corresponding to the difficulty of the game; 0 = easy, 1 = normal, 2 = hard
      */
     public void startGame(int difficulty, String[] testInput) {
         switch (difficulty) {
@@ -93,13 +99,15 @@ public class GameEngine {
             }
         }
 
-        System.out.println("===========================================");
-        System.out.println("In the enigmatic expanse of the Bermuda Triangle, an area where time and space mysteriously intertwine, lies a realm unknown to most.\n" +
-                "This place, known as the heart of the Bermuda Triangle, is the Bermuda Isles.\n" +
-                "Its inhabitants, mostly sailors and aviators who vanished over the years, have formed a unique community in this lost world.");
-        System.out.println("You stand on the desolate beach, with dense forests to the west and south.\n" +
-                "Currently, you have only two paths to choose from: one leading north and one leading east.");
-        System.out.println("===========================================");
+        if (difficulty != 4) {
+            System.out.println("===========================================");
+            System.out.println("In the enigmatic expanse of the Bermuda Triangle, an area where time and space mysteriously intertwine, lies a realm unknown to most.\n" +
+                    "This place, known as the heart of the Bermuda Triangle, is the Bermuda Isles.\n" +
+                    "Its inhabitants, mostly sailors and aviators who vanished over the years, have formed a unique community in this lost world.");
+            System.out.println("You stand on the desolate beach, with dense forests to the west and south.\n" +
+                    "Currently, you have only two paths to choose from: one leading north and one leading east.");
+            System.out.println("===========================================");
+        }
         System.out.println("Type 'help' for a list of commands.");
 
         boolean isGameOver = false;
@@ -112,9 +120,13 @@ public class GameEngine {
         int prevYPosition = yPosition;
 
         int currInput = 0;
-        while (!isGameOver && currInput < testInput.length) {
+        int display = 0;
+
+        while ((!isGameOver && currInput < testInput.length)) {
+            if (display == 0 && difficulty == 4) display = 1;
             // Check if the player's position has changed and print new dialogue when entering a new area
-            if (xPosition != prevXPosition || yPosition != prevYPosition) {
+            if (xPosition != prevXPosition || yPosition != prevYPosition || display == 1) {
+                display++;
                 if (xPosition == 0 && yPosition == 0) {
                     System.out.println("You find yourself back at where you started, with dense forests to the west and south.\n" +
                             "There are only two paths to choose from: one leading north and one leading east.");
@@ -127,13 +139,13 @@ public class GameEngine {
                 }
                 else if (xPosition == 3 && yPosition == 3) {
                     System.out.println("You've reached an open highland. From here, you can overlook the entire Bermuda Isles and " +
-                            "see the distant coastline.\n You can choose to descend the highlands and move towards west or south.");
+                            "see the distant coastline.\nYou can choose to descend the highlands and move towards west or south.");
                 }
                 else if (xPosition == 0 && yPosition == 1 || xPosition == 0 && yPosition == 2 ) {
-                    System.out.println("You continue traversing alongside the dense forest towards west, leaving all other directions open.");
+                    System.out.println("You continue traversing alongside the dense forest on your west, leaving all other directions open.");
                 }
                 else if (xPosition == 1 && yPosition == 0 || xPosition == 2 && yPosition == 0) {
-                    System.out.println("You continue traversing alongside the lonesome beach towards south, leaving all other directions open.");
+                    System.out.println("You continue traversing alongside the lonesome beach on your south, leaving all other directions open.");
                 }
                 else if (xPosition == 3 && yPosition == 1 || xPosition == 3 && yPosition == 2 ) {
                     System.out.println("You find yourself following the cliff of the highlands on your east, leaving all other directions open.");
@@ -180,13 +192,32 @@ public class GameEngine {
             }
 
             switch (input) {
+                /*
+                  Displays a list of available commands to the player.
+                 */
                 case "help" -> displayCommands();
+
+                /*
+                 * Quits the game, ending the current session.
+                 */
                 case "quit" -> {
                     isGameOver = true;
                     System.out.println("Thanks for playing!");
                 }
+
+                /*
+                 * Display the contents of the inventory
+                 */
                 case "inventory" -> displayInventory();
+
+                /*
+                 * Display the player's current HP
+                 */
                 case "hp" -> System.out.println("You current HP is: "+ HP);
+
+                /*
+                 * Initiates an attack on enemy entity.
+                 */
                 case "attack" -> {
                     Entity entity = map.getEntityAt(xPosition, yPosition);
                     if (entity instanceof Enemy) {
@@ -195,6 +226,12 @@ public class GameEngine {
                         System.out.println("There's no enemy here to fight!");
                     }
                 }
+
+                /*
+                 * Handles the attack on a specific enemy type. If the enemy exists in the player's current
+                 * location, a fight is initiated.
+                 * There are four enemies for player to attack(include BOSS)
+                 */
                 case "attack goblin", "attack ogre", "attack spider" -> {
                     Entity entity = map.getEntityAt(xPosition, yPosition);
                     if (entity instanceof Enemy enemy) {
@@ -204,6 +241,11 @@ public class GameEngine {
                         System.out.println("There's no enemy here to fight!");
                     }
                 }
+
+                /*
+                 * Attempts to attack the main boss of the game.
+                 * The player can only challenge the boss if they possess a weapon.
+                 */
                 case "attack boss"-> {
                     if(playerHasWeapon()){
                         Entity entity = map.getEntityAt(xPosition, yPosition);
@@ -215,26 +257,30 @@ public class GameEngine {
                                 map.removeEntity(xPosition,yPosition);
                                 // Some extra content can be added here
                                 System.out.println("Congratulations! You've won the game!");
-
                                 int newListSize = testInput.length - currInput;
                                 String[] newList = new String[newListSize];
                                 System.arraycopy(testInput, currInput, newList, 0, testInput.length - currInput);
+                                map = new Map();
+                                inventory = new Inventory();
                                 this.gameOver(newList);
                             }
-                            System.out.println("The boss hit back at you! You lost 2 HP.");
-                            if (HP <= 0) {
+                            else if (HP <= 0) {
+                                System.out.println("The boss hits back at you, crushing you into the ground!");
                                 isGameOver = true;
                                 System.out.println("# You have been defeated by the boss!");
                                 System.out.println("## Game Over ##");
                                 int newListSize = testInput.length - currInput;
                                 String[] newList = new String[newListSize];
                                 System.arraycopy(testInput, currInput, newList, 0, testInput.length - currInput);
+                                map = new Map();
+                                inventory = new Inventory();
                                 this.gameOver(newList);
                             }
                             else if (attack_time == 1) {
-                                // Some extra content can be added here
-                                System.out.println("Your current HP is "+ HP +". Start your decisive battle with the boss!");
+                                System.out.println("The boss hits back at you! You lost 2 HP.");
+                                System.out.println("Your current HP is "+ HP +". Attack the boss one more time to defeat it!");
                             } else {
+                                System.out.println("The boss hits back at you! You lost 2 HP.");
                                 System.out.println("Your current HP is "+ HP +". Attack " + attack_time + " more times to defeat the boss.");
                             }
                         } else {
@@ -242,7 +288,16 @@ public class GameEngine {
                         }
                     } else {System.out.println("You are unable to challenge the boss without a weapon!");}
                 }
+
+                /*
+                 * Allow the player to move at a specified position
+                 */
                 case "move" -> System.out.println("Please specify the direction you would like to move in, i.e. 'move right'");
+
+                /*
+                 * Handles command 'move' and moves the player to the specified direction.
+                 * There are four positions for player to move
+                 */
                 case "move forward", "move backward", "move left", "move right" -> {
                     String[] parts = input.split(" ");
                     if (parts.length == 2) {
@@ -260,7 +315,7 @@ public class GameEngine {
                         if (direction != null) {
                             boolean moveFlag = move(direction);
                             if (!moveFlag) {
-                                System.out.println("[" + "Move command is invalid" + "]");
+                                System.out.println("You cannot move in that direction!");
                             }
                         } else {
                             System.out.println("[" + "Move " + directionStr + "]");
@@ -270,7 +325,15 @@ public class GameEngine {
                     }
                 }
 
+                /*
+                 * Prompts the player to specify the NPC they'd like to talk with.
+                 */
                 case "talk" -> System.out.println("Specify who you would like to talk to, i.e. 'talk [Entity]'");
+
+                /*
+                 * Handles conversations with various NPCs within the game.
+                 * There are eight NPCs for player to talk in total.
+                 */
                 case "talk dwarf", "talk merchant", "talk stranger", "talk blacksmith",
                         "talk goblin", "talk spider", "talk boss", "talk ogre" -> {
                     String[] parts = input.split(" ");
@@ -303,7 +366,16 @@ public class GameEngine {
                         System.out.println("There is no " + parts[1] + " here to talk to.");
                     }
                 }
+
+                /*
+                 * Allows the player to specify items they'd like to take.
+                 */
                 case "take" -> System.out.println("What would you like to take?");
+
+                /*
+                 * Handles the action of the player taking items.
+                 * There are four items for player to take in total.
+                 */
                 case "take potion", "take armor", "take gold", "take bow" -> {
                     String[] parts = input.split(" ");
                     Entity entity = map.getEntityAt(xPosition, yPosition);
@@ -315,11 +387,19 @@ public class GameEngine {
                     else {System.out.println("There is no item here");}
                 }
 
+                /*
+                 * Allows the player to specify an item they'd like to use from their inventory.
+                 */
                 case "use" -> {
                     System.out.println("Which item do you want to use: ");
                     displayInventory();
                     System.out.println("Type 'use [item]'");
                 }
+
+                /*
+                 * Handles the action of the player using items from their inventory.
+                 * There are five items for player to use in total.
+                 */
                 case "use potion", "use armor", "use gold", "use sword", "use bow" -> {
                     String[] parts = input.split(" ");
                     Item selectedItem = inventory.getItem(parts[1]);
@@ -349,6 +429,12 @@ public class GameEngine {
                     else {System.out.println("Invalid item name");}
                 }
 
+                /*
+                 * Interacts with an NPC to perform a trade if the NPC is a merchant.
+                 * It determines whether there's a merchant in the player's position and allows the
+                 * player to trade items with the merchant.
+                 * There are three items in total for player to trade.
+                 */
                 case "trade" -> {
                     Entity entity = map.getEntityAt(xPosition, yPosition);
                     if (entity instanceof NPC.Merchant) {
@@ -370,6 +456,10 @@ public class GameEngine {
                         System.out.println("There is no merchant here to trade with.");
                     }
                 }
+
+                /*
+                 * Saves the current state of the game.
+                 */
                 case "save" -> {saveGame();}
 
                 // Add more commands such as save and load later
@@ -381,6 +471,8 @@ public class GameEngine {
 
     /**
      * Commands printed to the user if desired
+     *
+     * @author Jerry Zhao
      */
     private void displayCommands() {
         System.out.println("Available commands:");
@@ -398,10 +490,12 @@ public class GameEngine {
 
     /**
      * moves the user in the input direction
+     *
+     * @author Sam Powell
+     *
      * @param direction the direction to move the character
      *
      * @return True if the movement was successful, false if the movement was unsuccessful.
-     * @author Sam Powell
      */
     public boolean move(Direction direction) {
         if (direction == Direction.Left) {
@@ -424,9 +518,13 @@ public class GameEngine {
     }
 
     /**
-     * Prints the players current inventory
+     * Prints the players' current inventory
+     *
+     * @author Thomas Green
      */
     private void displayInventory() {
+        int goldCount = 0;
+        boolean hasGold = false;
         List<Item> items = inventory.getItems();
         if (items.isEmpty()) {
             System.out.println("Your inventory is empty.");
@@ -434,17 +532,24 @@ public class GameEngine {
         }
         System.out.println("Your inventory contains:");
         for (Item item : items) {
-            System.out.println("- " + item.getName() + " (" + item.getDurability() + ")");
+            if (item.getItemType() == ItemType.Gold) {
+                hasGold = true;
+                goldCount++;
+            }
+            else if (item.getItemType() == ItemType.Armor) System.out.println("- " + item.getName());
+            else System.out.println("- " + item.getName() + " (" + item.getDurability() + " use(s))");
         }
+        if (hasGold) System.out.println("- gold (" + goldCount + " piece(s))");
     }
 
 
     /**
      * Check if the player has weapon or not.
      *
-     * @return does the player has a weapon.
      * @author Kwong Yu Zhou
      * @author Thomas Green
+     *
+     * @return whether the player has one weapon, false otherwise.
      */
     public boolean playerHasWeapon() {
         for (Item item : inventory.getItems()) {
@@ -455,6 +560,14 @@ public class GameEngine {
         return playerHasWeapon; // Return false if no weapon was found in the loop
     }
 
+    /**
+     * Retrieves the current weapon of the player from the inventory.
+     *
+     * @author Kwong Yu Zhou
+     * @author Thomas Green
+     *
+     * @return whether the player has one weapon, null otherwise.
+     */
     public Item returnWeapon() {
         for (Item item : inventory.getItems()) {
             if (item.getItemType() == ItemType.Bow || item.getItemType() == ItemType.Sword) {
@@ -464,8 +577,13 @@ public class GameEngine {
         return null;
     }
 
-    //   Getter methods to allow Reading and Writing to JSON with Jackson library
-    //    Unless alternative method implemented, do not remove.
+    /**
+     * Getter methods to allow Reading and Writing to JSON with Jackson library
+     * Unless alternative method implemented, do not remove.
+     *
+     * @author Sam Powell
+     */
+
     public Inventory getInventory() {
         return inventory;
     }
@@ -482,14 +600,31 @@ public class GameEngine {
 
     public int getHp_limit() {return hp_limit;}
 
-
-
     /**
-     * Used to restart the game
+     * Handles the game-over scenario and prompts the player to restart the game.
+     * If the player chooses to restart, the game is restarted again with previous settings
+     * If the player chooses not to restart, the game exits.
+     *
      * @author Sam Powell
+     * @author Jerry Zhao
+     *
+     * @param testInput An array of strings containing the player's input. If the input
+     * is null, a prompt will be displayed to the player.
      */
     public void gameOver(String[] testInput) {
-        if (testInput != null) {
+        if (Objects.equals(testInput[0], "playthrough")) {
+            System.out.println("Would you like to play again? [Y/N]: ");
+            System.out.print("> ");
+            String playAgain = scanner.nextLine();
+            switch (playAgain) {
+                case "Y" -> startGame(difficulty, new String[]{"playthrough"});
+                case "N" -> {
+                    System.out.println("See you next time!");
+                    System.exit(0);
+                }
+            }
+        }
+        else {
             switch (testInput[0]) {
                 case "Y" -> {
                     int newListSize = testInput.length - 1;
@@ -503,23 +638,15 @@ public class GameEngine {
                 }
             }
         }
-        else {
-            System.out.println("Would you like to play again? [Y/N]: ");
-            System.out.print("> ");
-            String playAgain = scanner.nextLine();
-            switch (playAgain) {
-                case "Y" -> startGame(difficulty, null);
-                case "N" -> {
-                    System.out.println("See you next time!");
-                    System.exit(0);
-                }
-            }
-        }
     }
 
     /**
-     * Open a chest and add the items to the inventory
+     * Open a chest and add the items to the inventory.
+     * A random item and some pieces of gold(0 to 2 ) will be added to player's inventory
+     *
      * @author Kwong Yu Zhou
+     *
+     * @param inventory The inventory where the items from the chest will be added.
      */
     public void openChest(Inventory inventory) {
         Random random = new Random();
@@ -553,6 +680,11 @@ public class GameEngine {
         }
     }
 
+    /**
+     * Saves the current state of the game to a file using the Jackson library.
+     *
+     * @author Sam Powell
+     */
     public void saveGame() {
         ObjectMapper objectMapper = new ObjectMapper();
         try {

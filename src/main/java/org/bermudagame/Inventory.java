@@ -9,7 +9,9 @@ import java.util.List;
  * This class provides methods to add,delete,change or search the contents of the inventory.
  * </p>
  *
- * @author
+ * @author Sam Powell
+ * @author Hsuan-Chu
+ * @author Thomas Green
  */
 
 public class Inventory {
@@ -22,7 +24,9 @@ public class Inventory {
     /**
      * Get all the items from the inventory
      *
-     * @author
+     * @author Sam Powell
+     * @author Hsuan-Chu
+     * @author Thomas Green
      *
      * @return  item The list of items in the inventory
      *
@@ -34,7 +38,9 @@ public class Inventory {
     /**
      * Get an item from the inventory
      *
-     * @author
+     * @author Sam Powell
+     * @author Hsuan-Chu
+     * @author Thomas Green
      *
      * @param name The name of item to get in inventory
      *
@@ -50,7 +56,9 @@ public class Inventory {
     /**
      * Add an item from the inventory
      *
-     * @author
+     * @author Sam Powell
+     * @author Hsuan-Chu
+     * @author Thomas Green
      *
      * @param item The name of item to add in inventory
      *
@@ -62,7 +70,9 @@ public class Inventory {
     /**
      * Remove an item from the inventory
      *
-     * @author
+     * @author Sam Powell
+     * @author Hsuan-Chu
+     * @author Thomas Green
      *
      * @param item The name of item to remove in inventory
      *
@@ -74,7 +84,9 @@ public class Inventory {
     /**
      * Count the number of items presented in the inventory
      *
-     * @author
+     * @author Sam Powell
+     * @author Hsuan-Chu
+     * @author Thomas Green
      *
      * @param itemName The name of item to count
      *
@@ -89,7 +101,4 @@ public class Inventory {
         }
         return count;
     }
-
-
-
 }

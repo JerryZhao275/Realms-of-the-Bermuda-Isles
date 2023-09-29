@@ -10,6 +10,8 @@ import java.util.Scanner;
 /**
  * The MainMenu class represents the main menu and user interface of the Text-based RPG game.
  * It allows the user to start the game or quit the application.
+ *
+ * @author Jerry Zhao
  */
 public class MainMenu {
     private Scanner scanner;
@@ -56,14 +58,13 @@ public class MainMenu {
             switch (input) {
                 case "quit":
                     isInMenu = false;
-//                    System.out.println("hi");
                     System.out.println("Thanks for playing!");
                     break;
                 case "play":
                     System.out.println("Please select the difficult you would like to play on");
                     break;
                 case "play easy":
-                    if (gameEngine == null) {
+                    if (gameEngine == null){
                         int newListSize = testInput.length - currInput;
                         String[] newList = new String[newListSize];
                         for (int i = 0; currInput < testInput.length; i++, currInput++) {
@@ -103,9 +104,6 @@ public class MainMenu {
                     break;
                 case "load":
                     if (gameEngine == null) {
-
-
-
                         Reader fileReader = null;
                         try {
                             ObjectMapper objectMapper = new ObjectMapper();
@@ -143,6 +141,13 @@ public class MainMenu {
         scanner.close();
     }
 
+    /**
+     * The main entry point for the program.
+     *
+     * @author Jerry Zhao
+     *
+     * @param args Command-line arguments.
+     */
     public static void main(String[] args) {
         // Initialize the program for the user
         MainMenu mainMenu = new MainMenu();

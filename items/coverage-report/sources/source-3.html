@@ -1,0 +1,201 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <title>Coverage Report > Enemy</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/highlight-idea.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.pack.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">&lt;empty package name&gt;</a>
+</div>
+
+<h1>Coverage Summary for Class: Enemy (&lt;empty package name&gt;)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">Enemy</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (4/4)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    66.7%
+  </span>
+  <span class="absValue">
+    (26/39)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<div class="sourceCode" id="sourceCode"><i class="no-highlight">1</i>&nbsp;import java.util.Objects;
+<i class="no-highlight">2</i>&nbsp;
+<i class="no-highlight">3</i>&nbsp;/**
+<i class="no-highlight">4</i>&nbsp; * Represents Enemy.
+<i class="no-highlight">5</i>&nbsp; * This class represents interaction between the user and enemy by fighting or talking with them.
+<i class="no-highlight">6</i>&nbsp; * There are different kinds of enemies each with their unique dialogue.
+<i class="no-highlight">7</i>&nbsp; * &lt;/p&gt;
+<i class="no-highlight">8</i>&nbsp; *
+<i class="no-highlight">9</i>&nbsp; */
+<i class="no-highlight">10</i>&nbsp;
+<i class="no-highlight">11</i>&nbsp;
+<i class="no-highlight">12</i>&nbsp;public class Enemy extends Entity{
+<i class="no-highlight">13</i>&nbsp;    /**
+<i class="no-highlight">14</i>&nbsp;     * Public constructor to initialize the Enemy instance.
+<i class="no-highlight">15</i>&nbsp;     * It creates a new name, x-axis coordinate, and y-axis coordinate for the Enemy.
+<i class="no-highlight">16</i>&nbsp;     *
+<i class="no-highlight">17</i>&nbsp;     * @author Kwong Yu Zhou
+<i class="no-highlight">18</i>&nbsp;     * @author Hsuan Chu Shih
+<i class="no-highlight">19</i>&nbsp;     *
+<i class="no-highlight">20</i>&nbsp;     * @param name The name of the enemy (e.g., goblin, spider, ogre, boss).
+<i class="no-highlight">21</i>&nbsp;     * @param x    The x-coordinate of the enemy on the map.
+<i class="no-highlight">22</i>&nbsp;     * @param y    The y-coordinate of the enemy on the map.
+<i class="no-highlight">23</i>&nbsp;     */
+<i class="no-highlight">24</i>&nbsp;    public Enemy(String name, int x, int y) {
+<b class="fc"><i class="no-highlight">25</i>&nbsp;        super(name, x, y);</b>
+<b class="fc"><i class="no-highlight">26</i>&nbsp;    }</b>
+<i class="no-highlight">27</i>&nbsp;
+<i class="no-highlight">28</i>&nbsp;//    Empty Constructor to allow JSON mapping
+<b class="fc"><i class="no-highlight">29</i>&nbsp;    public Enemy() {}</b>
+<b class="fc"><i class="no-highlight">30</i>&nbsp;</b>
+<i class="no-highlight">31</i>&nbsp;    /**
+<i class="no-highlight">32</i>&nbsp;     * Initiates a battle between the enemy and the player.
+<i class="no-highlight">33</i>&nbsp;     * The outcome of the battle is determined by the player&#39;s current weapon and its usability.
+<i class="no-highlight">34</i>&nbsp;     * If the player is equipped with a usable weapon, the enemy (except for the boss) can be defeated.
+<i class="no-highlight">35</i>&nbsp;     * Otherwise, the player loses HP.
+<i class="no-highlight">36</i>&nbsp;     *
+<i class="no-highlight">37</i>&nbsp;     * @author
+<i class="no-highlight">38</i>&nbsp;     *
+<i class="no-highlight">39</i>&nbsp;     * @param gameEngine The game engine.
+<i class="no-highlight">40</i>&nbsp;     * @param map        The game map where enemies are located.
+<i class="no-highlight">41</i>&nbsp;     * @param row        The row coordinate of the enemy on the map.
+<i class="no-highlight">42</i>&nbsp;     * @param column     The column coordinate of the enemy on the map.
+<i class="no-highlight">43</i>&nbsp;     * @param HP         The current HP of the player.
+<i class="no-highlight">44</i>&nbsp;     */
+<i class="no-highlight">45</i>&nbsp;    public void fight(GameEngine gameEngine, Map map, int row, int column, int HP) {
+<b class="fc"><i class="no-highlight">46</i>&nbsp;        Item weapon = gameEngine.returnWeapon();</b>
+<b class="fc"><i class="no-highlight">47</i>&nbsp;        if (weapon != null &amp;&amp; weapon.canUse()) {</b>
+<b class="fc"><i class="no-highlight">48</i>&nbsp;            weapon.use(gameEngine.getInventory());</b>
+<b class="fc"><i class="no-highlight">49</i>&nbsp;            if (!Objects.equals(getName(), &quot;boss&quot;)){</b>
+<b class="fc"><i class="no-highlight">50</i>&nbsp;                map.removeEntity(row,column);</b>
+<b class="fc"><i class="no-highlight">51</i>&nbsp;                System.out.println(&quot;# You have slayed the &quot; + getName() + &quot;!&quot;);</b>
+<b class="nc"><i class="no-highlight">52</i>&nbsp;            }</b>
+<i class="no-highlight">53</i>&nbsp;        } else {
+<b class="fc"><i class="no-highlight">54</i>&nbsp;            System.out.println(&quot;# The &quot; + getName() + &quot; gains the upper hand in the fight!&quot;);</b>
+<b class="fc"><i class="no-highlight">55</i>&nbsp;            HP--;</b>
+<b class="fc"><i class="no-highlight">56</i>&nbsp;            System.out.println(&quot;# You lost 1 HP (you may need a weapon to defeat this enemy)&quot;);</b>
+<b class="fc"><i class="no-highlight">57</i>&nbsp;            if (HP &lt;= 0){</b>
+<b class="nc"><i class="no-highlight">58</i>&nbsp;                System.out.println(&quot;# You have been defeated by the &quot; + getName() + &quot; !&quot;);</b>
+<b class="nc"><i class="no-highlight">59</i>&nbsp;                System.out.println(&quot;## Game Over ##&quot;);</b>
+<b class="nc"><i class="no-highlight">60</i>&nbsp;                gameEngine.gameOver(null);</b>
+<b class="nc"><i class="no-highlight">61</i>&nbsp;            }</b>
+<b class="fc"><i class="no-highlight">62</i>&nbsp;            System.out.println(&quot;You HP has been decrease to &quot;+ HP +&quot;.&quot;);</b>
+<b class="nc"><i class="no-highlight">63</i>&nbsp;        }</b>
+<i class="no-highlight">64</i>&nbsp;    }
+<i class="no-highlight">65</i>&nbsp;
+<i class="no-highlight">66</i>&nbsp;
+<i class="no-highlight">67</i>&nbsp;    /**
+<i class="no-highlight">68</i>&nbsp;     * This method is to talk with different kinds of enemy based on type of enemy the player encounters.
+<i class="no-highlight">69</i>&nbsp;     * Different kinds of enemy(e.g., goblin, spider, ogre, boss) will return different dialogue results.
+<i class="no-highlight">70</i>&nbsp;     *
+<i class="no-highlight">71</i>&nbsp;     * @author
+<i class="no-highlight">72</i>&nbsp;     *
+<i class="no-highlight">73</i>&nbsp;     * @return A string representing the dialogue between the user and the enemy
+<i class="no-highlight">74</i>&nbsp;     */
+<i class="no-highlight">75</i>&nbsp;    public String talk() {
+<i class="no-highlight">76</i>&nbsp;        String response;
+<b class="fc"><i class="no-highlight">77</i>&nbsp;        switch (getName().toLowerCase()) {</b>
+<b class="nc"><i class="no-highlight">78</i>&nbsp;            case &quot;goblin&quot;:</b>
+<b class="fc"><i class="no-highlight">79</i>&nbsp;                response = &quot;A puny traveler dares enter my territory? Face my wrath!&quot;;</b>
+<b class="fc"><i class="no-highlight">80</i>&nbsp;                break;</b>
+<b class="nc"><i class="no-highlight">81</i>&nbsp;            case &quot;spider&quot;:</b>
+<b class="fc"><i class="no-highlight">82</i>&nbsp;                response = &quot;Hssss... Another prey entangled in my web!&quot;;</b>
+<b class="fc"><i class="no-highlight">83</i>&nbsp;                break;</b>
+<b class="nc"><i class="no-highlight">84</i>&nbsp;            case &quot;ogre&quot;:</b>
+<b class="fc"><i class="no-highlight">85</i>&nbsp;                response = &quot;You smell... tasty! Prepare to be my meal!&quot;;</b>
+<b class="fc"><i class="no-highlight">86</i>&nbsp;                break;</b>
+<b class="nc"><i class="no-highlight">87</i>&nbsp;            case &quot;boss&quot;:</b>
+<b class="fc"><i class="no-highlight">88</i>&nbsp;                response = &quot;Impressive that you&#39;ve come this far, but do you really think you can defeat me?&quot;; // feel free to change this line</b>
+<b class="fc"><i class="no-highlight">89</i>&nbsp;                break;</b>
+<b class="nc"><i class="no-highlight">90</i>&nbsp;            default:</b>
+<b class="fc"><i class="no-highlight">91</i>&nbsp;                response = &quot;There is an enemy!&quot;;</b>
+<b class="nc"><i class="no-highlight">92</i>&nbsp;                break;</b>
+<i class="no-highlight">93</i>&nbsp;        }
+<b class="fc"><i class="no-highlight">94</i>&nbsp;        return response;</b>
+<b class="nc"><i class="no-highlight">95</i>&nbsp;    }</b>
+<i class="no-highlight">96</i>&nbsp;}
+</div>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+        var codeBlock = document.getElementById('sourceCode');
+
+        if (codeBlock) {
+            hljs.highlightBlock(codeBlock);
+        }
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2023-09-29 15:28</div>
+</div>
+</body>
+</html>

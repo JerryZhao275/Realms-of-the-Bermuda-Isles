@@ -1,6 +1,5 @@
 import java.util.*;
 
-
 /**
  * The NPC (Non-Playable Character) class serves as a foundation for the various types of NPCs present in the game.
  * Each type of NPC has unique interactions and behaviors that influence the player and the game .
@@ -69,7 +68,6 @@ public abstract class NPC extends Entity {
          * @param x    The x-coordinate of the Blacksmith's location.
          * @param y    The y-coordinate of the Blacksmith's location.
          */
-
         public Blacksmith(String name, int x, int y) {
             super(name, x, y);
         }
@@ -91,7 +89,6 @@ public abstract class NPC extends Entity {
          * @param inventory The player's inventory where items are stored.
          * @return A message to the player describing the outcome of the interaction.
          */
-
         @Override
         public String talk(Map map, int row, int column, Inventory inventory) {
             System.out.println("Ah, a wanderer! You could use a sword to protect these treacherous lands");
@@ -112,7 +109,6 @@ public abstract class NPC extends Entity {
      *
      * @author Thomas Green
      */
-
     public static class Thief extends NPC {
         /**
          * Constructs a Thief NPC with the specified name and coordinates.
@@ -122,7 +118,6 @@ public abstract class NPC extends Entity {
          * @param x    The x-coordinate of the Thief's location.
          * @param y    The y-coordinate of the Thief's location.
          */
-
         public Thief(String name, int x, int y) {
             super("stranger", x, y);
         }
@@ -143,7 +138,6 @@ public abstract class NPC extends Entity {
          * @param inventory The player's inventory which is subject to theft by the Thief.
          * @return A message to the player describing the outcome of the interaction.
          */
-
         @Override
         public String talk(Map map, int row, int column, Inventory inventory) {
             System.out.println("Hey there! It's not often I see new faces around here. Stay safe and watch your belongings!");
@@ -425,8 +419,7 @@ public abstract class NPC extends Entity {
                             System.out.println("# Thank you for your purchases! I have nothing more to sell.");
                         }
                     }
-                    }
-
+                }
 
                 int newListSize = listInputs.length - lastInput;
                 String[] newList = new String[newListSize];

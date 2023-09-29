@@ -1,0 +1,235 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <title>Coverage Report > AutomaticGameTest</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/highlight-idea.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.pack.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">&lt;empty package name&gt;</a>
+</div>
+
+<h1>Coverage Summary for Class: AutomaticGameTest (&lt;empty package name&gt;)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">AutomaticGameTest</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (13/13)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    68.7%
+  </span>
+  <span class="absValue">
+    (68/99)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<div class="sourceCode" id="sourceCode"><i class="no-highlight">1</i>&nbsp;import org.junit.*;
+<i class="no-highlight">2</i>&nbsp;import java.io.*;
+<i class="no-highlight">3</i>&nbsp;
+<b class="fc"><i class="no-highlight">4</i>&nbsp;/**</b>
+<i class="no-highlight">5</i>&nbsp; * This is a test class responsible for simulating a playthrough within the game, through
+<b class="fc"><i class="no-highlight">6</i>&nbsp; * providing simulated user inputs and covering code within GameEngine and MainMenu classes.</b>
+<b class="fc"><i class="no-highlight">7</i>&nbsp; *</b>
+<b class="fc"><i class="no-highlight">8</i>&nbsp; * @author Jerry Zhao</b>
+<i class="no-highlight">9</i>&nbsp; */
+<b class="fc"><i class="no-highlight">10</i>&nbsp;public class AutomaticGameTest {</b>
+<i class="no-highlight">11</i>&nbsp;
+<b class="fc"><i class="no-highlight">12</i>&nbsp;    private final ByteArrayOutputStream outContent = new ByteArrayOutputStream();</b>
+<b class="fc"><i class="no-highlight">13</i>&nbsp;    private final PrintStream originalOut = System.out;</b>
+<b class="fc"><i class="no-highlight">14</i>&nbsp;    private final InputStream originalIn = System.in;</b>
+<i class="no-highlight">15</i>&nbsp;
+<i class="no-highlight">16</i>&nbsp;    @Before
+<b class="fc"><i class="no-highlight">17</i>&nbsp;    public void setUpStreams() {</b>
+<b class="fc"><i class="no-highlight">18</i>&nbsp;        System.setOut(new PrintStream(outContent));</b>
+<i class="no-highlight">19</i>&nbsp;    }
+<i class="no-highlight">20</i>&nbsp;
+<i class="no-highlight">21</i>&nbsp;    @After
+<i class="no-highlight">22</i>&nbsp;    public void restoreStreams() {
+<b class="fc"><i class="no-highlight">23</i>&nbsp;        System.setOut(originalOut);</b>
+<b class="fc"><i class="no-highlight">24</i>&nbsp;        System.setIn(originalIn);</b>
+<b class="nc"><i class="no-highlight">25</i>&nbsp;    }</b>
+<b class="nc"><i class="no-highlight">26</i>&nbsp;</b>
+<b class="nc"><i class="no-highlight">27</i>&nbsp;    @Test</b>
+<i class="no-highlight">28</i>&nbsp;    public void testPlayEasyTrivial() {
+<b class="fc"><i class="no-highlight">29</i>&nbsp;        String[] input = {&quot;play&quot;, &quot;play easy&quot;,&quot;help&quot;, &quot;quit&quot;};</b>
+<b class="fc"><i class="no-highlight">30</i>&nbsp;        MainMenu mainMenu = new MainMenu();</b>
+<b class="fc"><i class="no-highlight">31</i>&nbsp;        mainMenu.initialise(input);</b>
+<b class="fc"><i class="no-highlight">32</i>&nbsp;        String output = outContent.toString();</b>
+<b class="fc"><i class="no-highlight">33</i>&nbsp;        Assert.assertTrue(output.contains(&quot;Thanks for playing!&quot;));</b>
+<b class="nc"><i class="no-highlight">34</i>&nbsp;    }</b>
+<b class="nc"><i class="no-highlight">35</i>&nbsp;</b>
+<b class="nc"><i class="no-highlight">36</i>&nbsp;    @Test</b>
+<i class="no-highlight">37</i>&nbsp;    public void testPlayNormalTrivial() {
+<b class="fc"><i class="no-highlight">38</i>&nbsp;        String[] input = {&quot;play easyyy&quot;, &quot;play normal&quot;, &quot;help&quot;, &quot;quit&quot;};</b>
+<b class="fc"><i class="no-highlight">39</i>&nbsp;        MainMenu mainMenu = new MainMenu();</b>
+<b class="fc"><i class="no-highlight">40</i>&nbsp;        mainMenu.initialise(input);</b>
+<b class="fc"><i class="no-highlight">41</i>&nbsp;        String output = outContent.toString();</b>
+<b class="fc"><i class="no-highlight">42</i>&nbsp;        Assert.assertTrue(output.contains(&quot;Thanks for playing!&quot;));</b>
+<b class="nc"><i class="no-highlight">43</i>&nbsp;    }</b>
+<b class="nc"><i class="no-highlight">44</i>&nbsp;</b>
+<b class="nc"><i class="no-highlight">45</i>&nbsp;    @Test</b>
+<i class="no-highlight">46</i>&nbsp;    public void testPlayHardTrivial() {
+<b class="fc"><i class="no-highlight">47</i>&nbsp;        String[] input = {&quot;play hard&quot;,&quot;help&quot;, &quot;quit&quot;};</b>
+<b class="fc"><i class="no-highlight">48</i>&nbsp;        MainMenu mainMenu = new MainMenu();</b>
+<b class="fc"><i class="no-highlight">49</i>&nbsp;        mainMenu.initialise(input);</b>
+<b class="fc"><i class="no-highlight">50</i>&nbsp;        String output = outContent.toString();</b>
+<b class="fc"><i class="no-highlight">51</i>&nbsp;        Assert.assertTrue(output.contains(&quot;Thanks for playing!&quot;));</b>
+<i class="no-highlight">52</i>&nbsp;    }
+<i class="no-highlight">53</i>&nbsp;
+<i class="no-highlight">54</i>&nbsp;    @Test
+<i class="no-highlight">55</i>&nbsp;    public void testPlay() {
+<b class="fc"><i class="no-highlight">56</i>&nbsp;        String[] input = {&quot;play easy&quot;, &quot;use&quot;, &quot;use potion&quot;, &quot;use Sword&quot;, &quot;use saword&quot;, &quot;attack&quot;, &quot;hp&quot;, &quot;help&quot;, &quot;inventory&quot;,</b>
+<b class="nc"><i class="no-highlight">57</i>&nbsp;                &quot;move forward&quot;, &quot;move backward&quot;, &quot;move right&quot;, &quot;attack spider&quot;, &quot;inventory&quot;, &quot;use gold&quot;, &quot;move right&quot;,</b>
+<b class="nc"><i class="no-highlight">58</i>&nbsp;                &quot;take potion&quot;, &quot;move right&quot;, &quot;take armor&quot;, &quot;move forward&quot;, &quot;take gold&quot;, &quot;fight ogre&quot;, &quot;move left&quot;,</b>
+<b class="nc"><i class="no-highlight">59</i>&nbsp;                &quot;talk dwarf&quot;, &quot;take bow&quot;, &quot;inventory&quot;, &quot;move forward&quot;, &quot;attack goblin&quot;, &quot;move right&quot;, &quot;move right&quot;,</b>
+<b class="nc"><i class="no-highlight">60</i>&nbsp;                &quot;move right&quot;, &quot;move forward&quot;, &quot;move left&quot;, &quot;move left&quot;, &quot;move left&quot;, &quot;talk blacksmith&quot;, &quot;move right&quot;,</b>
+<i class="no-highlight">61</i>&nbsp;                &quot;move right&quot;, &quot;move right&quot;, &quot;attack&quot;, &quot;talk boss&quot;, &quot;attack boss&quot;, &quot;attack boss&quot;, &quot;use potion&quot;,
+<i class="no-highlight">62</i>&nbsp;                &quot;use armor&quot;, &quot;attack boss&quot;, &quot;Y&quot;, &quot;quit&quot;};
+<b class="fc"><i class="no-highlight">63</i>&nbsp;        MainMenu mainMenu = new MainMenu();</b>
+<b class="fc"><i class="no-highlight">64</i>&nbsp;        mainMenu.initialise(input);</b>
+<b class="fc"><i class="no-highlight">65</i>&nbsp;        String output = outContent.toString();</b>
+<b class="fc"><i class="no-highlight">66</i>&nbsp;        Assert.assertTrue(output.contains(&quot;Thanks for playing!&quot;));</b>
+<b class="nc"><i class="no-highlight">67</i>&nbsp;    }</b>
+<b class="nc"><i class="no-highlight">68</i>&nbsp;</b>
+<b class="nc"><i class="no-highlight">69</i>&nbsp;    @Test</b>
+<b class="nc"><i class="no-highlight">70</i>&nbsp;    public void testPlayDeath() {</b>
+<b class="fc"><i class="no-highlight">71</i>&nbsp;        String[] input = {&quot;play hard&quot;, &quot;move forward&quot;, &quot;move forward&quot;, &quot;move forward&quot;, &quot;talk blacksmith&quot; ,</b>
+<i class="no-highlight">72</i>&nbsp;                &quot;move right&quot;, &quot;move right&quot;, &quot;move right&quot;, &quot;attack boss&quot;, &quot;attack boss&quot;, &quot;Y&quot;, &quot;quit&quot;};
+<b class="fc"><i class="no-highlight">73</i>&nbsp;        MainMenu mainMenu = new MainMenu();</b>
+<b class="fc"><i class="no-highlight">74</i>&nbsp;        mainMenu.initialise(input);</b>
+<b class="fc"><i class="no-highlight">75</i>&nbsp;        String output = outContent.toString();</b>
+<b class="fc"><i class="no-highlight">76</i>&nbsp;        Assert.assertTrue(output.contains(&quot;Thanks for playing!&quot;));</b>
+<b class="nc"><i class="no-highlight">77</i>&nbsp;    }</b>
+<b class="nc"><i class="no-highlight">78</i>&nbsp;</b>
+<b class="nc"><i class="no-highlight">79</i>&nbsp;    @Test</b>
+<b class="nc"><i class="no-highlight">80</i>&nbsp;    public void testMerchant() {</b>
+<b class="fc"><i class="no-highlight">81</i>&nbsp;        String[] input = {&quot;play easy&quot;, &quot;move right&quot;, &quot;move forward&quot;, &quot;talk dwarf&quot;, &quot;move right&quot;, &quot;move forward&quot;,</b>
+<i class="no-highlight">82</i>&nbsp;                &quot;talk merchant&quot;, &quot;trade potion&quot;, &quot;trade armor&quot;, &quot;trade sword&quot;, &quot;exit&quot;, &quot;quit&quot;};
+<b class="fc"><i class="no-highlight">83</i>&nbsp;        MainMenu mainMenu = new MainMenu();</b>
+<b class="fc"><i class="no-highlight">84</i>&nbsp;        mainMenu.initialise(input);</b>
+<b class="fc"><i class="no-highlight">85</i>&nbsp;        String output = outContent.toString();</b>
+<b class="fc"><i class="no-highlight">86</i>&nbsp;        Assert.assertTrue(output.contains(&quot;Farewell, traveler!&quot;));</b>
+<i class="no-highlight">87</i>&nbsp;    }
+<b class="nc"><i class="no-highlight">88</i>&nbsp;</b>
+<b class="nc"><i class="no-highlight">89</i>&nbsp;</b>
+<b class="nc"><i class="no-highlight">90</i>&nbsp;    @Test</b>
+<b class="nc"><i class="no-highlight">91</i>&nbsp;    public void testMerchantNoGold() {</b>
+<b class="fc"><i class="no-highlight">92</i>&nbsp;        String[] input = {&quot;play normal&quot;, &quot;move right&quot;, &quot;move forward&quot;, &quot;talk dwarf&quot;, &quot;move right&quot;, &quot;move forward&quot;,</b>
+<i class="no-highlight">93</i>&nbsp;                &quot;talk&quot;, &quot;talk merchant&quot;, &quot;trade potion&quot;, &quot;trade armor&quot;, &quot;trade sword&quot;, &quot;exit&quot;, &quot;quit&quot;};
+<b class="fc"><i class="no-highlight">94</i>&nbsp;        MainMenu mainMenu = new MainMenu();</b>
+<b class="fc"><i class="no-highlight">95</i>&nbsp;        mainMenu.initialise(input);</b>
+<b class="fc"><i class="no-highlight">96</i>&nbsp;        String output = outContent.toString();</b>
+<b class="fc"><i class="no-highlight">97</i>&nbsp;        Assert.assertTrue(output.contains(&quot;Farewell, traveler!&quot;));</b>
+<b class="nc"><i class="no-highlight">98</i>&nbsp;    }</b>
+<b class="nc"><i class="no-highlight">99</i>&nbsp;</b>
+<b class="nc"><i class="no-highlight">100</i>&nbsp;    @Test</b>
+<i class="no-highlight">101</i>&nbsp;    public void testQuit() {
+<b class="fc"><i class="no-highlight">102</i>&nbsp;        String[] input = {&quot;quit&quot;};</b>
+<b class="fc"><i class="no-highlight">103</i>&nbsp;        MainMenu mainMenu = new MainMenu();</b>
+<b class="fc"><i class="no-highlight">104</i>&nbsp;        mainMenu.initialise(input);</b>
+<b class="fc"><i class="no-highlight">105</i>&nbsp;        String output = outContent.toString();</b>
+<b class="fc"><i class="no-highlight">106</i>&nbsp;        Assert.assertTrue(output.contains(&quot;Thanks for playing!&quot;));</b>
+<b class="nc"><i class="no-highlight">107</i>&nbsp;    }</b>
+<b class="nc"><i class="no-highlight">108</i>&nbsp;</b>
+<b class="nc"><i class="no-highlight">109</i>&nbsp;    @Test</b>
+<i class="no-highlight">110</i>&nbsp;    public void testThiefPlay() {
+<b class="fc"><i class="no-highlight">111</i>&nbsp;        String[] input = {&quot;play easy&quot;, &quot;move forward&quot;, &quot;talk stranger&quot;, &quot;quit&quot;};</b>
+<b class="fc"><i class="no-highlight">112</i>&nbsp;        MainMenu mainMenu = new MainMenu();</b>
+<b class="fc"><i class="no-highlight">113</i>&nbsp;        mainMenu.initialise(input);</b>
+<b class="fc"><i class="no-highlight">114</i>&nbsp;        String output = outContent.toString();</b>
+<b class="fc"><i class="no-highlight">115</i>&nbsp;        Assert.assertTrue(output.contains(&quot;Thanks for playing!&quot;));</b>
+<b class="fc"><i class="no-highlight">116</i>&nbsp;    }</b>
+<i class="no-highlight">117</i>&nbsp;
+<b class="fc"><i class="no-highlight">118</i>&nbsp;    @Test</b>
+<b class="fc"><i class="no-highlight">119</i>&nbsp;    public void testSaveAndLoad() {</b>
+<b class="fc"><i class="no-highlight">120</i>&nbsp;        String[] input = {&quot;load&quot;, &quot;play easy&quot;, &quot;move forward&quot;, &quot;save&quot;, &quot;quit&quot;};</b>
+<b class="fc"><i class="no-highlight">121</i>&nbsp;        MainMenu mainMenu = new MainMenu();</b>
+<b class="fc"><i class="no-highlight">122</i>&nbsp;        mainMenu.initialise(input);</b>
+<i class="no-highlight">123</i>&nbsp;
+<b class="fc"><i class="no-highlight">124</i>&nbsp;        String[] inputAfterSave = {&quot;load&quot;, &quot;quit&quot;};</b>
+<b class="fc"><i class="no-highlight">125</i>&nbsp;        MainMenu mainMenu2 = new MainMenu();</b>
+<b class="fc"><i class="no-highlight">126</i>&nbsp;        mainMenu2.initialise(inputAfterSave);</b>
+<b class="fc"><i class="no-highlight">127</i>&nbsp;        String output = outContent.toString();</b>
+<b class="fc"><i class="no-highlight">128</i>&nbsp;        Assert.assertTrue(output.contains(&quot;Thanks for playing!&quot;));</b>
+<i class="no-highlight">129</i>&nbsp;    }
+<i class="no-highlight">130</i>&nbsp;}
+</div>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+        var codeBlock = document.getElementById('sourceCode');
+
+        if (codeBlock) {
+            hljs.highlightBlock(codeBlock);
+        }
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2023-09-29 15:28</div>
+</div>
+</body>
+</html>

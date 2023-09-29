@@ -1,8 +1,6 @@
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.core.JsonFactoryBuilder;
 import com.fasterxml.jackson.databind.ObjectMapper;
-
-import java.io.File;
 import java.io.FileWriter;
 import java.util.List;
 import java.util.Objects;
@@ -29,9 +27,6 @@ public class GameEngine {
     protected int HP;
     protected int hp_limit;
     protected int attack_time = 3; // the remained times for the boss to be defeated
-
-    //    xPosition and yPosition can be changed when implementing the proper map and movement.
-
     protected int xPosition;
     protected int yPosition;
 
@@ -40,7 +35,7 @@ public class GameEngine {
      * Private constructor to initialize the GameEngine instance.
      * It creates a new map, inventory, and scanner for user input.
      */
-    public GameEngine() {
+    protected GameEngine() {
         map = new Map();
         inventory = new Inventory();
         this.scanner = new Scanner(System.in);
@@ -93,13 +88,15 @@ public class GameEngine {
             }
         }
 
-        System.out.println("===========================================");
-        System.out.println("In the enigmatic expanse of the Bermuda Triangle, an area where time and space mysteriously intertwine, lies a realm unknown to most.\n" +
-                "This place, known as the heart of the Bermuda Triangle, is the Bermuda Isles.\n" +
-                "Its inhabitants, mostly sailors and aviators who vanished over the years, have formed a unique community in this lost world.");
-        System.out.println("You stand on the desolate beach, with dense forests to the west and south.\n" +
-                "Currently, you have only two paths to choose from: one leading north and one leading east.");
-        System.out.println("===========================================");
+        if (difficulty != 4) {
+            System.out.println("===========================================");
+            System.out.println("In the enigmatic expanse of the Bermuda Triangle, an area where time and space mysteriously intertwine, lies a realm unknown to most.\n" +
+                    "This place, known as the heart of the Bermuda Triangle, is the Bermuda Isles.\n" +
+                    "Its inhabitants, mostly sailors and aviators who vanished over the years, have formed a unique community in this lost world.");
+            System.out.println("You stand on the desolate beach, with dense forests to the west and south.\n" +
+                    "Currently, you have only two paths to choose from: one leading north and one leading east.");
+            System.out.println("===========================================");
+        }
         System.out.println("Type 'help' for a list of commands.");
 
         boolean isGameOver = false;
@@ -112,9 +109,13 @@ public class GameEngine {
         int prevYPosition = yPosition;
 
         int currInput = 0;
-        while (!isGameOver && currInput < testInput.length) {
+        int display = 0;
+
+        while ((!isGameOver && currInput < testInput.length)) {
+            if (display == 0 && difficulty == 4) display = 1;
             // Check if the player's position has changed and print new dialogue when entering a new area
-            if (xPosition != prevXPosition || yPosition != prevYPosition) {
+            if (xPosition != prevXPosition || yPosition != prevYPosition || display == 1) {
+                display++;
                 if (xPosition == 0 && yPosition == 0) {
                     System.out.println("You find yourself back at where you started, with dense forests to the west and south.\n" +
                             "There are only two paths to choose from: one leading north and one leading east.");
@@ -127,13 +128,13 @@ public class GameEngine {
                 }
                 else if (xPosition == 3 && yPosition == 3) {
                     System.out.println("You've reached an open highland. From here, you can overlook the entire Bermuda Isles and " +
-                            "see the distant coastline.\n You can choose to descend the highlands and move towards west or south.");
+                            "see the distant coastline.\nYou can choose to descend the highlands and move towards west or south.");
                 }
                 else if (xPosition == 0 && yPosition == 1 || xPosition == 0 && yPosition == 2 ) {
-                    System.out.println("You continue traversing alongside the dense forest towards west, leaving all other directions open.");
+                    System.out.println("You continue traversing alongside the dense forest on your west, leaving all other directions open.");
                 }
                 else if (xPosition == 1 && yPosition == 0 || xPosition == 2 && yPosition == 0) {
-                    System.out.println("You continue traversing alongside the lonesome beach towards south, leaving all other directions open.");
+                    System.out.println("You continue traversing alongside the lonesome beach on your south, leaving all other directions open.");
                 }
                 else if (xPosition == 3 && yPosition == 1 || xPosition == 3 && yPosition == 2 ) {
                     System.out.println("You find yourself following the cliff of the highlands on your east, leaving all other directions open.");
@@ -215,28 +216,30 @@ public class GameEngine {
                                 map.removeEntity(xPosition,yPosition);
                                 // Some extra content can be added here
                                 System.out.println("Congratulations! You've won the game!");
-
                                 int newListSize = testInput.length - currInput;
                                 String[] newList = new String[newListSize];
                                 System.arraycopy(testInput, currInput, newList, 0, testInput.length - currInput);
+                                map = new Map();
+                                inventory = new Inventory();
                                 this.gameOver(newList);
-
                             }
-                            System.out.println("The boss hit back at you! You lost 2 HP.");
-                            if (HP <= 0) {
+                            else if (HP <= 0) {
+                                System.out.println("The boss hits back at you, crushing you into the ground!");
                                 isGameOver = true;
                                 System.out.println("# You have been defeated by the boss!");
                                 System.out.println("## Game Over ##");
                                 int newListSize = testInput.length - currInput;
                                 String[] newList = new String[newListSize];
                                 System.arraycopy(testInput, currInput, newList, 0, testInput.length - currInput);
+                                map = new Map();
+                                inventory = new Inventory();
                                 this.gameOver(newList);
-
                             }
                             else if (attack_time == 1) {
-                                // Some extra content can be added here
-                                System.out.println("Your current HP is "+ HP +". Start your decisive battle with the boss!");
+                                System.out.println("The boss hits back at you! You lost 2 HP.");
+                                System.out.println("Your current HP is "+ HP +". Attack the boss one more time to defeat it!");
                             } else {
+                                System.out.println("The boss hits back at you! You lost 2 HP.");
                                 System.out.println("Your current HP is "+ HP +". Attack " + attack_time + " more times to defeat the boss.");
                             }
                         } else {
@@ -262,7 +265,7 @@ public class GameEngine {
                         if (direction != null) {
                             boolean moveFlag = move(direction);
                             if (!moveFlag) {
-                                System.out.println("[" + "Move command is invalid" + "]");
+                                System.out.println("You cannot move in that direction!");
                             }
                         } else {
                             System.out.println("[" + "Move " + directionStr + "]");
@@ -351,30 +354,10 @@ public class GameEngine {
                     else {System.out.println("Invalid item name");}
                 }
 
-                case "trade" -> {
-                    Entity entity = map.getEntityAt(xPosition, yPosition);
-                    if (entity instanceof NPC.Merchant) {
-                        NPC.Merchant merchant = (NPC.Merchant) entity;
-
-                        int newListSize = testInput.length - currInput;
-                        String[] newList = new String[newListSize];
-                        System.arraycopy(testInput, currInput, newList, 0, testInput.length - currInput);
-
-                        String message = "";
-                        if (newList != null) {
-                            testInput = merchant.talk(map, xPosition, yPosition, this.inventory, newList);
-                            currInput = 0;
-                        } else {
-                            message = merchant.talk(map, xPosition, yPosition, this.inventory);
-                        }
-                        System.out.println(message);
-                    } else {
-                        System.out.println("There is no merchant here to trade with.");
-                    }
+                case "save" -> {
+                    System.out.println("You have saved the game!");
+                    saveGame();
                 }
-                case "save" -> {saveGame();}
-
-                // Add more commands such as save and load later
                 default -> System.out.println("Please enter a valid command or type help to see the commands.");
             }
         }
@@ -429,6 +412,8 @@ public class GameEngine {
      * Prints the players current inventory
      */
     private void displayInventory() {
+        int goldCount = 0;
+        boolean hasGold = false;
         List<Item> items = inventory.getItems();
         if (items.isEmpty()) {
             System.out.println("Your inventory is empty.");
@@ -436,8 +421,14 @@ public class GameEngine {
         }
         System.out.println("Your inventory contains:");
         for (Item item : items) {
-            System.out.println("- " + item.getName() + " (" + item.getDurability() + ")");
+            if (item.getItemType() == ItemType.Gold) {
+                hasGold = true;
+                goldCount++;
+            }
+            else if (item.getItemType() == ItemType.Armor) System.out.println("- " + item.getName());
+            else System.out.println("- " + item.getName() + " (" + item.getDurability() + " use(s))");
         }
+        if (hasGold) System.out.println("- gold (" + goldCount + " piece(s))");
     }
 
 
@@ -491,14 +482,12 @@ public class GameEngine {
      * @author Sam Powell
      */
     public void gameOver(String[] testInput) {
-        if (testInput != null) {
-            switch (testInput[0]) {
-                case "Y" -> {
-                    int newListSize = testInput.length - 1;
-                    String[] newList = new String[newListSize];
-                    System.arraycopy(testInput, 1, newList, 0, testInput.length - 1);
-                    startGame(difficulty, newList);
-                }
+        if (Objects.equals(testInput[0], "playthrough")) {
+            System.out.println("Would you like to play again? [Y/N]: ");
+            System.out.print("> ");
+            String playAgain = scanner.nextLine();
+            switch (playAgain) {
+                case "Y" -> startGame(difficulty, new String[]{"playthrough"});
                 case "N" -> {
                     System.out.println("See you next time!");
                     System.exit(0);
@@ -506,11 +495,13 @@ public class GameEngine {
             }
         }
         else {
-            System.out.println("Would you like to play again? [Y/N]: ");
-            System.out.print("> ");
-            String playAgain = scanner.nextLine();
-            switch (playAgain) {
-                case "Y" -> startGame(difficulty, null);
+            switch (testInput[0]) {
+                case "Y" -> {
+                    int newListSize = testInput.length - 1;
+                    String[] newList = new String[newListSize];
+                    System.arraycopy(testInput, 1, newList, 0, testInput.length - 1);
+                    startGame(difficulty, newList);
+                }
                 case "N" -> {
                     System.out.println("See you next time!");
                     System.exit(0);

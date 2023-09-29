@@ -37,10 +37,4 @@ public class EntityTest {
         assertEquals(0, entity.getX(), "X-coordinate should be 0 after moving");
         assertEquals(1, entity.getY(), "Y-coordinate should be 1 after moving");
     }
-
-    @Test
-    void testToString() {
-        Entity entity = new Entity("Item", 0, 1);
-        assertEquals("Item", entity.toString());
-    }
 }

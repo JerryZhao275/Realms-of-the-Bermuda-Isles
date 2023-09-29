@@ -6,7 +6,6 @@ import java.util.Objects;
  * There are different kinds of enemies each with their unique dialogue.
  * </p>
  *
- * @author
  */
 
 

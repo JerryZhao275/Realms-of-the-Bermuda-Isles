@@ -1,6 +1,11 @@
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * This is a JUnit test class responsible for covering all tests for the Item class.
+ *
+ * @author Jerry Zhao
+ */
 public class ItemTest {
     Inventory inventory = new Inventory();
     private final Item item1 = new Item("Greatsword", 0, 0,ItemType.Sword);

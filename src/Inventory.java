@@ -7,7 +7,6 @@ import java.util.List;
  * This class provides methods to add,delete,change or search the contents of the inventory.
  * </p>
  *
- * @author
  */
 
 public class Inventory {

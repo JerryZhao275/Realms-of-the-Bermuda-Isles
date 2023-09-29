@@ -155,14 +155,13 @@ public abstract class NPC extends Entity {
                     inventory.removeItem(item);
                 }
             }
-
             map.removeEntity(row, column);
 
             if (stolenItems.isEmpty()) {
                 return "# After the brief conversation, the stranger quickly disappeared.";
             } else {
-                return "# You figured that your " + listItems(stolenItems) + " is missing. You turned around to look for the stranger "
-                        +  ". He/She’s already gone, leaving no trace. That guy was a THIEF!";
+                return "# You checked your bag and noticed that your " + listItems(stolenItems) + " is missing. " +
+                        "\nYou turned around to look for the stranger. They're already gone, leaving no trace. They were a thief!";
             }
         }
 

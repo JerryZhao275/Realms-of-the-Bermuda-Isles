@@ -22,8 +22,8 @@ import java.util.Scanner;
 public class GameEngine {
     private static GameEngine instance;
     protected transient Scanner scanner;
-    protected Map map;
-    protected Inventory inventory;
+    public Map map;
+    public Inventory inventory;
     protected int difficulty;
 
     protected boolean playerHasWeapon = false;  // At the class level, after other fields (testing boolean)

@@ -141,6 +141,13 @@ public class MainMenu {
         scanner.close();
     }
 
+    /**
+     * The main entry point for the program.
+     *
+     * @author Jerry Zhao
+     *
+     * @param args Command-line arguments.
+     */
     public static void main(String[] args) {
         // Initialize the program for the user
         MainMenu mainMenu = new MainMenu();

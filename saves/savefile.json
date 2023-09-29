@@ -1,0 +1,191 @@
+{
+  "map" : {
+    "@class" : "Map",
+    "grid" : [ [ null, {
+      "@class" : "NPC$Thief",
+      "name" : "stranger",
+      "x" : 0,
+      "y" : 1
+    }, {
+      "@class" : "Enemy",
+      "name" : "goblin",
+      "x" : 1,
+      "y" : 3
+    }, null ], [ {
+      "@class" : "NPC$Merchant",
+      "name" : "merchant",
+      "x" : 2,
+      "y" : 2
+    }, null, {
+      "@class" : "Item",
+      "name" : "gold",
+      "x" : 1,
+      "y" : 2,
+      "price" : 1,
+      "durability" : 0,
+      "itemType" : "Gold"
+    }, {
+      "@class" : "Enemy",
+      "name" : "goblin",
+      "x" : 1,
+      "y" : 3
+    } ], [ null, {
+      "@class" : "Enemy",
+      "name" : "ogre",
+      "x" : 2,
+      "y" : 1
+    }, {
+      "@class" : "NPC$Merchant",
+      "name" : "merchant",
+      "x" : 2,
+      "y" : 2
+    }, {
+      "@class" : "Enemy",
+      "name" : "spider",
+      "x" : 2,
+      "y" : 3
+    } ], [ null, null, {
+      "@class" : "Enemy",
+      "name" : "goblin",
+      "x" : 1,
+      "y" : 3
+    }, null ] ]
+  },
+  "inventory" : {
+    "items" : [ {
+      "@class" : "Item",
+      "name" : "potion",
+      "x" : -1,
+      "y" : -1,
+      "price" : 1,
+      "durability" : 1,
+      "itemType" : "Potion"
+    }, {
+      "@class" : "Item",
+      "name" : "sword",
+      "x" : -1,
+      "y" : -1,
+      "price" : 2,
+      "durability" : 3,
+      "itemType" : "Sword"
+    }, {
+      "@class" : "Item",
+      "name" : "sword",
+      "x" : -1,
+      "y" : -1,
+      "price" : 2,
+      "durability" : 3,
+      "itemType" : "Sword"
+    }, {
+      "@class" : "Item",
+      "name" : "potion",
+      "x" : -1,
+      "y" : -1,
+      "price" : 1,
+      "durability" : 2,
+      "itemType" : "Potion"
+    }, {
+      "@class" : "Item",
+      "name" : "gold",
+      "x" : -1,
+      "y" : -1,
+      "price" : 1,
+      "durability" : 0,
+      "itemType" : "Gold"
+    }, {
+      "@class" : "Item",
+      "name" : "gold",
+      "x" : -1,
+      "y" : -1,
+      "price" : 1,
+      "durability" : 0,
+      "itemType" : "Gold"
+    }, {
+      "@class" : "Item",
+      "name" : "gold",
+      "x" : -1,
+      "y" : -1,
+      "price" : 1,
+      "durability" : 0,
+      "itemType" : "Gold"
+    }, {
+      "@class" : "Item",
+      "name" : "gold",
+      "x" : -1,
+      "y" : -1,
+      "price" : 1,
+      "durability" : 0,
+      "itemType" : "Gold"
+    }, {
+      "@class" : "Item",
+      "name" : "potion",
+      "x" : 2,
+      "y" : 0,
+      "price" : 1,
+      "durability" : 2,
+      "itemType" : "Potion"
+    }, {
+      "@class" : "Item",
+      "name" : "gold",
+      "x" : 1,
+      "y" : 2,
+      "price" : 1,
+      "durability" : 0,
+      "itemType" : "Gold"
+    }, {
+      "@class" : "Item",
+      "name" : "sword",
+      "x" : -1,
+      "y" : -1,
+      "price" : 2,
+      "durability" : 3,
+      "itemType" : "Sword"
+    }, {
+      "@class" : "Item",
+      "name" : "potion",
+      "x" : -1,
+      "y" : -1,
+      "price" : 1,
+      "durability" : 2,
+      "itemType" : "Potion"
+    }, {
+      "@class" : "Item",
+      "name" : "gold",
+      "x" : -1,
+      "y" : -1,
+      "price" : 1,
+      "durability" : 0,
+      "itemType" : "Gold"
+    }, {
+      "@class" : "Item",
+      "name" : "gold",
+      "x" : -1,
+      "y" : -1,
+      "price" : 1,
+      "durability" : 0,
+      "itemType" : "Gold"
+    }, {
+      "@class" : "Item",
+      "name" : "gold",
+      "x" : -1,
+      "y" : -1,
+      "price" : 1,
+      "durability" : 0,
+      "itemType" : "Gold"
+    }, {
+      "@class" : "Item",
+      "name" : "gold",
+      "x" : -1,
+      "y" : -1,
+      "price" : 1,
+      "durability" : 0,
+      "itemType" : "Gold"
+    } ]
+  },
+  "difficulty" : 0,
+  "hp_limit" : 5,
+  "attack_time" : 0,
+  "xPosition" : 0,
+  "yPosition" : 1,
+  "hp" : 5
+}

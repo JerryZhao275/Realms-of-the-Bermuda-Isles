@@ -8,7 +8,10 @@ import java.util.*;
  * </p>
  *
  * @author Thomas Green
+ * @author Kwong Yu Zhou
+ * @author Jerry Zhao
  */
+
 public abstract class NPC extends Entity {
 
     /**
@@ -19,12 +22,16 @@ public abstract class NPC extends Entity {
      * @param name The name of the NPC.
      * @param x    The x-coordinate of the NPC.
      * @param y    The y-coordinate of the NPC.
-     *
      */
     public NPC(String name, int x, int y) {
         super(name, x, y);
     }
-    //    Empty Constructor to allow JSON mapping
+
+    /**
+     * Empty Constructor to allow JSON mapping
+     *
+     * @author Sam Powell
+     */
     public NPC() {}
 
     /**
@@ -64,6 +71,7 @@ public abstract class NPC extends Entity {
         public Blacksmith(String name, int x, int y) {
             super(name, x, y);
         }
+
         //    Empty Constructor to allow JSON mapping
         public Blacksmith() {}
 
@@ -73,6 +81,7 @@ public abstract class NPC extends Entity {
          * After the interaction, the Blacksmith is removed from the map.
          *
          * @author Thomas Green
+         * @author Kwong Yu Zhou
          *
          * @param map       The game map where entities, including the Blacksmith, are located.
          * @param row       The row coordinate of the Blacksmith on the map.
@@ -112,6 +121,7 @@ public abstract class NPC extends Entity {
         public Thief(String name, int x, int y) {
             super("stranger", x, y);
         }
+
         //    Empty Constructor to allow JSON mapping
         public Thief() {}
 
@@ -154,7 +164,6 @@ public abstract class NPC extends Entity {
             }
         }
 
-
         /**
          * Utility method to format the list of stolen items into a readable string format.
          *
@@ -177,7 +186,6 @@ public abstract class NPC extends Entity {
         }
     }
 
-
     /**
      * Represents a Dwarf NPC who will give item 'Gold' into player's inventory
      * </p>
@@ -199,8 +207,10 @@ public abstract class NPC extends Entity {
         public Dwarf(String name, int x, int y) {
             super(name, x, y);
         }
+
         //    Empty Constructor to allow JSON mapping
         public Dwarf() {}
+
         /**
          * Represents the interaction between the player and the Dwarf NPC.
          * When the player interacts with the Dwarf, the Dwarf offers them some gold.
@@ -227,7 +237,6 @@ public abstract class NPC extends Entity {
             return "# The Dwarf left you a piece of gold. A piece of 'gold' has been added to your inventory.";
         }
     }
-
 
     /**
      * Represents a Merchant NPC, a character in the game from whom the player can buy items.
@@ -277,6 +286,7 @@ public abstract class NPC extends Entity {
          * </p>
          *
          * @author Thomas Green
+         * @author Hsuan-Chu
          *
          * @param map       The game map where entities, including the Merchant, are located.
          * @param row       The row coordinate of the Merchant on the map.
@@ -346,6 +356,7 @@ public abstract class NPC extends Entity {
          * and remove the players' corresponding gold for buying this item.
          *
          * @author Jerry Zhao
+         * @author Hsuan-Chu
          *
          * @param map         The game map where the entities are located.
          * @param row         The row position of the merchant on the map.

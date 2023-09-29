@@ -14,6 +14,12 @@ public class ItemTest {
     private final Item item4 = new Item("Steel Plated Chestplate", 0, 0,ItemType.Armor);
     private final Item item5 = new Item("Gold", 0, 0,ItemType.Gold);
 
+    /**
+     * Tests the 'getPrice' method for various items.
+     * Expected outcome: Each item should return its unique price.
+     *
+     * @author Jerry Zhao
+     */
     @Test
     void testGetPrice() {
         assertEquals(2, item1.getPrice());
@@ -23,6 +29,12 @@ public class ItemTest {
         assertEquals(1, item5.getPrice());
     }
 
+    /**
+     * Tests the 'getItemType' method for various items.
+     * Expected outcome: Each item should return its unique type.
+     *
+     * @author Jerry Zhao
+     */
     @Test
     void testItemType() {
         assertEquals(ItemType.Sword, item1.getItemType());
@@ -32,6 +44,12 @@ public class ItemTest {
         assertEquals(ItemType.Gold, item5.getItemType());
     }
 
+    /**
+     * Tests the 'getDurability' method for various items.
+     * Expected outcome: Each item should return its correct durability.
+     *
+     * @author Jerry Zhao
+     */
     @Test
     void testGetDurability() {
         assertEquals(3, item1.getDurability());
@@ -39,7 +57,13 @@ public class ItemTest {
         assertEquals(3, item3.getDurability());
     }
 
-
+    /**
+     * Tests the durability of items after using the items.
+     * Expected outcome: Item's durability will decrease after using the item.
+     *                      Unusable items will be removed from inventory.
+     *
+     * @author Jerry Zhao
+     */
     @Test
     void testUseItem() {
         // Using item until break
@@ -62,7 +86,5 @@ public class ItemTest {
         assertNotNull(item4);
         item4.use(inventory);
         assertNotNull(item4);
-
     }
-
 }

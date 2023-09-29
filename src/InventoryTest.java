@@ -13,6 +13,12 @@ public class InventoryTest {
     private Item item2 = new Item("Mana Elixir", 0, 0,ItemType.Potion);
     private Item item3 = new Item("Bow", 0, 0,ItemType.Bow);
 
+    /**
+     * Tests the ability to add items from inventory system.
+     * Expected outcome: The item should be added successfully into the inventory system.
+     *
+     * @author Jerry Zhao
+     */
     @Test
     void testAddItem() {
         inventory = new Inventory();
@@ -20,6 +26,12 @@ public class InventoryTest {
         assertTrue(inventory.getItems().contains(item1), "Item should be added to inventory");
     }
 
+    /**
+     * Tests the ability to remove items from inventory system.
+     * Expected outcome: The item should be removed successfully from the inventory system.
+     *
+     * @author Jerry Zhao
+     */
     @Test
     void testRemoveItem() {
         inventory = new Inventory();
@@ -31,6 +43,13 @@ public class InventoryTest {
         assertTrue(inventory.getItems().contains(item2), "Other item should still be in inventory");
     }
 
+    /**
+     * Tests the ability to retrieve items from inventory class.
+     * Expected outcome: The item should be retrieved successfully from the inventory system,
+     *                      and null should be returned if it doesn't.
+     *
+     * @author Jerry Zhao
+     */
     @Test
     void testGetItemByName() {
         inventory = new Inventory();
@@ -45,6 +64,12 @@ public class InventoryTest {
         assertNull(nonExistentItem, "Non-existent item should return null");
     }
 
+    /**
+     * Tests the ability to get items from inventory system.
+     * Expected outcome: The item should be got successfully from the inventory system based on what was added.
+     *
+     * @author Jerry Zhao
+     */
     @Test
     void testGetItems() {
         inventory = new Inventory();
@@ -54,6 +79,12 @@ public class InventoryTest {
         assertEquals(2, inventory.getItems().size(), "Inventory should contain two items");
     }
 
+    /**
+     * Tests the count of items from inventory system.
+     * Expected outcome: The correct count of specified item should be returned.
+     *
+     * @author Jerry Zhao
+     */
     @Test
     void testGetItemCount() {
         inventory = new Inventory();

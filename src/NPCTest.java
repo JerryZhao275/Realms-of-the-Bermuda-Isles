@@ -11,6 +11,13 @@ public class NPCTest {
     private Inventory inventory;
     private Map map;
 
+    /**
+     * Test the interaction with BlackSmith NPC.
+     * Expected outcome: The inventory should contain a 'Sword' after talking with BlackSmith,
+     *                      and BlackSmith should be removed on the map.
+     *
+     * @author Jerry Zhao
+     */
     @Test
     void testBlacksmithTalk() {
         inventory = new Inventory();
@@ -21,6 +28,13 @@ public class NPCTest {
         assertNull(map.getEntityAt(0, 0), "Blacksmith should be removed from the map");
     }
 
+    /**
+     * Test the interaction with Thief NPC when player has only 'Sword'.
+     * Expected outcome: The inventory's size should be 1 after talking with Thief,
+     *                      and Thief should be removed on the map.
+     *
+     * @author Jerry Zhao
+     */
     @Test
     void testThiefTalkWeapon() {
         inventory = new Inventory();
@@ -32,6 +46,13 @@ public class NPCTest {
         assertNull(map.getEntityAt(0, 0), "Thief should be removed from the map");
     }
 
+    /**
+     * Test the interaction with Thief NPC when player has a single item (except sword).
+     * Expected outcome: The inventory's size should be 0 after talking with Thief,
+     *                      and Thief should be removed on the map.
+     *
+     * @author Jerry Zhao
+     */
     @Test
     void testThiefTalkSingle() {
         inventory = new Inventory();
@@ -43,6 +64,13 @@ public class NPCTest {
         assertNull(map.getEntityAt(0, 0), "Thief should be removed from the map");
     }
 
+    /**
+     * Test the interaction with Thief NPC when player has multiple items.
+     * Expected outcome: The inventory's size should only contain sword after talking with Thief,
+     *                      and Thief should be removed on the map.
+     *
+     * @author Jerry Zhao
+     */
     @Test
     void testThiefTalkMultiple() {
         inventory = new Inventory();
@@ -56,6 +84,13 @@ public class NPCTest {
         assertNull(map.getEntityAt(1, 0), "Thief should be removed from the map");
     }
 
+    /**
+     * Test the interaction with Dwarf NPC.
+     * Expected outcome: The inventory should contain a 'gold' after talking with Dwarf,
+     *                      and Dwarf should be removed on the map.
+     *
+     * @author Jerry Zhao
+     */
     @Test
     void testDwarfTalk() {
         inventory = new Inventory();

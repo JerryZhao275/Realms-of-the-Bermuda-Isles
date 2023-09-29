@@ -1,3 +1,5 @@
+package org.bermudagame;
+
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 
 /**

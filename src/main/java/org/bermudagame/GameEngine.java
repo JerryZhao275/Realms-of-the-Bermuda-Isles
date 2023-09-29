@@ -1,6 +1,8 @@
+package org.bermudagame;
+
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.core.JsonFactoryBuilder;
 import com.fasterxml.jackson.databind.ObjectMapper;
+
 import java.io.FileWriter;
 import java.util.List;
 import java.util.Objects;
@@ -20,8 +22,8 @@ import java.util.Scanner;
 public class GameEngine {
     private static GameEngine instance;
     protected transient Scanner scanner;
-    protected Map map;
-    protected Inventory inventory;
+    public Map map;
+    public Inventory inventory;
     protected int difficulty;
 
     protected boolean playerHasWeapon = false;  // At the class level, after other fields (testing boolean)
@@ -39,7 +41,7 @@ public class GameEngine {
      *
      * @author Jerry Zhao
      */
-    protected GameEngine() {
+    public GameEngine() {
         map = new Map();
         inventory = new Inventory();
         this.scanner = new Scanner(System.in);

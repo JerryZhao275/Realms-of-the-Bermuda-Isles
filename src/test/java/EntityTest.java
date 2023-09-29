@@ -1,4 +1,7 @@
+import org.bermudagame.Entity;
 import org.junit.jupiter.api.Test;
+
+
 import static org.junit.jupiter.api.Assertions.*;
 
 /**

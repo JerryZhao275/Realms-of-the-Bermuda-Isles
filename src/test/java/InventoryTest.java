@@ -1,3 +1,6 @@
+import org.bermudagame.Inventory;
+import org.bermudagame.Item;
+import org.bermudagame.ItemType;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -9,9 +12,9 @@ import static org.junit.jupiter.api.Assertions.*;
 public class InventoryTest {
 
     private Inventory inventory;
-    private Item item1 = new Item("Health Potion", 0, 0,ItemType.Potion);
-    private Item item2 = new Item("Mana Elixir", 0, 0,ItemType.Potion);
-    private Item item3 = new Item("Bow", 0, 0,ItemType.Bow);
+    private Item item1 = new Item("Health Potion", 0, 0, ItemType.Potion);
+    private Item item2 = new Item("Mana Elixir", 0, 0, ItemType.Potion);
+    private Item item3 = new Item("Bow", 0, 0, ItemType.Bow);
 
     /**
      * Tests the ability to add items from inventory system.

@@ -1,0 +1,31 @@
+plugins {
+    id 'com.github.johnrengelman.shadow' version '8.1.1'
+    id 'java'
+}
+
+tasks.jar {
+    manifest {
+        attributes 'Main-Class': "org.bermudagame.MainMenu"
+    }
+}
+
+
+group 'org.bermudagame'
+version '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.15.2'
+//    runtimeClasspath 'com.fasterxml.jackson.core:jackson-databind:2.15.1'
+//    implementation 'com.fasterxml.jackson.core:jackson-databind:2.15.1'
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.1'
+    testImplementation 'junit:junit:4.13.1'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.1'
+}
+
+test {
+    useJUnitPlatform()
+}

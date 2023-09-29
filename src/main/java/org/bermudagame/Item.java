@@ -1,3 +1,4 @@
+package org.bermudagame;
 /**
  * This class represents in-game item, which can be of various types such as a sword, armor, or potion.
  * Items can be used by players, and they can be bought at specified prices.
@@ -9,7 +10,6 @@
  * @author Jerry Zhao
  * @author Hsuan-Chu Shih
  */
-
 public class Item extends Entity{
     // This is the initialisation of a java class in a source folder
     private int price;

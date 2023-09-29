@@ -1,5 +1,7 @@
+package org.bermudagame;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
+
 /**
  * This class represents the entity of the non-playable roles of the game (Enemy/NPC/Item).
  * It handles the character's name and its coordinate related to the map.

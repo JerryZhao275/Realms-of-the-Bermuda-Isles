@@ -1,3 +1,5 @@
+package org.bermudagame;
+
 /**
  * Represents the possible directions of movement.
  *

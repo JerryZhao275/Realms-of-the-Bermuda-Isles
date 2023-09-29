@@ -13,7 +13,6 @@ import java.util.*;
  * @author Jerry Zhao
  */
 
-
 public abstract class NPC extends Entity {
 
     /**
@@ -171,7 +170,6 @@ public abstract class NPC extends Entity {
             }
         }
 
-
         /**
          * Utility method to format the list of stolen items into a readable string format.
          *
@@ -180,7 +178,6 @@ public abstract class NPC extends Entity {
          * @param items A list of items that the Thief stole from the player.
          * @return A formatted string listing all the stolen items.
          */
-
         private String listItems(List<Item> items) {
             StringBuilder sb = new StringBuilder();
             for (int i = 0; i < items.size(); i++) {
@@ -195,14 +192,12 @@ public abstract class NPC extends Entity {
         }
     }
 
-
     /**
      * Represents a Dwarf NPC who will give item 'Gold' into player's inventory
      * </p>
      *
      * @author Thomas Green
      */
-
     public static class Dwarf extends NPC {
 
         /**
@@ -297,6 +292,7 @@ public abstract class NPC extends Entity {
          * </p>
          *
          * @author Thomas Green
+         * @author Hsuan-Chu
          *
          * @param map       The game map where entities, including the Merchant, are located.
          * @param row       The row coordinate of the Merchant on the map.
@@ -366,6 +362,7 @@ public abstract class NPC extends Entity {
          * and remove the players' corresponding gold for buying this item.
          *
          * @author Jerry Zhao
+         * @author Hsuan-Chu
          *
          * @param map         The game map where the entities are located.
          * @param row         The row position of the merchant on the map.

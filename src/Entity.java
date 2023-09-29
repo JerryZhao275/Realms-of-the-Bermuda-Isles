@@ -106,5 +106,17 @@ public class Entity {
         y = newY;
     }
 
+    /**
+     * To string method of entity.
+     *
+     * @author Kwong Yu Zhou
+     *
+     * @return String return name of the entity.
+     *
+     */
+    @Override
+    public String toString() {
+        return name;
+    }
 }
 

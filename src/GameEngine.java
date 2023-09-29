@@ -68,8 +68,11 @@ public class GameEngine {
     /**
      * startGame() starts the user's playthrough of the game.
      *
+     * @author Hsuan-Chu Shih
      * @author Jerry Zhao
      * @author Sam Powell
+     * @author Thomas Green
+     * @author Kwong Yu Zhou
      *
      * @param difficulty integer corresponding to the difficulty of the game; 0 = easy, 1 = normal, 2 = hard
      */
@@ -220,9 +223,11 @@ public class GameEngine {
                         System.out.println("There's no enemy here to fight!");
                     }
                 }
+
                 /*
                  * Handles the attack on a specific enemy type. If the enemy exists in the player's current
                  * location, a fight is initiated.
+                 * There are four enemies for player to attack(include BOSS)
                  */
                 case "attack goblin", "attack ogre", "attack spider" -> {
                     Entity entity = map.getEntityAt(xPosition, yPosition);
@@ -233,7 +238,8 @@ public class GameEngine {
                         System.out.println("There's no enemy here to fight!");
                     }
                 }
-                /**
+
+                /*
                  * Attempts to attack the main boss of the game.
                  * The player can only challenge the boss if they possess a weapon.
                  */
@@ -277,12 +283,15 @@ public class GameEngine {
                         }
                     } else {System.out.println("You are unable to challenge the boss without a weapon!");}
                 }
-                /**
-                 * Prompts the player to specify a direction they'd like to move in.
+
+                /*
+                 * Allow the player to move at a specified position
                  */
                 case "move" -> System.out.println("Please specify the direction you would like to move in, i.e. 'move right'");
-                /**
-                 * Handles movement commands and moves the player to the specified direction.
+
+                /*
+                 * Handles command 'move' and moves the player to the specified direction.
+                 * There are four positions for player to move
                  */
                 case "move forward", "move backward", "move left", "move right" -> {
                     String[] parts = input.split(" ");
@@ -310,12 +319,15 @@ public class GameEngine {
                         System.out.println("Invalid move command. Please specify a direction.");
                     }
                 }
-                /**
-                 * Prompts the player to specify an entity they'd like to converse with.
+
+                /*
+                 * Prompts the player to specify the NPC they'd like to talk with.
                  */
                 case "talk" -> System.out.println("Specify who you would like to talk to, i.e. 'talk [Entity]'");
-                /**
-                 * Handles conversations with various entities within the game.
+
+                /*
+                 * Handles conversations with various NPCs within the game.
+                 * There are eight NPCs for player to talk in total.
                  */
                 case "talk dwarf", "talk merchant", "talk stranger", "talk blacksmith",
                         "talk goblin", "talk spider", "talk boss", "talk ogre" -> {
@@ -349,12 +361,15 @@ public class GameEngine {
                         System.out.println("There is no " + parts[1] + " here to talk to.");
                     }
                 }
-                /**
-                 * Prompts the player to specify an item they'd like to take.
+
+                /*
+                 * Allows the player to specify items they'd like to take.
                  */
                 case "take" -> System.out.println("What would you like to take?");
-                /**
-                 * Handles the action of the player taking items within the game world.
+
+                /*
+                 * Handles the action of the player taking items.
+                 * There are four items for player to take in total.
                  */
                 case "take potion", "take armor", "take gold", "take bow" -> {
                     String[] parts = input.split(" ");
@@ -366,16 +381,19 @@ public class GameEngine {
                     }
                     else {System.out.println("There is no item here");}
                 }
-                /**
-                 * Prompts the player to specify an item they'd like to use from their inventory.
+
+                /*
+                 * Allows the player to specify an item they'd like to use from their inventory.
                  */
                 case "use" -> {
                     System.out.println("Which item do you want to use: ");
                     displayInventory();
                     System.out.println("Type 'use [item]'");
                 }
-                /**
+
+                /*
                  * Handles the action of the player using items from their inventory.
+                 * There are five items for player to use in total.
                  */
                 case "use potion", "use armor", "use gold", "use sword", "use bow" -> {
                     String[] parts = input.split(" ");
@@ -406,6 +424,12 @@ public class GameEngine {
                     else {System.out.println("Invalid item name");}
                 }
 
+                /*
+                 * Interacts with an NPC to perform a trade if the NPC is a merchant.
+                 * It determines whether there's a merchant in the player's position and allows the
+                 * player to trade items with the merchant.
+                 * There are three items in total for player to trade.
+                 */
                 case "trade" -> {
                     Entity entity = map.getEntityAt(xPosition, yPosition);
                     if (entity instanceof NPC.Merchant) {
@@ -427,6 +451,10 @@ public class GameEngine {
                         System.out.println("There is no merchant here to trade with.");
                     }
                 }
+
+                /*
+                 * Saves the current state of the game.
+                 */
                 case "save" -> {saveGame();}
 
                 // Add more commands such as save and load later
@@ -438,6 +466,8 @@ public class GameEngine {
 
     /**
      * Commands printed to the user if desired
+     *
+     * @author Jerry Zhao
      */
     private void displayCommands() {
         System.out.println("Available commands:");
@@ -455,10 +485,12 @@ public class GameEngine {
 
     /**
      * moves the user in the input direction
+     *
+     * @author Sam Powell
+     *
      * @param direction the direction to move the character
      *
      * @return True if the movement was successful, false if the movement was unsuccessful.
-     * @author Sam Powell
      */
     public boolean move(Direction direction) {
         if (direction == Direction.Left) {
@@ -481,7 +513,9 @@ public class GameEngine {
     }
 
     /**
-     * Prints the players current inventory
+     * Prints the players' current inventory
+     *
+     * @author Thomas Green
      */
     private void displayInventory() {
         List<Item> items = inventory.getItems();
@@ -499,9 +533,10 @@ public class GameEngine {
     /**
      * Check if the player has weapon or not.
      *
-     * @return does the player has a weapon.
      * @author Kwong Yu Zhou
      * @author Thomas Green
+     *
+     * @return whether the player has one weapon, false otherwise.
      */
     public boolean playerHasWeapon() {
         for (Item item : inventory.getItems()) {
@@ -512,6 +547,14 @@ public class GameEngine {
         return playerHasWeapon; // Return false if no weapon was found in the loop
     }
 
+    /**
+     * Retrieves the current weapon of the player from the inventory.
+     *
+     * @author Kwong Yu Zhou
+     * @author Thomas Green
+     *
+     * @return whether the player has one weapon, null otherwise.
+     */
     public Item returnWeapon() {
         for (Item item : inventory.getItems()) {
             if (item.getItemType() == ItemType.Bow || item.getItemType() == ItemType.Sword) {
@@ -521,8 +564,13 @@ public class GameEngine {
         return null;
     }
 
-    //   Getter methods to allow Reading and Writing to JSON with Jackson library
-    //    Unless alternative method implemented, do not remove.
+    /**
+     * Getter methods to allow Reading and Writing to JSON with Jackson library
+     * Unless alternative method implemented, do not remove.
+     *
+     * @author Sam Powell
+     */
+
     public Inventory getInventory() {
         return inventory;
     }
@@ -539,11 +587,16 @@ public class GameEngine {
 
     public int getHp_limit() {return hp_limit;}
 
-
-
     /**
-     * Used to restart the game
+     * Handles the game-over scenario and prompts the player to restart the game.
+     * If the player chooses to restart, the game is restarted again with previous settings
+     * If the player chooses not to restart, the game exits.
+     *
      * @author Sam Powell
+     * @author Jerry Zhao
+     *
+     * @param testInput An array of strings containing the player's input. If the input
+     * is null, a prompt will be displayed to the player.
      */
     public void gameOver(String[] testInput) {
         if (testInput != null) {
@@ -575,8 +628,12 @@ public class GameEngine {
     }
 
     /**
-     * Open a chest and add the items to the inventory
+     * Open a chest and add the items to the inventory.
+     * A random item and some pieces of gold(0 to 2 ) will be added to player's inventory
+     *
      * @author Kwong Yu Zhou
+     *
+     * @param inventory The inventory where the items from the chest will be added.
      */
     public void openChest(Inventory inventory) {
         Random random = new Random();
@@ -610,6 +667,11 @@ public class GameEngine {
         }
     }
 
+    /**
+     * Saves the current state of the game to a file using the Jackson library.
+     *
+     * @author Sam Powell
+     */
     public void saveGame() {
         ObjectMapper objectMapper = new ObjectMapper();
         try {

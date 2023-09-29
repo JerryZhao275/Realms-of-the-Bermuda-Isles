@@ -73,7 +73,7 @@ public class AutomaticGameTest {
     @Test
     public void testMerchant() {
         String[] input = {"play easy", "move right", "move forward", "talk dwarf", "move right", "move forward",
-                "talk merchant", "potion", "armor", "sword", "exit", "quit"};
+                "talk merchant", "trade potion", "trade armor", "trade sword", "exit", "quit"};
         MainMenu mainMenu = new MainMenu();
         mainMenu.initialise(input);
         String output = outContent.toString();
@@ -84,7 +84,7 @@ public class AutomaticGameTest {
     @Test
     public void testMerchantNoGold() {
         String[] input = {"play normal", "move right", "move forward", "talk dwarf", "move right", "move forward",
-                "talk", "talk merchant", "potion", "armor", "sword", "exit", "quit"};
+                "talk", "talk merchant", "trade potion", "trade armor", "trade sword", "exit", "quit"};
         MainMenu mainMenu = new MainMenu();
         mainMenu.initialise(input);
         String output = outContent.toString();

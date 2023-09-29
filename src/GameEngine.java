@@ -220,6 +220,7 @@ public class GameEngine {
                                 String[] newList = new String[newListSize];
                                 System.arraycopy(testInput, currInput, newList, 0, testInput.length - currInput);
                                 this.gameOver(newList);
+
                             }
                             System.out.println("The boss hit back at you! You lost 2 HP.");
                             if (HP <= 0) {
@@ -230,6 +231,7 @@ public class GameEngine {
                                 String[] newList = new String[newListSize];
                                 System.arraycopy(testInput, currInput, newList, 0, testInput.length - currInput);
                                 this.gameOver(newList);
+
                             }
                             else if (attack_time == 1) {
                                 // Some extra content can be added here

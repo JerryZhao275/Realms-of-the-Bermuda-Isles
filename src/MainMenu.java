@@ -58,14 +58,13 @@ public class MainMenu {
             switch (input) {
                 case "quit":
                     isInMenu = false;
-//                    System.out.println("hi");
                     System.out.println("Thanks for playing!");
                     break;
                 case "play":
                     System.out.println("Please select the difficult you would like to play on");
                     break;
                 case "play easy":
-                    if (gameEngine == null) {
+                    if (gameEngine == null){
                         int newListSize = testInput.length - currInput;
                         String[] newList = new String[newListSize];
                         for (int i = 0; currInput < testInput.length; i++, currInput++) {
@@ -105,9 +104,6 @@ public class MainMenu {
                     break;
                 case "load":
                     if (gameEngine == null) {
-
-
-
                         Reader fileReader = null;
                         try {
                             ObjectMapper objectMapper = new ObjectMapper();

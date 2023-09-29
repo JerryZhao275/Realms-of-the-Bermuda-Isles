@@ -4,5 +4,5 @@
  * @author Sam Powell
  */
 public enum ItemType {
-    Sword,Bow,Potion,Armor,Gold
+    Sword, Bow, Potion, Armor, Gold
 }

@@ -1,6 +1,12 @@
 import org.junit.*;
 import java.io.*;
 
+/**
+ * This is a test class responsible for simulating a playthrough within the game, through
+ * providing simulated user inputs and covering code within GameEngine and MainMenu classes.
+ *
+ * @author Jerry Zhao
+ */
 public class AutomaticGameTest {
 
     private final ByteArrayOutputStream outContent = new ByteArrayOutputStream();
@@ -73,7 +79,7 @@ public class AutomaticGameTest {
     @Test
     public void testMerchant() {
         String[] input = {"play easy", "move right", "move forward", "talk dwarf", "move right", "move forward",
-                "talk merchant", "potion", "armor", "sword", "exit", "quit"};
+                "talk merchant", "trade potion", "trade armor", "trade sword", "exit", "quit"};
         MainMenu mainMenu = new MainMenu();
         mainMenu.initialise(input);
         String output = outContent.toString();
@@ -84,7 +90,7 @@ public class AutomaticGameTest {
     @Test
     public void testMerchantNoGold() {
         String[] input = {"play normal", "move right", "move forward", "talk dwarf", "move right", "move forward",
-                "talk", "talk merchant", "potion", "armor", "sword", "exit", "quit"};
+                "talk", "talk merchant", "trade potion", "trade armor", "trade sword", "exit", "quit"};
         MainMenu mainMenu = new MainMenu();
         mainMenu.initialise(input);
         String output = outContent.toString();
@@ -96,6 +102,28 @@ public class AutomaticGameTest {
         String[] input = {"quit"};
         MainMenu mainMenu = new MainMenu();
         mainMenu.initialise(input);
+        String output = outContent.toString();
+        Assert.assertTrue(output.contains("Thanks for playing!"));
+    }
+
+    @Test
+    public void testThiefPlay() {
+        String[] input = {"play easy", "move forward", "talk stranger", "quit"};
+        MainMenu mainMenu = new MainMenu();
+        mainMenu.initialise(input);
+        String output = outContent.toString();
+        Assert.assertTrue(output.contains("Thanks for playing!"));
+    }
+
+    @Test
+    public void testSaveAndLoad() {
+        String[] input = {"load", "play easy", "move forward", "save", "quit"};
+        MainMenu mainMenu = new MainMenu();
+        mainMenu.initialise(input);
+
+        String[] inputAfterSave = {"load", "quit"};
+        MainMenu mainMenu2 = new MainMenu();
+        mainMenu2.initialise(inputAfterSave);
         String output = outContent.toString();
         Assert.assertTrue(output.contains("Thanks for playing!"));
     }

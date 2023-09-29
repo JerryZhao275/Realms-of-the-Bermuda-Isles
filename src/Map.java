@@ -49,7 +49,7 @@ public class Map {
         placeEntity(armor,3,0);
 
         Entity[][] entities = { // row 1-3
-                {bow, dwarf, ogre, gold},
+                {thief, dwarf, ogre, gold},
                 {goblin, gold, merchant, goblin},
                 {blacksmith, goblin, spider, boss}
         };

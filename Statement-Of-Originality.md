@@ -14,8 +14,8 @@ By signing your name and UID each member of the group acknowledges that all the 
 
 ---
 
-- Group Member 3 Name:
-- Group Member 3 UID:
+- Group Member 3 Name: Kwong Yu Zhou
+- Group Member 3 UID: u7466271
 
 ---
 

@@ -150,6 +150,10 @@ public class MainMenu {
      */
     public static void main(String[] args) {
         // Initialize the program for the user
+        runGame();
+    }
+
+    public static void runGame() {
         MainMenu mainMenu = new MainMenu();
         mainMenu.initialise(new String[]{"playthrough"});
     }

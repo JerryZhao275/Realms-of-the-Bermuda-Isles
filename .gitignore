@@ -205,3 +205,5 @@ $RECYCLE.BIN/
 
 # Ignore Gradle build output directory
 build
+/.idea/misc.xml
+/.idea/vcs.xml

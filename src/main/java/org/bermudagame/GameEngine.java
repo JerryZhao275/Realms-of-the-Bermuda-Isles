@@ -201,8 +201,7 @@ public class GameEngine {
                  * Quits the game, ending the current session.
                  */
                 case "quit" -> {
-                    isGameOver = true;
-                    System.out.println("Thanks for playing!");
+                    gameOver(testInput);
                 }
 
                 /*
@@ -593,7 +592,7 @@ public class GameEngine {
             System.out.print("> ");
             String playAgain = scanner.nextLine();
             switch (playAgain) {
-                case "Y" -> startGame(difficulty, new String[]{"playthrough"});
+                case "Y" -> MainMenu.runGame();
                 case "N" -> {
                     System.out.println("See you next time!");
                     System.exit(0);

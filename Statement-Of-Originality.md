@@ -24,8 +24,8 @@ By signing your name and UID each member of the group acknowledges that all the 
 
 ---
 
-- Group Member 5 Name:
-- Group Member 5 UID:
+- Group Member 5 Name: Sam Powell
+- Group Member 5 UID: u7480724
 
 ---
 

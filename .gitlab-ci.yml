@@ -10,7 +10,7 @@
 # https://gradle.org/
 # https://github.com/gradle/gradle
 
-image: gradle:alpine
+image: shelleyshih/game-image:latest
 
 before_script:
   - GRADLE_USER_HOME="$(pwd)/.gradle"

@@ -19,8 +19,8 @@ By signing your name and UID each member of the group acknowledges that all the 
 
 ---
 
-- Group Member 4 Name:
-- Group Member 4 UID:
+- Group Member 4 Name: Hsuan Chu Shih
+- Group Member 4 UID: u7443726
 
 ---
 
@@ -33,3 +33,4 @@ By signing your name and UID each member of the group acknowledges that all the 
 
 - [1] [Stack Overflow ](https://stackoverflow.com/questions/42452329/java-lang-noclassdeffounderror-com-fasterxml-jackson-databind-objectmapper-wh) - Error fixing for using jackson-databind when running gradle
 - [2] [test.com](test.com) - Description/other info
+- [3] [docs.docker.com](https://docs.docker.com/language/java/build-images/) - Build docker

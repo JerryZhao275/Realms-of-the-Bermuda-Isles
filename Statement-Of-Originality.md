@@ -4,8 +4,8 @@ By signing your name and UID each member of the group acknowledges that all the 
 
 ---
 
-- Group Member 1 Name:
-- Group Member 1 UID:
+- Group Member 1 Name: Jerry Zhao
+- Group Member 1 UID: u7490271
 
 ---
 
@@ -24,12 +24,12 @@ By signing your name and UID each member of the group acknowledges that all the 
 
 ---
 
-- Group Member 5 Name: (Remove if not applicable)
-- Group Member 5 UID: (Remove if not applicable)
+- Group Member 5 Name:
+- Group Member 5 UID:
 
 ---
 
 # References (If any)
 
-- [1] [test.com](test.com) - Description/other info
+- [1] [Stack Overflow ](https://stackoverflow.com/questions/42452329/java-lang-noclassdeffounderror-com-fasterxml-jackson-databind-objectmapper-wh) - Error fixing for using jackson-databind when running gradle
 - [2] [test.com](test.com) - Description/other info

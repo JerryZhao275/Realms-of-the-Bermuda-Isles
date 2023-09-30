@@ -1,5 +1,6 @@
 FROM openjdk:17
-COPY ./out/production/comp-2120-assignment-3-workshop-07-group-a/ /tmp
+COPY . /tmp
 WORKDIR /tmp
-CMD java MainMenu
+CMD ./gradlew shadowJar
+CMD java -jar build/libs/comp-2120-assignment-3-workshop-07-group-a-1.0-SNAPSHOT-all.jar
 #ENTRYPOINT ["java","MainMenu"]

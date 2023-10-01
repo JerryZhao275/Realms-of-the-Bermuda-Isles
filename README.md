@@ -31,15 +31,15 @@
 
     **-** Enter “**_play hard_**” to play on a Hard mode.
 
-* ![game_mode](uploads/df53e723af8519effd85e474ff2a59da/game_mode.png)
+* ![game_mode](items/img/game_mode.png)
 
 ## HP System
 
 * The **_HP_** system is designed for the player. It will decrease when the enemy gains the upper hand. It is recoverable by using **supplementary Items**.
 * When your HP comes lower than 1, the game **END**s.
-* ![HP___0](uploads/dd5eced0ed468de2de4eafd2ec561b61/HP___0.png)
+* ![HP___0](items/img/HP___0.png)
 * If you want to check your _HP_, you can enter the command “**_hp_**”. Your remaining _HP_ will then be presented.
-* ![HP](uploads/93db302a45893dd316e97eb830497841/HP.png)
+* ![HP](items/img/HP.png)
 
 ## Moving on the Map
 
@@ -55,7 +55,7 @@
 **- S # # #**   (e.g. <span dir="">“</span>S<span dir="">”</span> stands for the **starting point**(0,0))
 
 * If you want to move to a new area, you can enter a command “**_move_** _+ (The direction)_”, where the directions can be **_left_**, **_right_**, **_forward_** or **_backward_**.
-* ![move](uploads/e4924848b502ed26359fd9f5ad630354/move.png)
+* ![move](items/img/move.png)
 * Once you move on to a new area, the game will tell you what entity exists in that area (**_Enemy_**, **_NPC_**, or **_Item_**).
 
 ## Inventory
@@ -63,7 +63,7 @@
 * The **Inventory** saves the **Items** you get during the adventure.
 * You may hold more than one of the same items in your inventory.
 * If you want to check your inventory, you can enter the command “**_inventory_**”. The names of the items in your inventory will be listed.
-* ![inventory](uploads/3b0ad6a7f6844bb0ae28cf91dd680ac1/inventory.png)
+* ![inventory](items/img/inventory.png)
 
 ## Items
 
@@ -73,8 +73,8 @@
 * Pieces of “**_Gold_**” are used as the currency along the Bermuda Isles. You can use them to trade with some particular NPCs.
 * If you find an item, you can add the item to your inventory by entering the command “**_take_**”. Each item can only be taken **ONCE**.
 * If you want to use a supplement, you can use the item from your inventory by entering the command “**_use_** _+ (The name of the Item)_”.
-* ![use_potion](uploads/1662d2d59984dd0e567853f4ed6345bd/use_potion.png)
-* ![use_armor](uploads/ef14173c3b62f1c4ea9d510ac3dff9d2/use_armor.png)
+* ![use_potion](items/img/use_potion.png)
+* ![use_armor](items/img/use_armor.png)
 * There is a **Durability** for the weapons and supplements. You can use:
 
     **-** _Sword_ & _Bow_: Three times
@@ -100,7 +100,7 @@
 
        **-** _ps. The identity of the thief is not published before you talk to him._
 
-* ![thief](uploads/489b19f2e1a9192ad1f70c6cbed6f595/thief.png)
+* ![thief](items/img/thief.png)
 
     **- _Merchant_**: You can purchase items from astute Merchant using “_Gold_”, with a pricing of
 
@@ -116,7 +116,7 @@
 
 **-** After "**_talking_**" with the **_merchant_**, if you want to purchase an item, you can enter the command “**_trade_** _+ (The item you want to buy)_”.
 
-* ![merchant](uploads/ec85bfcc18ce3315710aa056dab68247/merchant.png)
+* ![merchant](items/img/merchant.png)
 
 ## Enemy Interaction
 
@@ -127,7 +127,7 @@
 
     **-** After defeating all the enemies in an area, you will find a treasure **_Chest_** as your trophy.
 
-* ![normal_enemy_fight\_-\_win](uploads/976376f0c9b4b7b408158cd30a0736b8/normal_enemy_fight\_-\_win.png)
+* ![normal_enemy_fight\_-\_win](items/img/normal_enemy_fight\_-\_win.png)
 
     **-** The **_Chest_** will open automatically, giving you a random weapon or supplement, with _0-2_ pieces of **_Gold_**.
 
@@ -135,7 +135,7 @@
 
     **-** If you attack an enemy **without having a weapon**, the enemy will prevail against you, resulting in a loss of _1 HP_.
 
-* ![normal_enemy_fight\_-\_lose](uploads/dfe1dc3abeb354ed9467f861dca156ab/normal_enemy_fight\_-\_lose.png)
+* ![normal_enemy_fight\_-\_lose](items/img/normal_enemy_fight\_-\_lose.png)
 * The “**_Boss_**”, who is the king of all the Bermuda monsters, is guarding the exit. Defeating him is the **ONLY** way for you to **WIN** the game.
 
     **-** To challenge the **_Boss_**, you need to be equipped with a **weapon**.

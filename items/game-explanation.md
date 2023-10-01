@@ -143,7 +143,7 @@
 
     **-** For the intense hit-back from the **_Boss_**, you will lose **_2 HP_** from each of your attacks.
 
-- <img src="img/boss.png"><br>
+- <img src="img/hit_back_from_boss.png"><br>
 
     **-** During your challenge, logical planning on the usage of your **supplement** may be useful.
 

@@ -32,5 +32,4 @@ By signing your name and UID each member of the group acknowledges that all the 
 # References (If any)
 
 - [1] [Stack Overflow ](https://stackoverflow.com/questions/42452329/java-lang-noclassdeffounderror-com-fasterxml-jackson-databind-objectmapper-wh) - Error fixing for using jackson-databind when running gradle
-- [2] [test.com](test.com) - Description/other info
-- [3] [docs.docker.com](https://docs.docker.com/language/java/build-images/) - Build docker
+- [2] [docs.docker.com](https://docs.docker.com/language/java/build-images/) - Build docker

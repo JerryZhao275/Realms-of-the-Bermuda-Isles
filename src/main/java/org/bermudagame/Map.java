@@ -34,11 +34,11 @@ public class Map {
         Entity ogre = new Enemy("ogre", -1, -1);
         Entity boss = new Enemy("boss", -1, -1);
 
-        Entity potion = new Item("potion", -1, -1,ItemType.Potion);
-        Entity armor = new Item("armor", -1, -1,ItemType.Armor);
-        Entity sword = new Item("sword", -1, -1,ItemType.Sword);
-        Entity bow = new Item("bow", -1, -1,ItemType.Bow);
-        Entity gold = new Item("gold", -1, -1,ItemType.Gold);
+        Entity potion = new Item(GameEngine.potion, -1, -1,ItemType.Potion);
+        Entity armor = new Item(GameEngine.armor, -1, -1,ItemType.Armor);
+        Entity sword = new Item(GameEngine.sword, -1, -1,ItemType.Sword);
+        Entity bow = new Item(GameEngine.bow, -1, -1,ItemType.Bow);
+        Entity gold = new Item(GameEngine.gold, -1, -1,ItemType.Gold);
 
         Entity blacksmith = new NPC.Blacksmith("blacksmith", -1, -1);
         Entity thief = new NPC.Thief("thief", -1, -1);

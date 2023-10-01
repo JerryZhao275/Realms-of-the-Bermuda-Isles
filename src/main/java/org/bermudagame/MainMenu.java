@@ -24,6 +24,8 @@ public class MainMenu {
         this.gameEngine = null;
     }
 
+    public final static String pathToSaveFile = "saves/savefile.json";
+
     /**
      * Initialize the main menu and allow the user to start the game or quit.
      * Once the user chooses to start the game, control is handed over to the GameEngine.

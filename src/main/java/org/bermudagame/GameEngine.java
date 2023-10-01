@@ -9,6 +9,8 @@ import java.util.Objects;
 import java.util.Random;
 import java.util.Scanner;
 
+
+
 /**
  * This class represents the game engine for a text-based RPG.
  * It handles user input, game progression, and interactions with respect to a singleton design pattern.
@@ -34,6 +36,11 @@ public class GameEngine {
     protected int xPosition;
     protected int yPosition;
 
+    public final static String gold = "gold";
+    public final static String sword = "sword";
+    public final static String potion = "potion";
+    public final static String bow = "bow";
+    public final static String armor = "armor";
 
     /**
      * Private constructor to initialize the GameEngine instance.
@@ -78,18 +85,18 @@ public class GameEngine {
             case 0 -> {
                 HP = 5;
                 hp_limit = HP;
-                inventory.addItem(new Item("sword", -1, -1, ItemType.Sword));
-                inventory.addItem(new Item("potion", -1, -1, ItemType.Potion));
-                inventory.addItem(new Item("gold", -1, -1, ItemType.Gold));
-                inventory.addItem(new Item("gold", -1, -1, ItemType.Gold));
-                inventory.addItem(new Item("gold", -1, -1, ItemType.Gold));
-                inventory.addItem(new Item("gold", -1, -1, ItemType.Gold));
+                inventory.addItem(new Item(sword, -1, -1, ItemType.Sword));
+                inventory.addItem(new Item(potion, -1, -1, ItemType.Potion));
+                inventory.addItem(new Item(gold, -1, -1, ItemType.Gold));
+                inventory.addItem(new Item(gold, -1, -1, ItemType.Gold));
+                inventory.addItem(new Item(gold, -1, -1, ItemType.Gold));
+                inventory.addItem(new Item(gold, -1, -1, ItemType.Gold));
                 System.out.println("You are playing easy mode!");
             }
             case 1 -> {
                 HP = 4;
                 hp_limit = HP;
-                inventory.addItem(new Item("sword", -1, -1,ItemType.Sword));
+                inventory.addItem(new Item(sword, -1, -1,ItemType.Sword));
                 System.out.println("You are playing normal mode!");
             }
             case 2 -> {
@@ -404,7 +411,7 @@ public class GameEngine {
                     Item selectedItem = inventory.getItem(parts[1]);
                     if (selectedItem != null) {
                         switch (selectedItem.getName()) {
-                            case "potion" -> {
+                            case potion -> {
                                 if (HP + 1 <= hp_limit){
                                     HP++;
                                     selectedItem.use(inventory);
@@ -413,12 +420,12 @@ public class GameEngine {
                                     System.out.println("# You are unable to use a potion with full HP.");
                                 }
                             }
-                            case "armor" -> { //Armor is significantly more useful than potions, and there are fewer ways to get it
+                            case armor -> { //Armor is significantly more useful than potions, and there are fewer ways to get it
                                 HP++;
                                 inventory.removeItem(selectedItem);
                                 System.out.println("# You equipped yourself with an armor (HP:+1). Your HP has been increased to "+ HP +".");
                             }
-                            case "gold" -> System.out.println("You look at the piece of gold, " +
+                            case gold -> System.out.println("You look at the piece of gold, " +
                                     "maybe someone would like to trade with you.");
                             default -> System.out.println("You are unsure how to use this item, " +
                                     "you place it back into your inventory.");
@@ -625,11 +632,11 @@ public class GameEngine {
      */
     public void openChest(Inventory inventory) {
         Random random = new Random();
-        Item sword = new Item("sword", -1, -1,ItemType.Sword);
-        Item potion = new Item("potion", -1, -1,ItemType.Potion);
-        Item bow = new Item("bow", -1, -1,ItemType.Bow);
-        Item armor = new Item("armor", -1, -1,ItemType.Armor);
-        Item[] possibleItems = {sword, bow, potion, armor};
+        Item swordItem = new Item(sword, -1, -1,ItemType.Sword);
+        Item potionItem = new Item(potion, -1, -1,ItemType.Potion);
+        Item bowItem = new Item(bow, -1, -1,ItemType.Bow);
+        Item armorItem = new Item(armor, -1, -1,ItemType.Armor);
+        Item[] possibleItems = {swordItem, bowItem, potionItem, armorItem};
         int count_gold = 0;
 
         // Randomly select a weapon (sword or bow) or a supplement (armor or potion)
@@ -640,7 +647,7 @@ public class GameEngine {
         int numberOfGolds = random.nextInt(3);
 
         for (int i = 0; i < numberOfGolds; i++) {
-            inventory.addItem(new Item("gold", -1, -1,ItemType.Gold));
+            inventory.addItem(new Item(gold, -1, -1,ItemType.Gold));
             count_gold++;
         }
         if (count_gold == 0){
@@ -663,7 +670,7 @@ public class GameEngine {
     public void saveGame() {
         ObjectMapper objectMapper = new ObjectMapper();
         try {
-            FileWriter writer = new FileWriter("saves/savefile.json");
+            FileWriter writer = new FileWriter(MainMenu.pathToSaveFile);
             objectMapper.writerWithDefaultPrettyPrinter().writeValue(writer,this);
             writer.close();
         } catch (Exception e) {

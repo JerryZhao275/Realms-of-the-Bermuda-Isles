@@ -29,14 +29,15 @@
     **-** Enter “**_play normal_**” to play on a Normal mode.
 
     **-** Enter “**_play hard_**” to play on a Hard mode.
-- <img src="img/game_mode.png">
+- <img src="img/game_mode.png"><br>
 
 ## HP System
 
 * The **_HP_** system is designed for the player. It will decrease when the enemy gains the upper hand. It is recoverable by using **supplementary Items**.
 * When your HP comes lower than 1, the game **END**s.
-
+- <img src="img/0HP.png"><br>
 * If you want to check your _HP_, you can enter the command “**_hp_**”. Your remaining _HP_ will then be presented.
+- <img src="img/HP.png"><br>
 
 ## Moving on the Map
 
@@ -53,18 +54,22 @@
 
 * If you want to move to a new area, you can enter a command “**_move_** _+ (The direction)_”, where the directions can be **_left_**, **_right_**, **_forward_** or **_backward_**.
 * Once you move on to a new area, the game will tell you what entity exists in that area (**_Enemy_**, **_NPC_**, or **_Item_**).
+- <img src="img/move.png"><br>
 
 ## Inventory
 
 * The **Inventory** saves the **Items** you get during the adventure.
 * You may hold more than one of the same items in your inventory.
 * If you want to check your inventory, you can enter the command “**_inventory_**”. The names of the items in your inventory will be listed.
+- <img src="img/inventory.png"><br>
 
 ## Items
 
 * You will have a chance to come across certain items in the game, including weapons (**_Sword_**, **_Bow_**_)_, supplements (**_Potions_**, **_Armor_**) and currency (**_Gold_**).
 * Weapons are useful when you attack the enemies. Challenging enemies without a weapon may cause a loss on your HP.
 * Supplements provide support on your HP. “**_Potion_**” recoveries **_1 HP_** if your _HP_ is lower than your _HP limit_. “**_Armor_**” gives you **1** **extra** **HP**, which is independent of the _HP limit_. It performs better than potions, but it is also more difficult to obtain.
+- <img src="img/use_potion.png"><br>
+- <img src="img/use_armor.png"><br>
 * Pieces of “**_Gold_**” are used as the currency along the Bermuda Isles. You can use them to trade with some particular NPCs.
 * If you find an item, you can add the item to your inventory by entering the command “**_take_**”. Each item can only be taken **ONCE**.
 * If you want to use a supplement, you can use the item from your inventory by entering the command “**_use_** _+ (The name of the Item)_”.
@@ -80,6 +85,7 @@
     **-** _ps. The durability of weapons means the time for using them to attack_
 
 * When the durability comes to **0**, the item will be removed from your inventory.
+- <img src="img/durability.png"><br>
 
 ## NPC Interaction
 
@@ -92,6 +98,8 @@
     **- _Thief_**: The sneaky thief will steal all the items (except swords) from you and escape.
 
        **-** _ps. The identity of the thief is not published before you talk to him._
+
+- <img src="img/thief.png"><br>
 
     **- _Merchant_**: You can purchase items from astute Merchant using “_Gold_”, with a pricing of
 
@@ -107,6 +115,8 @@
 
 **-** After "**_talking_**" with the **_merchant_**, if you want to purchase an item, you can enter the command “**_trade_** _+ (The item you want to buy)_”.
 
+- <img src="img/merchant.png"><br>
+
 ## Enemy Interaction
 
 * On the Bermuda Isles, there is a risk of encountering enemies such as **_Goblins_**, **_Spiders_**, and **_Ogres_**.
@@ -116,11 +126,14 @@
 
     **-** After defeating all the enemies in an area, you will find a treasure **_Chest_** as your trophy.
 
+- <img src="img/normal_enemy_fight_win.png"><br>
+
     **-** The **_Chest_** will open automatically, giving you a random weapon or supplement, with _0-2_ pieces of **_Gold_**.
 
     **-** The items from the chest will be automatically saved in your **_Inventory_**.
 
     **-** If you attack an enemy **without having a weapon**, the enemy will prevail against you, resulting in a loss of _1 HP_.
+- <img src="img/normal_enemy_fight_lose.png"><br>
 
 * The “**_Boss_**”, who is the king of all the Bermuda monsters, is guarding the exit. Defeating him is the **ONLY** way for you to **WIN** the game.
 
@@ -129,6 +142,8 @@
     **-** The **_Boss_** is much more powerful than normal enemies. To defeat him, you need to attack it 3 times in total.
 
     **-** For the intense hit-back from the **_Boss_**, you will lose **_2 HP_** from each of your attacks.
+
+- <img src="img/boss.png"><br>
 
     **-** During your challenge, logical planning on the usage of your **supplement** may be useful.
 
@@ -140,10 +155,11 @@
 
 * If you need to leave during a play, you can choose to save your current progress (maximum storage: 1 file)
 * The command for **Saving** is “**_save_**”, all the parameters (**_Inventory_**, **_HP_**, player location, The state of **_NPCs_**, **_Enemies_**, and **_Items_**) will all be saved.
+- <img src="img/save.png"><br>
 
 * When you come back, you can load the game and continue playing.
 * The command for **Loading** is **<span dir="">“</span>_load_<span dir="">”</span>.** The data saved will be loaded as parameters for continuing the game.
-
+- <img src="img/load.png"><br>
 
 ## Features Planned without Implement
 
@@ -175,5 +191,5 @@ An Automatic tester was implemented similar to JUnit testing syntax, but rather 
 This tester was implemented by utilising the ByteArrayOutputStream class, allowing us to hardcode inputs in a list of Strings that are sequentially fed into the game engine. However, to allow this input feeding process, we were required to re-architecture our GameEngine.java class, parameterising it with a list of strings, allowing testing to be performed. This re-architecture was performed for specific class methods that require the use of a scanner, further allowing a list of string inputs to be processed by several unique scanners functioning in different classes. For the case of a normal playthrough, we would simply process a key within a singleton, and write additional logic for the program to not perform testing.
 
 Through using both JUnit testing and Automated game testing, our team was able to provide coverage of 82.7% of all lines within the project. Note that some methods are duplicated for the sake of testing and running a playthrough, but retain the same functionality, hence the true coverage is much higher.
-
+- <img src="img/coverage.png"><br>
 More information on the coverage report can be found in [coverage-report/index.html](https://gitlab.cecs.anu.edu.au/u7480724/comp-2120-assignment-3-workshop-07-group-a/-/blob/main/items/coverage-report/index.html).

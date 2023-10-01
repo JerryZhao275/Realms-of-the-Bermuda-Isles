@@ -29,7 +29,7 @@
     **-** Enter “**_play normal_**” to play on a Normal mode.
 
     **-** Enter “**_play hard_**” to play on a Hard mode.
-
+- <img src="img/game_mode.png">
 
 ## HP System
 

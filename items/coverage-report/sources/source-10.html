@@ -1,0 +1,608 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <title>Coverage Report > NPC</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/highlight-idea.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.pack.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">&lt;empty package name&gt;</a>
+</div>
+
+<h1>Coverage Summary for Class: NPC (&lt;empty package name&gt;)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">NPC</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (2/2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (2/2)
+  </span>
+</td>
+</tr>
+  <tr>
+    <td class="name">NPC$Blacksmith</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (3/3)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (8/8)
+  </span>
+</td>
+  </tr>
+  <tr>
+    <td class="name">NPC$Dwarf</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (3/3)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (8/8)
+  </span>
+</td>
+  </tr>
+  <tr>
+    <td class="name">NPC$Merchant</td>
+<td class="coverageStat">
+  <span class="percent">
+    75%
+  </span>
+  <span class="absValue">
+    (3/4)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    44.6%
+  </span>
+  <span class="absValue">
+    (45/101)
+  </span>
+</td>
+  </tr>
+  <tr>
+    <td class="name">NPC$Thief</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (4/4)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    91.7%
+  </span>
+  <span class="absValue">
+    (22/24)
+  </span>
+</td>
+  </tr>
+<tr>
+  <td class="name"><strong>Total</strong></td>
+<td class="coverageStat">
+  <span class="percent">
+    93.8%
+  </span>
+  <span class="absValue">
+    (15/16)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    59.4%
+  </span>
+  <span class="absValue">
+    (85/143)
+  </span>
+</td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<div class="sourceCode" id="sourceCode"><i class="no-highlight">1</i>&nbsp;import java.util.*;
+<i class="no-highlight">2</i>&nbsp;
+<i class="no-highlight">3</i>&nbsp;/**
+<i class="no-highlight">4</i>&nbsp; * The NPC (Non-Playable Character) class serves as a foundation for the various types of NPCs present in the game.
+<i class="no-highlight">5</i>&nbsp; * Each type of NPC has unique interactions and behaviors that influence the player and the game .
+<i class="no-highlight">6</i>&nbsp; * &lt;p&gt;
+<i class="no-highlight">7</i>&nbsp; * This class primarily acts as an abstract base, with subclasses providing specific implementations for each NPC type.
+<i class="no-highlight">8</i>&nbsp; * &lt;/p&gt;
+<i class="no-highlight">9</i>&nbsp; *
+<i class="no-highlight">10</i>&nbsp; * @author Thomas Green
+<i class="no-highlight">11</i>&nbsp; */
+<i class="no-highlight">12</i>&nbsp;public abstract class NPC extends Entity {
+<i class="no-highlight">13</i>&nbsp;
+<i class="no-highlight">14</i>&nbsp;    /**
+<i class="no-highlight">15</i>&nbsp;     * Constructs an NPC with the specified name and coordinates.
+<i class="no-highlight">16</i>&nbsp;     *
+<i class="no-highlight">17</i>&nbsp;     * @author Thomas Green
+<i class="no-highlight">18</i>&nbsp;     *
+<i class="no-highlight">19</i>&nbsp;     * @param name The name of the NPC.
+<i class="no-highlight">20</i>&nbsp;     * @param x    The x-coordinate of the NPC.
+<i class="no-highlight">21</i>&nbsp;     * @param y    The y-coordinate of the NPC.
+<i class="no-highlight">22</i>&nbsp;     *
+<i class="no-highlight">23</i>&nbsp;     */
+<i class="no-highlight">24</i>&nbsp;    public NPC(String name, int x, int y) {
+<i class="no-highlight">25</i>&nbsp;        super(name, x, y);
+<i class="no-highlight">26</i>&nbsp;    }
+<i class="no-highlight">27</i>&nbsp;    //    Empty Constructor to allow JSON mapping
+<i class="no-highlight">28</i>&nbsp;    public NPC() {}
+<b class="fc"><i class="no-highlight">29</i>&nbsp;</b>
+<i class="no-highlight">30</i>&nbsp;    /**
+<i class="no-highlight">31</i>&nbsp;     * Engages the player in a conversation or interaction. The nature and outcome of this interaction
+<b class="fc"><i class="no-highlight">32</i>&nbsp;     * varies based on the NPC&#39;s type and can potentially modify the player&#39;s inventory or the game world.</b>
+<i class="no-highlight">33</i>&nbsp;     *
+<i class="no-highlight">34</i>&nbsp;     * @author Thomas Green
+<i class="no-highlight">35</i>&nbsp;     *
+<i class="no-highlight">36</i>&nbsp;     * @param map       The game map.
+<i class="no-highlight">37</i>&nbsp;     * @param row       The row-coordinate of the NPC on the map.
+<i class="no-highlight">38</i>&nbsp;     * @param column    The column-coordinate of the NPC on the map.
+<i class="no-highlight">39</i>&nbsp;     * @param inventory The player&#39;s current inventory.
+<i class="no-highlight">40</i>&nbsp;     *
+<i class="no-highlight">41</i>&nbsp;     * @return A message to the player describing the result of the interaction.
+<i class="no-highlight">42</i>&nbsp;     */
+<i class="no-highlight">43</i>&nbsp;    public abstract String talk(Map map, int row, int column, Inventory inventory);
+<i class="no-highlight">44</i>&nbsp;
+<i class="no-highlight">45</i>&nbsp;    /**
+<i class="no-highlight">46</i>&nbsp;     * Represents a Blacksmith NPC who offers weaponry to players.
+<i class="no-highlight">47</i>&nbsp;     * &lt;p&gt;
+<i class="no-highlight">48</i>&nbsp;     * When interacted with, the Blacksmith provides the player with a sword.
+<i class="no-highlight">49</i>&nbsp;     * &lt;/p&gt;
+<i class="no-highlight">50</i>&nbsp;     *
+<i class="no-highlight">51</i>&nbsp;     * @author Thomas Green
+<i class="no-highlight">52</i>&nbsp;     */
+<i class="no-highlight">53</i>&nbsp;    public static class Blacksmith extends NPC {
+<i class="no-highlight">54</i>&nbsp;
+<i class="no-highlight">55</i>&nbsp;        /**
+<i class="no-highlight">56</i>&nbsp;         * Constructs a Blacksmith NPC with the specified name and coordinates.
+<i class="no-highlight">57</i>&nbsp;         *
+<i class="no-highlight">58</i>&nbsp;         * @author Thomas Green
+<i class="no-highlight">59</i>&nbsp;         *
+<i class="no-highlight">60</i>&nbsp;         * @param name The name of the Blacksmith.
+<i class="no-highlight">61</i>&nbsp;         * @param x    The x-coordinate of the Blacksmith&#39;s location.
+<i class="no-highlight">62</i>&nbsp;         * @param y    The y-coordinate of the Blacksmith&#39;s location.
+<i class="no-highlight">63</i>&nbsp;         */
+<i class="no-highlight">64</i>&nbsp;        public Blacksmith(String name, int x, int y) {
+<i class="no-highlight">65</i>&nbsp;            super(name, x, y);
+<i class="no-highlight">66</i>&nbsp;        }
+<i class="no-highlight">67</i>&nbsp;        //    Empty Constructor to allow JSON mapping
+<i class="no-highlight">68</i>&nbsp;        public Blacksmith() {}
+<i class="no-highlight">69</i>&nbsp;
+<i class="no-highlight">70</i>&nbsp;
+<i class="no-highlight">71</i>&nbsp;        /**
+<b class="fc"><i class="no-highlight">72</i>&nbsp;         * Allows the player to interact with the Blacksmith, resulting in the Blacksmith offering a sword.</b>
+<i class="no-highlight">73</i>&nbsp;         * After the interaction, the Blacksmith is removed from the map.
+<i class="no-highlight">74</i>&nbsp;         *
+<b class="fc"><i class="no-highlight">75</i>&nbsp;         * @author Thomas Green</b>
+<i class="no-highlight">76</i>&nbsp;         *
+<i class="no-highlight">77</i>&nbsp;         * @param map       The game map where entities, including the Blacksmith, are located.
+<i class="no-highlight">78</i>&nbsp;         * @param row       The row coordinate of the Blacksmith on the map.
+<i class="no-highlight">79</i>&nbsp;         * @param column    The column coordinate of the Blacksmith on the map.
+<i class="no-highlight">80</i>&nbsp;         * @param inventory The player&#39;s inventory where items are stored.
+<i class="no-highlight">81</i>&nbsp;         * @return A message to the player describing the outcome of the interaction.
+<i class="no-highlight">82</i>&nbsp;         */
+<i class="no-highlight">83</i>&nbsp;        @Override
+<i class="no-highlight">84</i>&nbsp;        public String talk(Map map, int row, int column, Inventory inventory) {
+<i class="no-highlight">85</i>&nbsp;            System.out.println(&quot;Ah, a wanderer! You could use a sword to protect these treacherous lands&quot;);
+<i class="no-highlight">86</i>&nbsp;            Item sword = new Item(&quot;sword&quot;, -1, -1, ItemType.Sword);
+<i class="no-highlight">87</i>&nbsp;            inventory.addItem(sword);
+<i class="no-highlight">88</i>&nbsp;            map.removeEntity(row,column);
+<i class="no-highlight">89</i>&nbsp;            System.out.println(&quot;Use it wisely. The Bermuda Isles are no place for the unprepared&quot;);
+<i class="no-highlight">90</i>&nbsp;            return &quot;# The blacksmith left you a sharp sword. A &#39;Sword&#39; has been added to your inventory.&quot;;
+<i class="no-highlight">91</i>&nbsp;        }
+<i class="no-highlight">92</i>&nbsp;    }
+<b class="fc"><i class="no-highlight">93</i>&nbsp;</b>
+<b class="fc"><i class="no-highlight">94</i>&nbsp;    /**</b>
+<b class="fc"><i class="no-highlight">95</i>&nbsp;     * Represents a Thief NPC who will steal all the items from players except the sword.</b>
+<b class="fc"><i class="no-highlight">96</i>&nbsp;     * &lt;p&gt;</b>
+<b class="fc"><i class="no-highlight">97</i>&nbsp;     * When interacted with, the Thief scans the player&#39;s inventory and steals any item, sparing only the sword.</b>
+<b class="fc"><i class="no-highlight">98</i>&nbsp;     * The Thief then disappears from the game map.</b>
+<i class="no-highlight">99</i>&nbsp;     * &lt;/p&gt;
+<i class="no-highlight">100</i>&nbsp;     *
+<i class="no-highlight">101</i>&nbsp;     * @author Thomas Green
+<i class="no-highlight">102</i>&nbsp;     */
+<i class="no-highlight">103</i>&nbsp;    public static class Thief extends NPC {
+<i class="no-highlight">104</i>&nbsp;        /**
+<i class="no-highlight">105</i>&nbsp;         * Constructs a Thief NPC with the specified name and coordinates.
+<i class="no-highlight">106</i>&nbsp;         *
+<i class="no-highlight">107</i>&nbsp;         * @author Thomas Green
+<i class="no-highlight">108</i>&nbsp;         *
+<i class="no-highlight">109</i>&nbsp;         * @param x    The x-coordinate of the Thief&#39;s location.
+<i class="no-highlight">110</i>&nbsp;         * @param y    The y-coordinate of the Thief&#39;s location.
+<i class="no-highlight">111</i>&nbsp;         */
+<i class="no-highlight">112</i>&nbsp;        public Thief(String name, int x, int y) {
+<i class="no-highlight">113</i>&nbsp;            super(&quot;stranger&quot;, x, y);
+<i class="no-highlight">114</i>&nbsp;        }
+<i class="no-highlight">115</i>&nbsp;        //    Empty Constructor to allow JSON mapping
+<i class="no-highlight">116</i>&nbsp;        public Thief() {}
+<i class="no-highlight">117</i>&nbsp;
+<i class="no-highlight">118</i>&nbsp;        /**
+<i class="no-highlight">119</i>&nbsp;         * Interacts with the Thief NPC, resulting in potential theft from the player&#39;s inventory.
+<i class="no-highlight">120</i>&nbsp;         * If the inventory is empty or only contains a sword, the Thief leaves without taking anything.
+<i class="no-highlight">121</i>&nbsp;         * After the interaction, the Thief disappears from the game map.
+<i class="no-highlight">122</i>&nbsp;         *
+<b class="fc"><i class="no-highlight">123</i>&nbsp;         * @author Thomas Green</b>
+<i class="no-highlight">124</i>&nbsp;         *
+<i class="no-highlight">125</i>&nbsp;         * @param map       The game map where entities, including the Thief, are located.
+<b class="fc"><i class="no-highlight">126</i>&nbsp;         * @param row       The row coordinate of the Thief on the map.</b>
+<i class="no-highlight">127</i>&nbsp;         * @param column    The column coordinate of the Thief on the map.
+<i class="no-highlight">128</i>&nbsp;         * @param inventory The player&#39;s inventory which is subject to theft by the Thief.
+<i class="no-highlight">129</i>&nbsp;         * @return A message to the player describing the outcome of the interaction.
+<i class="no-highlight">130</i>&nbsp;         */
+<i class="no-highlight">131</i>&nbsp;        @Override
+<i class="no-highlight">132</i>&nbsp;        public String talk(Map map, int row, int column, Inventory inventory) {
+<i class="no-highlight">133</i>&nbsp;            System.out.println(&quot;Hey there! It&#39;s not often I see new faces around here. Stay safe and watch your belongings!&quot;);
+<i class="no-highlight">134</i>&nbsp;
+<i class="no-highlight">135</i>&nbsp;            if (inventory.getItems().isEmpty()) {
+<i class="no-highlight">136</i>&nbsp;                map.removeEntity(row, column);
+<i class="no-highlight">137</i>&nbsp;                return &quot;# After the brief conversation, the stranger quickly disappeared.&quot;;
+<i class="no-highlight">138</i>&nbsp;            }
+<i class="no-highlight">139</i>&nbsp;
+<i class="no-highlight">140</i>&nbsp;            List&lt;Item&gt; stolenItems = new ArrayList&lt;&gt;();
+<i class="no-highlight">141</i>&nbsp;            for (Item item : new ArrayList&lt;&gt;(inventory.getItems())) {
+<i class="no-highlight">142</i>&nbsp;                if (!item.getName().equalsIgnoreCase(&quot;sword&quot;)) {
+<i class="no-highlight">143</i>&nbsp;                    stolenItems.add(item);
+<b class="fc"><i class="no-highlight">144</i>&nbsp;                    inventory.removeItem(item);</b>
+<i class="no-highlight">145</i>&nbsp;                }
+<b class="fc"><i class="no-highlight">146</i>&nbsp;            }</b>
+<b class="nc"><i class="no-highlight">147</i>&nbsp;            map.removeEntity(row, column);</b>
+<b class="nc"><i class="no-highlight">148</i>&nbsp;</b>
+<i class="no-highlight">149</i>&nbsp;            if (stolenItems.isEmpty()) {
+<i class="no-highlight">150</i>&nbsp;                return &quot;# After the brief conversation, the stranger quickly disappeared.&quot;;
+<b class="fc"><i class="no-highlight">151</i>&nbsp;            } else {</b>
+<b class="fc"><i class="no-highlight">152</i>&nbsp;                return &quot;# You checked your bag and noticed that your &quot; + listItems(stolenItems) + &quot; is missing. &quot; +</b>
+<b class="fc"><i class="no-highlight">153</i>&nbsp;                        &quot;\nYou turned around to look for the stranger. They&#39;re already gone, leaving no trace. They were a thief!&quot;;</b>
+<b class="fc"><i class="no-highlight">154</i>&nbsp;            }</b>
+<b class="fc"><i class="no-highlight">155</i>&nbsp;        }</b>
+<i class="no-highlight">156</i>&nbsp;
+<b class="fc"><i class="no-highlight">157</i>&nbsp;</b>
+<b class="fc"><i class="no-highlight">158</i>&nbsp;        /**</b>
+<i class="no-highlight">159</i>&nbsp;         * Utility method to format the list of stolen items into a readable string format.
+<b class="fc"><i class="no-highlight">160</i>&nbsp;         *</b>
+<b class="fc"><i class="no-highlight">161</i>&nbsp;         * @author Thomas Green</b>
+<i class="no-highlight">162</i>&nbsp;         *
+<b class="fc"><i class="no-highlight">163</i>&nbsp;         * @param items A list of items that the Thief stole from the player.</b>
+<i class="no-highlight">164</i>&nbsp;         * @return A formatted string listing all the stolen items.
+<i class="no-highlight">165</i>&nbsp;         */
+<i class="no-highlight">166</i>&nbsp;        private String listItems(List&lt;Item&gt; items) {
+<i class="no-highlight">167</i>&nbsp;            StringBuilder sb = new StringBuilder();
+<i class="no-highlight">168</i>&nbsp;            for (int i = 0; i &lt; items.size(); i++) {
+<i class="no-highlight">169</i>&nbsp;                sb.append(items.get(i).getName());
+<i class="no-highlight">170</i>&nbsp;                if (i &lt; items.size() - 2) {
+<i class="no-highlight">171</i>&nbsp;                    sb.append(&quot;, &quot;);
+<i class="no-highlight">172</i>&nbsp;                } else if (i == items.size() - 2) {
+<i class="no-highlight">173</i>&nbsp;                    sb.append(&quot; and &quot;);
+<i class="no-highlight">174</i>&nbsp;                }
+<i class="no-highlight">175</i>&nbsp;            }
+<i class="no-highlight">176</i>&nbsp;            return sb.toString();
+<i class="no-highlight">177</i>&nbsp;        }
+<i class="no-highlight">178</i>&nbsp;    }
+<b class="fc"><i class="no-highlight">179</i>&nbsp;</b>
+<b class="fc"><i class="no-highlight">180</i>&nbsp;</b>
+<b class="fc"><i class="no-highlight">181</i>&nbsp;    /**</b>
+<b class="fc"><i class="no-highlight">182</i>&nbsp;     * Represents a Dwarf NPC who will give item &#39;Gold&#39; into player&#39;s inventory</b>
+<b class="fc"><i class="no-highlight">183</i>&nbsp;     * &lt;/p&gt;</b>
+<b class="fc"><i class="no-highlight">184</i>&nbsp;     *</b>
+<b class="fc"><i class="no-highlight">185</i>&nbsp;     * @author Thomas Green</b>
+<i class="no-highlight">186</i>&nbsp;     */
+<i class="no-highlight">187</i>&nbsp;    public static class Dwarf extends NPC {
+<b class="fc"><i class="no-highlight">188</i>&nbsp;</b>
+<i class="no-highlight">189</i>&nbsp;        /**
+<i class="no-highlight">190</i>&nbsp;         * Constructs a Dwarf NPC with the specified name and coordinates.
+<i class="no-highlight">191</i>&nbsp;         *
+<i class="no-highlight">192</i>&nbsp;         * @author Thomas Green
+<i class="no-highlight">193</i>&nbsp;         *
+<i class="no-highlight">194</i>&nbsp;         * @param name The name of the Dwarf
+<i class="no-highlight">195</i>&nbsp;         * @param x    The x-coordinate of the Dwarf&#39;s location.
+<i class="no-highlight">196</i>&nbsp;         * @param y    The y-coordinate of the Dwarf&#39;s location.
+<i class="no-highlight">197</i>&nbsp;         */
+<i class="no-highlight">198</i>&nbsp;
+<i class="no-highlight">199</i>&nbsp;        public Dwarf(String name, int x, int y) {
+<i class="no-highlight">200</i>&nbsp;            super(name, x, y);
+<i class="no-highlight">201</i>&nbsp;        }
+<i class="no-highlight">202</i>&nbsp;        //    Empty Constructor to allow JSON mapping
+<i class="no-highlight">203</i>&nbsp;        public Dwarf() {}
+<i class="no-highlight">204</i>&nbsp;        /**
+<i class="no-highlight">205</i>&nbsp;         * Represents the interaction between the player and the Dwarf NPC.
+<i class="no-highlight">206</i>&nbsp;         * When the player interacts with the Dwarf, the Dwarf offers them some gold.
+<i class="no-highlight">207</i>&nbsp;         * This method will add the &#39;Gold&#39; item to the player&#39;s inventory, remove the Dwarf
+<i class="no-highlight">208</i>&nbsp;         * from the map after the interaction, and provide feedback to the player about the interaction&#39;s outcome.
+<i class="no-highlight">209</i>&nbsp;         * &lt;/p&gt;
+<i class="no-highlight">210</i>&nbsp;         *
+<i class="no-highlight">211</i>&nbsp;         * @author Thomas Green
+<i class="no-highlight">212</i>&nbsp;         *
+<b class="fc"><i class="no-highlight">213</i>&nbsp;         * @param map       The game map where entities, including the Dwarf, are located.</b>
+<i class="no-highlight">214</i>&nbsp;         * @param row       The row coordinate of the Dwarf on the map.
+<i class="no-highlight">215</i>&nbsp;         * @param column    The column coordinate of the Dwarf on the map.
+<b class="fc"><i class="no-highlight">216</i>&nbsp;         * @param inventory The player&#39;s inventory.</b>
+<i class="no-highlight">217</i>&nbsp;         * @return A message to the player describing the outcome of the interaction.
+<i class="no-highlight">218</i>&nbsp;         */
+<i class="no-highlight">219</i>&nbsp;        @Override
+<i class="no-highlight">220</i>&nbsp;        public String talk(Map map, int row, int column, Inventory inventory) {
+<i class="no-highlight">221</i>&nbsp;            System.out.println(&quot;Greetings, traveller. I&#39;ve been on this island for a time unknown.&quot; +
+<i class="no-highlight">222</i>&nbsp;                    &quot;Take some gold; it may aid you on your journey.&quot;);
+<i class="no-highlight">223</i>&nbsp;            Item gold = new Item(&quot;gold&quot;, -1, -1,ItemType.Gold);
+<i class="no-highlight">224</i>&nbsp;            inventory.addItem(gold);
+<i class="no-highlight">225</i>&nbsp;            map.removeEntity(row,column);
+<i class="no-highlight">226</i>&nbsp;            System.out.println(&quot;Gold might not have much value here, but it&#39;s a start. Seek the exit, and may fortune favor you&quot;);
+<i class="no-highlight">227</i>&nbsp;            return &quot;# The Dwarf left you a piece of gold. A piece of &#39;gold&#39; has been added to your inventory.&quot;;
+<i class="no-highlight">228</i>&nbsp;        }
+<i class="no-highlight">229</i>&nbsp;    }
+<i class="no-highlight">230</i>&nbsp;
+<i class="no-highlight">231</i>&nbsp;
+<i class="no-highlight">232</i>&nbsp;    /**
+<i class="no-highlight">233</i>&nbsp;     * Represents a Merchant NPC, a character in the game from whom the player can buy items.
+<b class="fc"><i class="no-highlight">234</i>&nbsp;     * The Merchant offers armor,potion and sword for sale and players can use in-game gold to make purchases.</b>
+<i class="no-highlight">235</i>&nbsp;     * Interactions with the Merchant allow players to enhance their inventory, provided they have enough gold.
+<b class="fc"><i class="no-highlight">236</i>&nbsp;     * &lt;/p&gt;</b>
+<b class="fc"><i class="no-highlight">237</i>&nbsp;     *</b>
+<b class="fc"><i class="no-highlight">238</i>&nbsp;     * @author Thomas Green</b>
+<b class="fc"><i class="no-highlight">239</i>&nbsp;     */</b>
+<b class="fc"><i class="no-highlight">240</i>&nbsp;</b>
+<i class="no-highlight">241</i>&nbsp;    public static class Merchant extends NPC {
+<i class="no-highlight">242</i>&nbsp;        private List&lt;Item&gt; itemsForSale;
+<i class="no-highlight">243</i>&nbsp;
+<i class="no-highlight">244</i>&nbsp;        /**
+<i class="no-highlight">245</i>&nbsp;         * Constructs a Merchant NPC with the specified name and coordinates.
+<i class="no-highlight">246</i>&nbsp;         *
+<i class="no-highlight">247</i>&nbsp;         * @author Thomas Green
+<i class="no-highlight">248</i>&nbsp;         *
+<i class="no-highlight">249</i>&nbsp;         * @param name The name of the Merchant
+<i class="no-highlight">250</i>&nbsp;         * @param x    The x-coordinate of the Merchant&#39;s location.
+<i class="no-highlight">251</i>&nbsp;         * @param y    The y-coordinate of the Merchant&#39;s location.
+<i class="no-highlight">252</i>&nbsp;         */
+<i class="no-highlight">253</i>&nbsp;
+<i class="no-highlight">254</i>&nbsp;        public Merchant(String name, int x, int y) {
+<i class="no-highlight">255</i>&nbsp;            super(name, x, y);
+<i class="no-highlight">256</i>&nbsp;            this.itemsForSale = itemsForSale;
+<i class="no-highlight">257</i>&nbsp;            Item armor = new Item(&quot;armor&quot;, -1, -1,ItemType.Armor);
+<i class="no-highlight">258</i>&nbsp;            armor.setPrice(2);
+<i class="no-highlight">259</i>&nbsp;
+<i class="no-highlight">260</i>&nbsp;            Item potion = new Item(&quot;potion&quot;, -1, -1,ItemType.Potion);
+<i class="no-highlight">261</i>&nbsp;            potion.setPrice(1);
+<i class="no-highlight">262</i>&nbsp;
+<i class="no-highlight">263</i>&nbsp;            Item sword = new Item(&quot;sword&quot;, -1, -1,ItemType.Sword);
+<i class="no-highlight">264</i>&nbsp;            sword.setPrice(2);
+<i class="no-highlight">265</i>&nbsp;
+<i class="no-highlight">266</i>&nbsp;            this.itemsForSale = new ArrayList&lt;&gt;(Arrays.asList(armor, potion, sword));
+<i class="no-highlight">267</i>&nbsp;
+<i class="no-highlight">268</i>&nbsp;        }
+<i class="no-highlight">269</i>&nbsp;        //    Empty Constructor to allow JSON mapping
+<b class="fc"><i class="no-highlight">270</i>&nbsp;        public Merchant() {}</b>
+<b class="fc"><i class="no-highlight">271</i>&nbsp;</b>
+<b class="fc"><i class="no-highlight">272</i>&nbsp;        /**</b>
+<b class="fc"><i class="no-highlight">273</i>&nbsp;         * Represents the interaction between the player and the Merchant NPC.</b>
+<i class="no-highlight">274</i>&nbsp;         * When the player interacts with the Merchant, the Merchant offers them a list of items available for sale.
+<b class="fc"><i class="no-highlight">275</i>&nbsp;         * This method will add the relevant item to the player&#39;s inventory, and remove the players&#39; corresponding gold</b>
+<b class="fc"><i class="no-highlight">276</i>&nbsp;         * for buying this item.</b>
+<i class="no-highlight">277</i>&nbsp;         * &lt;/p&gt;
+<b class="fc"><i class="no-highlight">278</i>&nbsp;         *</b>
+<b class="fc"><i class="no-highlight">279</i>&nbsp;         * @author Thomas Green</b>
+<i class="no-highlight">280</i>&nbsp;         *
+<b class="fc"><i class="no-highlight">281</i>&nbsp;         * @param map       The game map where entities, including the Merchant, are located.</b>
+<i class="no-highlight">282</i>&nbsp;         * @param row       The row coordinate of the Merchant on the map.
+<i class="no-highlight">283</i>&nbsp;         * @param column    The column coordinate of the Merchant on the map.
+<i class="no-highlight">284</i>&nbsp;         * @param inventory The player&#39;s inventory.
+<b class="fc"><i class="no-highlight">285</i>&nbsp;         * @return A message to the player describing the outcome of the interaction.</b>
+<i class="no-highlight">286</i>&nbsp;         */
+<i class="no-highlight">287</i>&nbsp;
+<i class="no-highlight">288</i>&nbsp;        @Override
+<i class="no-highlight">289</i>&nbsp;        public String talk(Map map, int row, int column, Inventory inventory) {
+<i class="no-highlight">290</i>&nbsp;            while (true) {
+<i class="no-highlight">291</i>&nbsp;                System.out.println(&quot;Greetings, traveler! Here are my wares:&quot;);
+<i class="no-highlight">292</i>&nbsp;                for (Item item : itemsForSale) {
+<i class="no-highlight">293</i>&nbsp;                    System.out.println(item.getName() + &quot;: &quot; + item.getPrice() + &quot; gold&quot;);
+<i class="no-highlight">294</i>&nbsp;                }
+<i class="no-highlight">295</i>&nbsp;
+<i class="no-highlight">296</i>&nbsp;                System.out.print(&quot;What would you like to buy? Enter &#39;trade [item]&#39; to trade or &#39;exit&#39; to leave.&quot;);
+<i class="no-highlight">297</i>&nbsp;                System.out.println(&quot;&gt; &quot;);
+<i class="no-highlight">298</i>&nbsp;                Scanner scanner = new Scanner(System.in);
+<i class="no-highlight">299</i>&nbsp;                String userInput = scanner.nextLine();
+<i class="no-highlight">300</i>&nbsp;                String[] inputParts = userInput.split(&quot; &quot;);
+<i class="no-highlight">301</i>&nbsp;
+<i class="no-highlight">302</i>&nbsp;                if (&quot;exit&quot;.equalsIgnoreCase(userInput)) {
+<i class="no-highlight">303</i>&nbsp;                    return &quot;# Farewell, traveler!&quot;;
+<i class="no-highlight">304</i>&nbsp;                }
+<i class="no-highlight">305</i>&nbsp;
+<b class="nc"><i class="no-highlight">306</i>&nbsp;                if (inputParts.length &gt;= 2 &amp;&amp; &quot;trade&quot;.equalsIgnoreCase(inputParts[0])) {</b>
+<b class="nc"><i class="no-highlight">307</i>&nbsp;                    String itemName = inputParts[1];</b>
+<b class="nc"><i class="no-highlight">308</i>&nbsp;                    boolean itemFound = false;</b>
+<b class="nc"><i class="no-highlight">309</i>&nbsp;                    for (Item item : new ArrayList&lt;&gt;(itemsForSale)) {</b>
+<i class="no-highlight">310</i>&nbsp;                        if (item.getName().equalsIgnoreCase(itemName)) {
+<b class="nc"><i class="no-highlight">311</i>&nbsp;                            itemFound = true;</b>
+<b class="nc"><i class="no-highlight">312</i>&nbsp;                            int goldCount = inventory.getItemCount(&quot;gold&quot;);</b>
+<b class="nc"><i class="no-highlight">313</i>&nbsp;                            if (item.getPrice() &lt;= goldCount) {</b>
+<b class="nc"><i class="no-highlight">314</i>&nbsp;                                for (int i = 0; i &lt; item.getPrice(); i++) {</b>
+<b class="nc"><i class="no-highlight">315</i>&nbsp;                                    inventory.removeItem(inventory.getItem(&quot;gold&quot;));</b>
+<b class="nc"><i class="no-highlight">316</i>&nbsp;                                }</b>
+<b class="nc"><i class="no-highlight">317</i>&nbsp;</b>
+<b class="nc"><i class="no-highlight">318</i>&nbsp;                                inventory.addItem(item);</b>
+<i class="no-highlight">319</i>&nbsp;                                itemsForSale.remove(item);
+<b class="nc"><i class="no-highlight">320</i>&nbsp;                                System.out.println(&quot;# You bought a &quot; + itemName + &quot;.&quot;);</b>
+<b class="nc"><i class="no-highlight">321</i>&nbsp;                            } else {</b>
+<b class="nc"><i class="no-highlight">322</i>&nbsp;                                System.out.println(&quot;You don&#39;t have enough gold!&quot;);</b>
+<b class="nc"><i class="no-highlight">323</i>&nbsp;                            }</b>
+<b class="nc"><i class="no-highlight">324</i>&nbsp;                            break;</b>
+<b class="nc"><i class="no-highlight">325</i>&nbsp;                        }</b>
+<b class="nc"><i class="no-highlight">326</i>&nbsp;                    }</b>
+<b class="nc"><i class="no-highlight">327</i>&nbsp;</b>
+<b class="nc"><i class="no-highlight">328</i>&nbsp;                    if (!itemFound) {</b>
+<b class="nc"><i class="no-highlight">329</i>&nbsp;                        System.out.println(&quot;I don&#39;t have that item for sale. Please choose a valid item.&quot;);</b>
+<b class="nc"><i class="no-highlight">330</i>&nbsp;                    }</b>
+<i class="no-highlight">331</i>&nbsp;                } else {
+<b class="nc"><i class="no-highlight">332</i>&nbsp;                    System.out.println(&quot;Invalid command. Please enter &#39;trade [item]&#39; or &#39;exit&#39;.&quot;);</b>
+<b class="nc"><i class="no-highlight">333</i>&nbsp;                }</b>
+<b class="nc"><i class="no-highlight">334</i>&nbsp;</b>
+<b class="nc"><i class="no-highlight">335</i>&nbsp;                if (itemsForSale.isEmpty()) {</b>
+<i class="no-highlight">336</i>&nbsp;                    map.removeEntity(row, column);
+<b class="nc"><i class="no-highlight">337</i>&nbsp;                    return &quot;# Thank you for your purchases! I have nothing more to sell.&quot;;</b>
+<i class="no-highlight">338</i>&nbsp;                }
+<b class="nc"><i class="no-highlight">339</i>&nbsp;            }</b>
+<i class="no-highlight">340</i>&nbsp;        }
+<b class="nc"><i class="no-highlight">341</i>&nbsp;</b>
+<b class="nc"><i class="no-highlight">342</i>&nbsp;        /**</b>
+<b class="nc"><i class="no-highlight">343</i>&nbsp;         * Represents the interaction between the player and the Merchant NPC.</b>
+<b class="nc"><i class="no-highlight">344</i>&nbsp;         * When the player interacts with the Merchant, the Merchant offers them a list of items available for sale.</b>
+<b class="nc"><i class="no-highlight">345</i>&nbsp;         * This method will add a list of items player want to buy into the player&#39;s inventory,</b>
+<b class="nc"><i class="no-highlight">346</i>&nbsp;         * and remove the players&#39; corresponding gold for buying this item.</b>
+<b class="nc"><i class="no-highlight">347</i>&nbsp;         *</b>
+<i class="no-highlight">348</i>&nbsp;         * @author Jerry Zhao
+<b class="nc"><i class="no-highlight">349</i>&nbsp;         *</b>
+<b class="nc"><i class="no-highlight">350</i>&nbsp;         * @param map         The game map where the entities are located.</b>
+<b class="nc"><i class="no-highlight">351</i>&nbsp;         * @param row         The row position of the merchant on the map.</b>
+<b class="nc"><i class="no-highlight">352</i>&nbsp;         * @param column      The column position of the merchant on the map.</b>
+<i class="no-highlight">353</i>&nbsp;         * @param inventory   The player&#39;s current inventory.
+<b class="nc"><i class="no-highlight">354</i>&nbsp;         * @param listInputs  An array of strings representing the list of items the player intends to buy.</b>
+<i class="no-highlight">355</i>&nbsp;         *
+<i class="no-highlight">356</i>&nbsp;         * @return A new array of strings containing any unprocessed commands after the interaction is completed.
+<i class="no-highlight">357</i>&nbsp;         *
+<i class="no-highlight">358</i>&nbsp;         */
+<i class="no-highlight">359</i>&nbsp;        public String[] talk(Map map, int row, int column, Inventory inventory, String[] listInputs) {
+<i class="no-highlight">360</i>&nbsp;            while (true) {
+<i class="no-highlight">361</i>&nbsp;                System.out.println(&quot;Greetings, traveler! Here are my wares:&quot;);
+<i class="no-highlight">362</i>&nbsp;                for (Item item : itemsForSale) {
+<i class="no-highlight">363</i>&nbsp;                    System.out.println(item.getName() + &quot;: &quot; + item.getPrice() + &quot; gold&quot;);
+<i class="no-highlight">364</i>&nbsp;                }
+<i class="no-highlight">365</i>&nbsp;
+<i class="no-highlight">366</i>&nbsp;                int lastInput = 0;
+<i class="no-highlight">367</i>&nbsp;                for (int i = 0; i &lt; listInputs.length; i++) {
+<i class="no-highlight">368</i>&nbsp;                    lastInput = i+1;
+<i class="no-highlight">369</i>&nbsp;                    String[] inputParts = listInputs[i].split(&quot; &quot;);  // Split input based on space
+<i class="no-highlight">370</i>&nbsp;                    String command = inputParts[0].toLowerCase();
+<b class="nc"><i class="no-highlight">371</i>&nbsp;</b>
+<b class="nc"><i class="no-highlight">372</i>&nbsp;                    // Ensure that there is a second part before trying to access it</b>
+<b class="nc"><i class="no-highlight">373</i>&nbsp;</b>
+<b class="nc"><i class="no-highlight">374</i>&nbsp;                    if (&quot;exit&quot;.equalsIgnoreCase(command)) {</b>
+<i class="no-highlight">375</i>&nbsp;                        System.out.println(&quot;# Farewell, traveler!&quot;);
+<b class="fc"><i class="no-highlight">376</i>&nbsp;                    }</b>
+<b class="fc"><i class="no-highlight">377</i>&nbsp;</b>
+<b class="fc"><i class="no-highlight">378</i>&nbsp;                    if (&quot;trade&quot;.equalsIgnoreCase(command) &amp;&amp; inputParts.length &gt; 1){</b>
+<b class="fc"><i class="no-highlight">379</i>&nbsp;                        String itemName = inputParts[1];</b>
+<i class="no-highlight">380</i>&nbsp;                        boolean itemFound = false;
+<b class="fc"><i class="no-highlight">381</i>&nbsp;                        for (Item item : new ArrayList&lt;&gt;(itemsForSale)) {  // Create a copy of itemsForSale for safe iteration and removal</b>
+<b class="fc"><i class="no-highlight">382</i>&nbsp;                            if (item.getName().equalsIgnoreCase(itemName)) {</b>
+<b class="fc"><i class="no-highlight">383</i>&nbsp;                                itemFound = true;</b>
+<b class="fc"><i class="no-highlight">384</i>&nbsp;                                int goldCount = inventory.getItemCount(&quot;gold&quot;);</b>
+<b class="fc"><i class="no-highlight">385</i>&nbsp;                                if (item.getPrice() &lt;= goldCount) {</b>
+<b class="nc"><i class="no-highlight">386</i>&nbsp;                                    // Remove gold pieces from inventory</b>
+<b class="nc"><i class="no-highlight">387</i>&nbsp;                                    for (int j = 0; j &lt; item.getPrice(); j++) {</b>
+<b class="nc"><i class="no-highlight">388</i>&nbsp;                                        inventory.removeItem(inventory.getItem(&quot;gold&quot;));</b>
+<b class="fc"><i class="no-highlight">389</i>&nbsp;                                    }</b>
+<b class="fc"><i class="no-highlight">390</i>&nbsp;                                    // Add the purchased item to player&#39;s inventory</b>
+<i class="no-highlight">391</i>&nbsp;                                    inventory.addItem(item);
+<b class="nc"><i class="no-highlight">392</i>&nbsp;                                    // Remove the purchased item from merchant&#39;s inventory</b>
+<b class="fc"><i class="no-highlight">393</i>&nbsp;                                    itemsForSale.remove(item);</b>
+<b class="fc"><i class="no-highlight">394</i>&nbsp;                                    System.out.println(&quot;# You bought a &quot; + itemName + &quot;.&quot;);</b>
+<b class="fc"><i class="no-highlight">395</i>&nbsp;                                } else {</b>
+<b class="fc"><i class="no-highlight">396</i>&nbsp;                                    System.out.println(&quot;You don&#39;t have enough gold!&quot;);</b>
+<b class="fc"><i class="no-highlight">397</i>&nbsp;                                }</b>
+<b class="fc"><i class="no-highlight">398</i>&nbsp;                                break;  // Exit the loop once the item is found</b>
+<b class="fc"><i class="no-highlight">399</i>&nbsp;                            }</b>
+<b class="fc"><i class="no-highlight">400</i>&nbsp;                        }</b>
+<b class="nc"><i class="no-highlight">401</i>&nbsp;</b>
+<b class="fc"><i class="no-highlight">402</i>&nbsp;                        if (!itemFound) {</b>
+<b class="fc"><i class="no-highlight">403</i>&nbsp;                            System.out.println(&quot;I don&#39;t have that item for sale. Please choose a valid item.&quot;);</b>
+<i class="no-highlight">404</i>&nbsp;                        }
+<b class="nc"><i class="no-highlight">405</i>&nbsp;</b>
+<b class="fc"><i class="no-highlight">406</i>&nbsp;                        if (itemsForSale.isEmpty()) {</b>
+<b class="nc"><i class="no-highlight">407</i>&nbsp;                            map.removeEntity(row, column);</b>
+<b class="fc"><i class="no-highlight">408</i>&nbsp;                            System.out.println(&quot;# Thank you for your purchases! I have nothing more to sell.&quot;);</b>
+<b class="fc"><i class="no-highlight">409</i>&nbsp;                        }</b>
+<i class="no-highlight">410</i>&nbsp;                    }
+<b class="fc"><i class="no-highlight">411</i>&nbsp;                }</b>
+<b class="nc"><i class="no-highlight">412</i>&nbsp;</b>
+<b class="fc"><i class="no-highlight">413</i>&nbsp;                int newListSize = listInputs.length - lastInput;</b>
+<i class="no-highlight">414</i>&nbsp;                String[] newList = new String[newListSize];
+<b class="fc"><i class="no-highlight">415</i>&nbsp;                System.arraycopy(listInputs, lastInput, newList, 0, listInputs.length - lastInput);</b>
+<i class="no-highlight">416</i>&nbsp;                return newList;
+<b class="fc"><i class="no-highlight">417</i>&nbsp;            }</b>
+<b class="nc"><i class="no-highlight">418</i>&nbsp;        }</b>
+<b class="nc"><i class="no-highlight">419</i>&nbsp;    }</b>
+<b class="nc"><i class="no-highlight">420</i>&nbsp;}</b>
+</div>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+        var codeBlock = document.getElementById('sourceCode');
+
+        if (codeBlock) {
+            hljs.highlightBlock(codeBlock);
+        }
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2023-09-29 15:28</div>
+</div>
+</body>
+</html>

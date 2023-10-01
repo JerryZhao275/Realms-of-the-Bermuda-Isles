@@ -4,32 +4,33 @@ By signing your name and UID each member of the group acknowledges that all the 
 
 ---
 
-- Group Member 1 Name:
-- Group Member 1 UID:
+- Group Member 1 Name: Jerry Zhao
+- Group Member 1 UID: u7490271
 
 ---
 
-- Group Member 2 Name:
-- Group Member 2 UID:
+- Group Member 2 Name: Thomas Green
+- Group Member 2 UID: u7416757
 
 ---
 
-- Group Member 3 Name:
-- Group Member 3 UID:
+- Group Member 3 Name: Kwong Yu Zhou
+- Group Member 3 UID: u7466271
 
 ---
 
-- Group Member 4 Name:
-- Group Member 4 UID:
+- Group Member 4 Name: Hsuan Chu Shih
+- Group Member 4 UID: u7443726
 
 ---
 
-- Group Member 5 Name: (Remove if not applicable)
-- Group Member 5 UID: (Remove if not applicable)
+- Group Member 5 Name: Sam Powell
+- Group Member 5 UID: u7480724
 
 ---
 
 # References (If any)
 
-- [1] [test.com](test.com) - Description/other info
+- [1] [Stack Overflow ](https://stackoverflow.com/questions/42452329/java-lang-noclassdeffounderror-com-fasterxml-jackson-databind-objectmapper-wh) - Error fixing for using jackson-databind when running gradle
 - [2] [test.com](test.com) - Description/other info
+- [3] [docs.docker.com](https://docs.docker.com/language/java/build-images/) - Build docker

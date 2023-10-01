@@ -37,7 +37,7 @@
 
 * The **_HP_** system is designed for the player. It will decrease when the enemy gains the upper hand. It is recoverable by using **supplementary Items**.
 * When your HP comes lower than 1, the game **END**s.
-* ![HP___0](items/img/HP___0.png)
+* ![0HP](items/img/0HP.png)
 * If you want to check your _HP_, you can enter the command “**_hp_**”. Your remaining _HP_ will then be presented.
 * ![HP](items/img/HP.png)
 

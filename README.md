@@ -86,7 +86,7 @@
     **-** _ps. The durability of weapons means the time for using them to attack_
 
 * When the durability comes to **0**, the item will be removed from your inventory.
-* ![%E6%88%AA%E5%B1%8F2023-09-30\_%E4%B8%8B%E5%8D%8811.06.14](uploads/334f7be5d1765920abcabc0b7fc9f1e5/%E6%88%AA%E5%B1%8F2023-09-30\_%E4%B8%8B%E5%8D%8811.06.14.png)
+* ![durability](items/img/durability.png)
 
 ## NPC Interaction
 
@@ -144,7 +144,7 @@
 
     **-** For the intense hit-back from the **_Boss_**, you will lose **_2 HP_** from each of your attacks.
 
-* ![%E6%88%AA%E5%B1%8F2023-09-30\_%E4%B8%8B%E5%8D%8811.12.09](uploads/0480ccde62a35f6d3283f54edf8cb04c/%E6%88%AA%E5%B1%8F2023-09-30\_%E4%B8%8B%E5%8D%8811.12.09.png)
+* ![hit_back_from_boss](items/img/hit_back_from_boss.png)
 
     **-** During your challenge, logical planning on the usage of your **supplement** may be useful.
 
@@ -156,10 +156,10 @@
 
 * If you need to leave during a play, you can choose to save your current progress (maximum storage: 1 file)
 * The command for **Saving** is “**_save_**”, all the parameters (**_Inventory_**, **_HP_**, player location, The state of **_NPCs_**, **_Enemies_**, and **_Items_**) will all be saved.
-* ![%E6%88%AA%E5%B1%8F2023-09-30\_%E4%B8%8B%E5%8D%8811.23.10](uploads/8d7493140429776a7a6e3b4c549af3bb/%E6%88%AA%E5%B1%8F2023-09-30\_%E4%B8%8B%E5%8D%8811.23.10.png)
+* ![save](items/img/save.png)
 * When you come back, you can load the game and continue playing.
 * The command for **Loading** is **<span dir="">“</span>_load_<span dir="">”</span>.** The data saved will be loaded as parameters for continuing the game.
-* ![%E6%88%AA%E5%B1%8F2023-09-30\_%E4%B8%8B%E5%8D%8811.22.44](uploads/949b76e033c5c815822d69ff21103406/%E6%88%AA%E5%B1%8F2023-09-30\_%E4%B8%8B%E5%8D%8811.22.44.png)
+* ![load](items/img/load.png)
 
 ## Features Planned without Implement
 
@@ -192,4 +192,4 @@ This tester was implemented by utilising the ByteArrayOutputStream class, allowi
 
 Through using both JUnit testing and Automated game testing, our team was able to provide coverage of 82.7% of all lines within the project. Note that some methods are duplicated for the sake of testing and running a playthrough, but retain the same functionality, hence the true coverage is much higher.
 
-![coverage](uploads/e9ae9213b667498de69ba60d1564c237/coverage.png)More information on the coverage report can be found in [_coverage-report/index.html_](https://gitlab.cecs.anu.edu.au/u7480724/comp-2120-assignment-3-workshop-07-group-a/-/blob/main/items/coverage-report/index.html).
+![coverage](items/img/coverage.png)More information on the coverage report can be found in [_coverage-report/index.html_](https://gitlab.cecs.anu.edu.au/u7480724/comp-2120-assignment-3-workshop-07-group-a/-/blob/main/items/coverage-report/index.html).

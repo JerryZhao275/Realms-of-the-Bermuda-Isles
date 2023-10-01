@@ -127,7 +127,7 @@
 
     **-** After defeating all the enemies in an area, you will find a treasure **_Chest_** as your trophy.
 
-* ![normal_enemy_fight\_-\_win](items/img/normal_enemy_fight\_-\_win.png)
+* ![normal_enemy_fight_win](items/img/normal_enemy_fight_win.png)
 
     **-** The **_Chest_** will open automatically, giving you a random weapon or supplement, with _0-2_ pieces of **_Gold_**.
 
@@ -135,7 +135,7 @@
 
     **-** If you attack an enemy **without having a weapon**, the enemy will prevail against you, resulting in a loss of _1 HP_.
 
-* ![normal_enemy_fight\_-\_lose](items/img/normal_enemy_fight\_-\_lose.png)
+* ![normal_enemy_fight_lose](items/img/normal_enemy_fight_lose.png)
 * The “**_Boss_**”, who is the king of all the Bermuda monsters, is guarding the exit. Defeating him is the **ONLY** way for you to **WIN** the game.
 
     **-** To challenge the **_Boss_**, you need to be equipped with a **weapon**.

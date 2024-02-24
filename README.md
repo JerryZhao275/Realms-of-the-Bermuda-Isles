@@ -2,8 +2,9 @@
 
 ### Contributions
 * Coordinatd meetings and documented meeting minutes
+* Wrote the report for the overview of the game
 * Established a structure on how classes will function/interact with one another
-* Implemented majority GameEngine.java code
+* Implemented majority of GameEngine.java code
 * Created thorough sets of unit tests and an execution of test commands, simulating a game run
 * Implementing additional game features such as using RNG and game difficulty
 

@@ -1,6 +1,11 @@
-# COMP2120-Assignment-3-Workshop-07-Group-A
-
 # **“Realms of the Bermuda Isles”**
+
+### Contributions
+* Coordinatd meetings and documented meeting minutes
+* Established a structure on how classes will function/interact with one another
+* Implemented majority GameEngine.java code
+* Created thorough sets of unit tests and an execution of test commands, simulating a game run
+* Implementing additional game features such as using RNG and game difficulty
 
 ## **Game Introduction**
 
